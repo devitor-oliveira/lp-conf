@@ -1,0 +1,155 @@
+$bar-height: 28px;
+$fillet-radius: 28px;
+
+.dock {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  cursor: pointer;
+  user-select: none;
+
+  .dockItems {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 22%;
+    min-width: 240px;
+    padding: 0.65rem 1.5rem 1.15rem 1.5rem;
+    background: var(--color-background);
+    border-radius: var(--radius-max) var(--radius-max) 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+
+    // Borda Côncava à Esquerda (Inverted Border Radius)
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: $bar-height;
+      left: -$fillet-radius;
+      width: $fillet-radius;
+      height: $fillet-radius;
+      background: radial-gradient(
+        circle at 0 0,
+        transparent $fillet-radius,
+        var(--color-background) calc($fillet-radius + 0.5px)
+      );
+      pointer-events: none;
+    }
+
+    // Borda Côncava à Direita (Inverted Border Radius)
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: $bar-height;
+      right: -$fillet-radius;
+      width: $fillet-radius;
+      height: $fillet-radius;
+      background: radial-gradient(
+        circle at 100% 0,
+        transparent $fillet-radius,
+        var(--color-background) calc($fillet-radius + 0.5px)
+      );
+      pointer-events: none;
+    }
+  }
+
+  .dockHandle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 0.55rem;
+
+    .handleBar {
+      width: 40px;
+      height: 4px;
+      border-radius: 999px;
+      background-color: var(--color-border);
+      transition: background-color 0.2s ease, width 0.2s ease;
+    }
+  }
+
+  &:hover .dockHandle .handleBar {
+    background-color: var(--color-accent);
+    width: 48px;
+  }
+
+  .buttonsRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .left-bar,
+  .right-bar {
+    z-index: 1;
+    height: $bar-height;
+    flex: 1;
+    background: var(--color-background);
+  }
+
+  .left-bar {
+    border-top-right-radius: 0;
+  }
+
+  .right-bar {
+    border-top-left-radius: 0;
+  }
+
+  button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background-color 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+
+    &:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    &.activeButton {
+      background-color: var(--color-accent);
+      color: var(--color-background);
+      border-color: transparent;
+    }
+  }
+
+  .progressRing {
+    position: absolute;
+    inset: -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    transform: rotate(-90deg);
+    pointer-events: none;
+    color: var(--color-accent);
+  }
+}
+
+@media (max-width: 900px) {
+  .dock .dockItems {
+    width: 60%;
+  }
+}
+

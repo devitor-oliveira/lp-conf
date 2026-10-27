@@ -1,13 +1,17 @@
 .wrapper {
+  position: relative;
   flex: 1;
   display: flex;
-  gap: 0.5rem;
-  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .content-wrapper {
   flex: 1;
   display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 .content {
@@ -15,59 +19,80 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0rem 4rem;
-  max-width: 45%;
+  padding: 6rem 4rem 3rem 4rem;
+  max-width: 50%;
   gap: 1.5rem;
+  z-index: 1;
 
   h1 {
-    font-size: 8rem;
+    font-size: clamp(3.5rem, 6.5vw, 8rem);
+    line-height: 1.05;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  p {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    margin: 0;
+    max-width: 90%;
+  }
+
+  .ctaWrapper {
+    display: flex;
+    align-self: flex-start;
+  }
+
+  button {
+    padding: 0.9rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-background);
+    background-color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+    border-radius: 100px;
+    cursor: pointer;
+    box-shadow: none;
+    transform-origin: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 }
 
 .canvas {
   flex: 1;
   position: relative;
+  height: 100%;
   min-height: 100%;
-  // border: 1px solid green;
-  img {
+  overflow: hidden;
+  perspective: 1000px;
+  z-index: 1;
+
+  .parallaxLayer {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    will-change: transform;
+  }
+
+  img {
+    position: absolute;
+    inset: 1.5rem;
+    width: calc(100% - 3rem);
+    height: calc(100% - 3rem);
     object-fit: cover;
-    border-bottom-left-radius: var(--radius-max);
+    border-radius: var(--radius-max);
+    will-change: transform, opacity;
   }
 }
 
-.dock {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-
-  display: flex;
-  align-items: end;
-  justify-content: space-evenly;
-  border: 1px solid black;
-  // background-color: var(--color-background);
-
-  .dockItems {
-    display: flex;
-    justify-content: center;
-    width: 20%;
-    padding: 1rem 0rem 2rem 0rem;
-    gap: 2rem;
-    background: var(--color-background);
+@media (max-width: 900px) {
+  .content-wrapper {
+    flex-direction: column;
   }
-  .left-bar {
-    z-index: 1;
-    height: 30%;
-    width: 50%;
-    background: var(--color-background);
-  }
-  .right-bar {
-    z-index: 1;
-    height: 30%;
-    width: 50%;
-    background: var(--color-background);
+
+  .content {
+    max-width: 100%;
+    padding: 5.5rem 1.75rem 2rem 1.75rem;
   }
 }
