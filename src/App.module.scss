@@ -1,6 +1,12 @@
 @use "./styles/mixins" as mixins;
 
-$fillet-size: 48px;
+$hero-margin: 8px;
+$nav-height: 52px;
+$nav-radius: 26px; // $nav-height / 2
+$header-padding-tl: 16px;
+$header-padding-rb: 12px;
+$header-radius: $nav-radius + $header-padding-rb; // 38px (concêntrico ao nav)
+$fillet-size: $header-padding-tl + $nav-radius - $hero-margin; // 34px (inflexão exata em y = 42px)
 
 .header {
   position: fixed;
@@ -9,8 +15,8 @@ $fillet-size: 48px;
   z-index: 30;
   display: inline-flex;
   background-color: var(--color-background);
-  padding: 16px 24px 24px 16px;
-  border-bottom-right-radius: 48px;
+  padding: $header-padding-tl $header-padding-rb $header-padding-rb $header-padding-tl;
+  border-bottom-right-radius: $header-radius;
 
   // Curva Côncava Superior Direita (conecta o teto da Hero à parede vertical do entalhe)
   &::before {
@@ -19,11 +25,11 @@ $fillet-size: 48px;
     top: 0;
     left: 100%;
     width: $fillet-size;
-    height: $fillet-size;
+    height: calc(#{$hero-margin} + #{$fillet-size});
     background: radial-gradient(
       circle at 100% 100%,
       transparent $fillet-size,
-      var(--color-background) calc($fillet-size + 0.5px)
+      var(--color-background) calc($fillet-size + 0.75px)
     );
     pointer-events: none;
   }
@@ -34,12 +40,12 @@ $fillet-size: 48px;
     position: absolute;
     top: 100%;
     left: 0;
-    width: $fillet-size;
+    width: calc(#{$hero-margin} + #{$fillet-size});
     height: $fillet-size;
     background: radial-gradient(
       circle at 100% 100%,
       transparent $fillet-size,
-      var(--color-background) calc($fillet-size + 0.5px)
+      var(--color-background) calc($fillet-size + 0.75px)
     );
     pointer-events: none;
   }
@@ -47,8 +53,9 @@ $fillet-size: 48px;
   nav {
     display: flex;
     align-items: center;
+    height: $nav-height;
     gap: 1.75rem;
-    padding: 0.75rem 2rem;
+    padding: 0 2rem;
     border-radius: var(--radius-max);
     color: var(--color-background);
     border: 2px solid var(--color-border);

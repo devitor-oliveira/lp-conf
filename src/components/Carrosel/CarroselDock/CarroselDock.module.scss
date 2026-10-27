@@ -1,5 +1,4 @@
-$bar-height: 28px;
-$fillet-radius: 28px;
+$bar-height: 16px;
 
 .dock {
   position: absolute;
@@ -18,45 +17,14 @@ $fillet-radius: 28px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 22%;
-    min-width: 240px;
-    padding: 0.65rem 1.5rem 1.15rem 1.5rem;
+    justify-content: flex-start;
+    width: 20%;
+    min-width: 220px;
+    padding: 0.35rem 1rem 0.4rem 1rem;
     background: var(--color-background);
-    border-radius: var(--radius-max) var(--radius-max) 0 0;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-
-    // Borda Côncava à Esquerda (Inverted Border Radius)
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: $bar-height;
-      left: -$fillet-radius;
-      width: $fillet-radius;
-      height: $fillet-radius;
-      background: radial-gradient(
-        circle at 0 0,
-        transparent $fillet-radius,
-        var(--color-background) calc($fillet-radius + 0.5px)
-      );
-      pointer-events: none;
-    }
-
-    // Borda Côncava à Direita (Inverted Border Radius)
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: $bar-height;
-      right: -$fillet-radius;
-      width: $fillet-radius;
-      height: $fillet-radius;
-      background: radial-gradient(
-        circle at 100% 0,
-        transparent $fillet-radius,
-        var(--color-background) calc($fillet-radius + 0.5px)
-      );
-      pointer-events: none;
-    }
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04);
   }
 
   .dockHandle {
@@ -64,11 +32,11 @@ $fillet-radius: 28px;
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding-bottom: 0.55rem;
+    height: 10px;
 
     .handleBar {
-      width: 40px;
-      height: 4px;
+      width: 36px;
+      height: 3px;
       border-radius: 999px;
       background-color: var(--color-border);
       transition: background-color 0.2s ease, width 0.2s ease;
@@ -77,31 +45,26 @@ $fillet-radius: 28px;
 
   &:hover .dockHandle .handleBar {
     background-color: var(--color-accent);
-    width: 48px;
+    width: 44px;
   }
 
   .buttonsRow {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
     width: 100%;
+    padding-top: 0.35rem;
   }
 
   .left-bar,
   .right-bar {
+    position: relative;
     z-index: 1;
     height: $bar-height;
     flex: 1;
     background: var(--color-background);
-  }
-
-  .left-bar {
-    border-top-right-radius: 0;
-  }
-
-  .right-bar {
-    border-top-left-radius: 0;
+    border-radius: var(--radius-max) var(--radius-max) 0 0;
   }
 
   button {
@@ -109,10 +72,10 @@ $fillet-radius: 28px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 2.35rem;
+    height: 2.35rem;
     padding: 0;
     background-color: var(--color-background);
     color: var(--color-text);
@@ -120,9 +83,7 @@ $fillet-radius: 28px;
     border-radius: 50%;
     cursor: pointer;
     box-shadow: none;
-    transition: background-color 0.2s ease,
-                border-color 0.2s ease,
-                color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
     &:hover {
       border-color: var(--color-accent);
@@ -138,9 +99,9 @@ $fillet-radius: 28px;
 
   .progressRing {
     position: absolute;
-    inset: -5px;
-    width: calc(100% + 10px);
-    height: calc(100% + 10px);
+    inset: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
     transform: rotate(-90deg);
     pointer-events: none;
     color: var(--color-accent);
@@ -152,4 +113,3 @@ $fillet-radius: 28px;
     width: 60%;
   }
 }
-

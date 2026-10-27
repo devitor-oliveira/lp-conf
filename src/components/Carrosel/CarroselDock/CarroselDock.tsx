@@ -36,10 +36,8 @@ export function CarroselDock({
   };
 
   return (
-    <motion.div
+    <div
       className={styles.dock}
-      animate={{ y: isOpen ? 0 : "calc(100% - 24px)" }}
-      transition={{ type: "spring", stiffness: 380, damping: 26, mass: 0.6 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -52,12 +50,26 @@ export function CarroselDock({
     >
       <span className={styles["left-bar"]} />
 
-      <div className={styles.dockItems}>
+      <motion.div
+        className={styles.dockItems}
+        animate={{
+          height: isOpen ? 64 : 18,
+        }}
+        transition={{ type: "spring", stiffness: 380, damping: 28 }}
+      >
         <div className={styles.dockHandle} aria-hidden="true">
           <span className={styles.handleBar} />
         </div>
 
-        <div className={styles.buttonsRow}>
+        <motion.div
+          className={styles.buttonsRow}
+          animate={{
+            opacity: isOpen ? 1 : 0,
+            y: isOpen ? 0 : 8,
+          }}
+          transition={{ duration: 0.2 }}
+          style={{ pointerEvents: isOpen ? "auto" : "none" }}
+        >
           {slides.map((slide, idx) => {
             const isActive = idx === currentIndex;
             return (
@@ -78,13 +90,13 @@ export function CarroselDock({
                 {isActive && progress && (
                   <svg
                     className={styles.progressRing}
-                    viewBox="0 0 48 48"
+                    viewBox="0 0 44 44"
                     aria-hidden="true"
                   >
                     <motion.circle
-                      cx="24"
-                      cy="24"
-                      r="21.5"
+                      cx="22"
+                      cy="22"
+                      r="19.5"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2.5"
@@ -97,11 +109,11 @@ export function CarroselDock({
               </motion.button>
             );
           })}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <span className={styles["right-bar"]} />
-    </motion.div>
+    </div>
   );
 }
 
