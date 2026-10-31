@@ -17,15 +17,17 @@
 .content {
   flex: 1;
   display: flex;
+  gap: 4rem;
   flex-direction: column;
   justify-content: center;
-  padding: 6rem 4rem 3rem 4rem;
-  max-width: 50%;
-  gap: 1.5rem;
+  padding: 1.5rem 2rem 1.5rem 4rem;
+  max-width: 47%;
+
   z-index: 1;
 
   h1 {
     font-size: clamp(3.5rem, 6.5vw, 8rem);
+    color: var(--color-background);
     line-height: 1.05;
     font-weight: 800;
     margin: 0;
@@ -33,7 +35,7 @@
 
   p {
     font-size: 1.15rem;
-    color: var(--color-text);
+    color: var(--color-background);
     margin: 0;
     max-width: 90%;
   }
@@ -47,14 +49,14 @@
     padding: 0.9rem 1.75rem;
     font-size: 1rem;
     font-weight: 700;
-    color: var(--color-background);
-    background-color: var(--color-accent);
-    border: 2px solid var(--color-accent);
+    color: var(--color-text-muted);
+    background-color: var(--color-background);
+    // border: 2px solid var(--color-accent);
     border-radius: 100px;
     cursor: pointer;
     box-shadow: none;
     transform-origin: center;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    // transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 }
 

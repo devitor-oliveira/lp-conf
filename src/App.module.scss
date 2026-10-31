@@ -1,8 +1,8 @@
 @use "./styles/mixins" as mixins;
 
 $hero-margin: 8px;
-$nav-height: 52px;
-$nav-radius: 26px; // $nav-height / 2
+$nav-height: 54px;
+$nav-radius: 32px; // $nav-height / 2
 $header-padding-tl: 16px;
 $header-padding-rb: 12px;
 $header-radius: $nav-radius + $header-padding-rb; // 38px (concêntrico ao nav)

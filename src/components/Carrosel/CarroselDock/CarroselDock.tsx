@@ -36,7 +36,7 @@ export function CarroselDock({
   };
 
   return (
-    <div
+    <motion.div
       className={styles.dock}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
@@ -113,7 +113,7 @@ export function CarroselDock({
       </motion.div>
 
       <span className={styles["right-bar"]} />
-    </div>
+    </motion.div>
   );
 }
 
