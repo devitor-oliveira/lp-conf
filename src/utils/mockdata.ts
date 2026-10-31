@@ -1,4 +1,5 @@
 import YellowHeroIMG from "@/assets/doce-amarelo.png";
+import GreenHeroIMG from "@/assets/doce-verde.png";
 import RedHeroIMG from "@/assets/doce-vermelho.png";
 
 export interface Slide {
@@ -8,7 +9,8 @@ export interface Slide {
   description: string;
   image: string;
   alt?: string;
-  textColorToken: string;
+  CTAColorToken?: string;
+  textColorToken?: string;
   surfaceColorToken: string;
 }
 
@@ -39,7 +41,7 @@ export const SLIDES: Slide[] = [
     title: "Display title 03",
     description:
       "Texturas delicadas e acabamento refinado para ocasiões memoráveis.",
-    image: RedHeroIMG,
+    image: GreenHeroIMG,
     alt: "Seleção especial de confeitaria",
     surfaceColorToken: "var(--color-surface-slide-3)",
   },

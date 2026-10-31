@@ -5,6 +5,9 @@ import { Hero } from "@/sections/Hero";
 import styles from "./App.module.scss";
 
 export function App() {
+  const [activeTextColor, setActiveTextColor] = useState<string>(
+    "var(--color-text-slide-1)",
+  );
   const [activeSurfaceColor, setActiveSurfaceColor] = useState<string>(
     "var(--color-surface-slide-1)",
   );
