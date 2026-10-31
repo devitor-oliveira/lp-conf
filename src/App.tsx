@@ -6,7 +6,7 @@ import styles from "./App.module.scss";
 
 export function App() {
   const [activeSurfaceColor, setActiveSurfaceColor] = useState<string>(
-    "var(--color-surface-slide-1)"
+    "var(--color-surface-slide-1)",
   );
   const [isHeroInView, setIsHeroInView] = useState<boolean>(true);
   const heroSectionRef = useRef<HTMLElement>(null);
@@ -21,7 +21,7 @@ export function App() {
       },
       {
         threshold: 0.15,
-      }
+      },
     );
 
     observer.observe(target);
@@ -39,9 +39,9 @@ export function App() {
           aria-label="Navegação principal"
           style={{ backgroundColor: headerNavBg }}
         >
-          <a href="/">Alo</a>
-          <a href="/">alo</a>
-          <a href="/">alo</a>
+          <a href="/">Inicio</a>
+          <a href="/">Conheça</a>
+          <a href="/">Encomende Já</a>
         </nav>
       </header>
       <main className={styles.main} id="conteudo" tabIndex={-1}>

@@ -7,56 +7,12 @@ import {
 } from "motion/react";
 import type React from "react";
 import { useEffect, useState } from "react";
-import YellowHeroIMG from "@/assets/doce-amarelo.png";
-import RedHeroIMG from "@/assets/doce-vermelho.png";
 
 import styles from "@/components/Carrosel/Carrosel.module.scss";
+import { SLIDES } from "@/utils/mockdata";
 import CarroselDock from "./CarroselDock/CarroselDock";
 
-export interface Slide {
-  id: number;
-  number: string;
-  title: string;
-  description: string;
-  image: string;
-  alt: string;
-  surfaceColorToken: string;
-}
-
-export const SLIDES: Slide[] = [
-  {
-    id: 1,
-    number: "01",
-    title: "Display title 01",
-    description:
-      "Doces artesanais produzidos com dedicação e ingredientes selecionados.",
-    image: RedHeroIMG,
-    alt: "Doce artesanal vermelho especial",
-    surfaceColorToken: "var(--color-surface-slide-1)",
-  },
-  {
-    id: 2,
-    number: "02",
-    title: "Display title 02",
-    description:
-      "Sabor cítrico especial em edição exclusiva da nossa confeitaria.",
-    image: YellowHeroIMG,
-    alt: "Doce artesanal amarelo especial",
-    surfaceColorToken: "var(--color-surface-slide-2)",
-  },
-  {
-    id: 3,
-    number: "03",
-    title: "Display title 03",
-    description:
-      "Texturas delicadas e acabamento refinado para ocasiões memoráveis.",
-    image: RedHeroIMG,
-    alt: "Seleção especial de confeitaria",
-    surfaceColorToken: "var(--color-surface-slide-3)",
-  },
-];
-
-const AUTO_PLAY_DURATION = 5000;
+const AUTO_PLAY_DURATION = 8000;
 
 export interface CarroselProps {
   onSlideColorChange?: (colorToken: string) => void;
@@ -70,13 +26,13 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
   const currentSlide = SLIDES[currentIndex];
   const isPaused = isContentHovered || isDockActive;
 
-  // Progresso contínuo (0 a 1) sincronizado em 60/120fps com o anel da dock
   const progress = useMotionValue(0);
 
   useAnimationFrame((_time, delta) => {
     if (isPaused) return;
 
     const nextProgress = progress.get() + delta / AUTO_PLAY_DURATION;
+
     if (nextProgress >= 1) {
       progress.set(0);
       setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
@@ -109,7 +65,7 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
     if (currentSlide?.surfaceColorToken) {
       onSlideColorChange?.(currentSlide.surfaceColorToken);
     }
-  }, [currentIndex, currentSlide?.surfaceColorToken, onSlideColorChange]);
+  }, [currentSlide?.surfaceColorToken, onSlideColorChange]);
 
   const handleSelectSlide = (idx: number) => {
     progress.set(0);
@@ -140,7 +96,7 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
   };
 
   return (
-    <div
+    <motion.div
       className={styles.wrapper}
       onMouseEnter={() => setIsContentHovered(true)}
       onMouseLeave={() => setIsContentHovered(false)}
@@ -178,7 +134,7 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
           </motion.div>
         </motion.div>
 
-        <div
+        <motion.div
           className={styles.canvas}
           aria-live="polite"
           onMouseMove={handleCanvasMouseMove}
@@ -203,7 +159,7 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
               />
             </AnimatePresence>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
       <CarroselDock
@@ -213,7 +169,7 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
         onActiveChange={setIsDockActive}
         progress={progress}
       />
-    </div>
+    </motion.div>
   );
 }
 
