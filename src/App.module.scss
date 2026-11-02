@@ -1,9 +1,9 @@
 @use "./styles/mixins" as mixins;
 
 $hero-margin: 8px;
-$nav-height: 54px;
+$nav-height: 56px;
 $nav-radius: 32px; // $nav-height / 2
-$header-padding-tl: 16px;
+$header-padding-tl: 8px;
 $header-padding-rb: 12px;
 $header-radius: $nav-radius + $header-padding-rb; // 38px (concêntrico ao nav)
 $fillet-size: $header-padding-tl + $nav-radius - $hero-margin; // 34px (inflexão exata em y = 42px)
@@ -58,7 +58,7 @@ $fillet-size: $header-padding-tl + $nav-radius - $hero-margin; // 34px (inflexã
     padding: 0 2rem;
     border-radius: var(--radius-max);
     color: var(--color-background);
-    border: 2px solid var(--color-border);
+    // border: 2px solid var(--color-border);
     box-shadow: none;
     transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 
