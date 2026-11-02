@@ -115,13 +115,8 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
           <motion.h1 id="hero-title" variants={contentItemVariants}>
             {currentSlide?.title}
           </motion.h1>
-          <motion.p variants={contentItemVariants}>
-            {currentSlide?.description}
-          </motion.p>
-          <motion.div
-            variants={contentItemVariants}
-            className={styles.ctaWrapper}
-          >
+          <motion.p variants={contentItemVariants}>{currentSlide?.description}</motion.p>
+          <motion.div variants={contentItemVariants} className={styles.ctaWrapper}>
             <motion.button
               type="button"
               whileHover={{ y: -2, scale: 1.02 }}
@@ -140,10 +135,7 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
           onMouseMove={handleCanvasMouseMove}
           onMouseLeave={handleCanvasMouseLeave}
         >
-          <motion.div
-            className={styles.parallaxLayer}
-            style={{ x: smoothX, y: smoothY }}
-          >
+          <motion.div className={styles.parallaxLayer} style={{ x: smoothX, y: smoothY }}>
             <AnimatePresence>
               <motion.img
                 key={`img-${currentSlide?.id}`}

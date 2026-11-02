@@ -1,0 +1,23 @@
+@use "@/styles/mixins" as mixins;
+
+:where(.notch) {
+  @include mixins.notch-variables();
+  position: relative;
+  display: inline-flex;
+}
+
+.topLeft {
+  @include mixins.notch-corner("top-left");
+}
+
+.topRight {
+  @include mixins.notch-corner("top-right");
+}
+
+.bottomLeft {
+  @include mixins.notch-corner("bottom-left");
+}
+
+.bottomRight {
+  @include mixins.notch-corner("bottom-right");
+}

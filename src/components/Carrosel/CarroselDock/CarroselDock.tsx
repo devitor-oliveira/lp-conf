@@ -88,11 +88,7 @@ export function CarroselDock({
                 aria-current={isActive ? "true" : undefined}
               >
                 {isActive && progress && (
-                  <svg
-                    className={styles.progressRing}
-                    viewBox="0 0 44 44"
-                    aria-hidden="true"
-                  >
+                  <svg className={styles.progressRing} viewBox="0 0 44 44" aria-hidden="true">
                     <motion.circle
                       cx="22"
                       cy="22"

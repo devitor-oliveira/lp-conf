@@ -2,3 +2,178 @@
   width: min(var(--container-width), calc(100% - 2.5rem));
   margin-inline: auto;
 }
+
+// Inicializa variáveis CSS customizadas para controle reativo e responsivo do entalhe.
+@mixin notch-variables(
+  $radius: 32px,
+  $fillet: 24px,
+  $offset-x: 0px,
+  $offset-y: 0px,
+  $bg: var(--color-background),
+  $aa: 0.75px
+) {
+  --notch-radius: #{$radius};
+  --notch-fillet: #{$fillet};
+  --notch-offset-x: #{$offset-x};
+  --notch-offset-y: #{$offset-y};
+  --notch-bg: #{$bg};
+  --notch-aa: #{$aa};
+}
+
+// Helper opcional para cálculo concêntrico automático a partir do raio interno e paddings.
+// Fórmula: R_ext = R_int + P_ext | Fillet = max(0px, P_int + R_int - Offset)
+@mixin notch-concentric(
+  $inner-radius,
+  $padding-outer,
+  $padding-inner: $padding-outer,
+  $offset-x: 0px,
+  $offset-y: 0px,
+  $bg: var(--color-background),
+  $aa: 0.75px
+) {
+  --notch-radius: calc(#{$inner-radius} + #{$padding-outer});
+  --notch-fillet: max(0px, calc(#{$padding-inner} + #{$inner-radius} - #{$offset-x}));
+  --notch-offset-x: #{$offset-x};
+  --notch-offset-y: #{$offset-y};
+  --notch-bg: #{$bg};
+  --notch-aa: #{$aa};
+}
+
+// Aplica a geometria de entalhe (canto convexo + 2 fillets côncavos via ::before e ::after)
+// nos 4 cantos externos suportados: "top-left", "top-right", "bottom-left", "bottom-right".
+@mixin notch-corner($placement) {
+  background-color: var(--notch-bg, var(--color-background));
+  filter: var(--notch-shadow, none);
+
+  @if $placement == "top-left" {
+    border-bottom-right-radius: var(--notch-radius);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: var(--notch-fillet);
+      height: calc(var(--notch-offset-y, 0px) + var(--notch-fillet));
+      background: radial-gradient(
+        circle at 100% 100%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: calc(var(--notch-offset-x, 0px) + var(--notch-fillet));
+      height: var(--notch-fillet);
+      background: radial-gradient(
+        circle at 100% 100%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+  } @else if $placement == "top-right" {
+    border-bottom-left-radius: var(--notch-radius);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 100%;
+      width: var(--notch-fillet);
+      height: calc(var(--notch-offset-y, 0px) + var(--notch-fillet));
+      background: radial-gradient(
+        circle at 0% 100%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: calc(var(--notch-offset-x, 0px) + var(--notch-fillet));
+      height: var(--notch-fillet);
+      background: radial-gradient(
+        circle at 0% 100%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+  } @else if $placement == "bottom-left" {
+    border-top-right-radius: var(--notch-radius);
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 100%;
+      width: var(--notch-fillet);
+      height: calc(var(--notch-offset-y, 0px) + var(--notch-fillet));
+      background: radial-gradient(
+        circle at 100% 0%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      width: calc(var(--notch-offset-x, 0px) + var(--notch-fillet));
+      height: var(--notch-fillet);
+      background: radial-gradient(
+        circle at 100% 0%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+  } @else if $placement == "bottom-right" {
+    border-top-left-radius: var(--notch-radius);
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 100%;
+      width: var(--notch-fillet);
+      height: calc(var(--notch-offset-y, 0px) + var(--notch-fillet));
+      background: radial-gradient(
+        circle at 0% 0%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      width: calc(var(--notch-offset-x, 0px) + var(--notch-fillet));
+      height: var(--notch-fillet);
+      background: radial-gradient(
+        circle at 0% 0%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+  } @else {
+    @error "Posição de entalhe inválida '#{$placement}'. Use 'top-left', 'top-right', 'bottom-left' ou 'bottom-right'.";
+  }
+}
