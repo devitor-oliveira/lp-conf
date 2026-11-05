@@ -2,8 +2,10 @@ import { ArrowUpRight, Award, Moon, ShoppingBag, Sliders, Sparkles, Sun } from "
 import { type CSSProperties, useEffect, useState } from "react";
 import {
   calculateConcentricNotch,
+  DEFAULT_BIARC_ANGLE_DEG,
   NotchContainer,
   type NotchCornerPlacement,
+  solveBiArc,
 } from "@/components/Notch";
 import styles from "./SandboxApp.module.scss";
 
@@ -69,7 +71,9 @@ export function SandboxApp() {
 
   const [manualRadius, setManualRadius] = useState<number>(38);
   const [manualFillet, setManualFillet] = useState<number>(26);
+  const [notchAngle, setNotchAngle] = useState<number>(DEFAULT_BIARC_ANGLE_DEG);
   const [enableShadow, setEnableShadow] = useState<boolean>(false);
+  const [enableTopCenterSmooth, setEnableTopCenterSmooth] = useState<boolean>(true);
 
   const [enabledCorners, setEnabledCorners] = useState<Record<NotchCornerPlacement, boolean>>({
     "top-left": true,
@@ -93,6 +97,7 @@ export function SandboxApp() {
   };
 
   const computedConcentric = calculateConcentricNotch(concentricConfig, stageMargin);
+  const smoothBiArcInfo = solveBiArc({ height: 44, angleDeg: notchAngle, radiusBottom: 80 });
 
   const activeRadiusDisplay =
     mode === "concentric" ? computedConcentric.radius : `${manualRadius}px`;
@@ -159,6 +164,23 @@ export function SandboxApp() {
               </a>
             </div>
           </nav>
+        </NotchContainer>
+      )}
+
+      {/* Aba Central Smooth (Bi-Arc SVG Paramétrico) */}
+      {enableTopCenterSmooth && (
+        <NotchContainer
+          as="div"
+          placement="top-center"
+          variant="smooth"
+          angle={notchAngle}
+          radius={80}
+          smoothHeight={44}
+          offsetY={stageMargin}
+          dropShadow={enableShadow ? "0 8px 20px rgb(0 0 0 / 0.18)" : undefined}
+          className={styles.slotTopCenter}
+        >
+          <span className={styles.topCenterLabel}>Smooth • {notchAngle}°</span>
         </NotchContainer>
       )}
 
@@ -330,6 +352,25 @@ export function SandboxApp() {
               </div>
             )}
 
+            <div className={styles.controlsGrid}>
+              <div className={styles.controlField}>
+                <div className={styles.fieldHeader}>
+                  <label htmlFor="ctrl-smooth-angle">Angulação Smooth (--notch-angle)</label>
+                  <span className={styles.fieldValue}>
+                    {notchAngle}deg • {Math.round(smoothBiArcInfo.transitionWidth)}px
+                  </span>
+                </div>
+                <input
+                  id="ctrl-smooth-angle"
+                  type="range"
+                  min={20}
+                  max={60}
+                  value={notchAngle}
+                  onChange={(e) => setNotchAngle(Number(e.target.value))}
+                />
+              </div>
+            </div>
+
             <div className={styles.togglesRow}>
               <div className={styles.cornerChecks}>
                 {CORNER_LABELS.map(({ key, label }) => (
@@ -342,6 +383,14 @@ export function SandboxApp() {
                     {label}
                   </label>
                 ))}
+                <label className={styles.checkChip}>
+                  <input
+                    type="checkbox"
+                    checked={enableTopCenterSmooth}
+                    onChange={(e) => setEnableTopCenterSmooth(e.target.checked)}
+                  />
+                  Top-Center (Smooth Bi-Arc)
+                </label>
               </div>
 
               <label className={styles.checkChip}>
@@ -356,9 +405,10 @@ export function SandboxApp() {
 
             <pre className={styles.codeReadout}>
               <code>
-                {`/* Variáveis CSS ativas nos 4 cantos */
+                {`/* Variáveis CSS ativas (Classic + Smooth Bi-Arc) */
 --notch-radius: ${activeRadiusDisplay};
 --notch-fillet: ${activeFilletDisplay};
+--notch-angle: ${notchAngle}deg; /* Rampa lateral: ${smoothBiArcInfo.transitionWidth.toFixed(1)}px */
 --notch-offset-x: ${stageMargin}px;
 --notch-offset-y: ${stageMargin}px;
 --notch-bg: var(--color-background); /* Tema: ${theme} */`}

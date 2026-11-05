@@ -2,6 +2,10 @@ import type { ComponentPropsWithRef, CSSProperties, ElementType, ReactNode } fro
 
 export type NotchCornerPlacement = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
+export type NotchPlacement = NotchCornerPlacement | "top-center";
+
+export type NotchVariant = "classic" | "smooth";
+
 export interface ConcentricNotchConfig {
   /** Raio interno do elemento filho (ex.: pílula de navegação ou botão interno) */
   innerRadius: number | string;
@@ -14,13 +18,19 @@ export interface ConcentricNotchConfig {
 export interface NotchOwnProps<T extends ElementType = "div"> {
   /** Elemento HTML ou componente React a ser renderizado (padrão: "div") */
   as?: T;
-  /** Canto externo onde o entalhe se ancora */
-  placement: NotchCornerPlacement;
-  /** Raio convexo externo do entalhe (sobrescreve cálculo concêntrico se informado) */
+  /** Posição onde o entalhe se ancora (cantos externos ou topo central) */
+  placement: NotchPlacement;
+  /** Variante geométrica: "classic" (CSS 90° padrão) ou "smooth" (Bi-arcos SVG de ângulo raso) */
+  variant?: NotchVariant;
+  /** Raio convexo externo do entalhe (no modo "smooth", define o raio inferior desejado; padrão: 80) */
   radius?: number | string;
-  /** Tamanho das curvas côncavas de concordância (sobrescreve cálculo concêntrico se informado) */
+  /** Tamanho das curvas côncavas de concordância (sobrescreve cálculo concêntrico no modo "classic") */
   filletSize?: number | string;
-  /** Configuração opcional para derivar radius e filletSize concentricamente */
+  /** Angulação máxima da rampa em graus para o modo "smooth" (ex.: 38 ou "38deg"; padrão: 38) */
+  angle?: number | string;
+  /** Altura líquida da aba em pixels para o cálculo de bi-arcos no modo "smooth" (padrão: 44) */
+  smoothHeight?: number;
+  /** Configuração opcional para derivar radius e filletSize concentricamente (modo "classic") */
   concentric?: ConcentricNotchConfig;
   /** Margem/distância horizontal até a superfície adjacente */
   offsetX?: number | string;

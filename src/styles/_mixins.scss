@@ -10,7 +10,8 @@
   $offset-x: 0px,
   $offset-y: 0px,
   $bg: var(--color-background),
-  $aa: 0.75px
+  $aa: 0.75px,
+  $angle: 38deg
 ) {
   --notch-radius: #{$radius};
   --notch-fillet: #{$fillet};
@@ -18,6 +19,7 @@
   --notch-offset-y: #{$offset-y};
   --notch-bg: #{$bg};
   --notch-aa: #{$aa};
+  --notch-angle: #{$angle};
 }
 
 // Helper opcional para cálculo concêntrico automático a partir do raio interno e paddings.
@@ -173,7 +175,40 @@
       );
       pointer-events: none;
     }
+  } @else if $placement == "top-center" {
+    border-bottom-left-radius: var(--notch-radius);
+    border-bottom-right-radius: var(--notch-radius);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 100%;
+      width: var(--notch-fillet);
+      height: calc(var(--notch-offset-y, 0px) + var(--notch-fillet));
+      background: radial-gradient(
+        circle at 0% 100%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: var(--notch-fillet);
+      height: calc(var(--notch-offset-y, 0px) + var(--notch-fillet));
+      background: radial-gradient(
+        circle at 100% 100%,
+        transparent var(--notch-fillet),
+        var(--notch-bg, var(--color-background)) calc(var(--notch-fillet) + var(--notch-aa, 0.75px))
+      );
+      pointer-events: none;
+    }
   } @else {
-    @error "Posição de entalhe inválida '#{$placement}'. Use 'top-left', 'top-right', 'bottom-left' ou 'bottom-right'.";
+    @error "Posição de entalhe inválida '#{$placement}'. Use 'top-left', 'top-right', 'bottom-left', 'bottom-right' ou 'top-center'.";
   }
 }

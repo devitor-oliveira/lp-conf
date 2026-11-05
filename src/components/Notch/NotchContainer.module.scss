@@ -21,3 +21,35 @@
 .bottomRight {
   @include mixins.notch-corner("bottom-right");
 }
+
+.topCenter {
+  @include mixins.notch-corner("top-center");
+}
+
+.smoothTopCenter {
+  height: var(--notch-smooth-total-height, 44px);
+  padding-top: var(--notch-offset-y, 0px);
+  background-color: var(--notch-bg, var(--color-background));
+  filter: var(--notch-shadow, none);
+}
+
+.smoothWingLeft,
+.smoothWingRight {
+  position: absolute;
+  top: 0;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.smoothWingLeft {
+  right: calc(100% - 1px);
+}
+
+.smoothWingRight {
+  left: calc(100% - 1px);
+}
+
+.smoothWingPath {
+  fill: var(--notch-bg, var(--color-background));
+}

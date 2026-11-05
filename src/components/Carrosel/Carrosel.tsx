@@ -9,22 +9,39 @@ import type React from "react";
 import { useEffect, useState } from "react";
 
 import styles from "@/components/Carrosel/Carrosel.module.scss";
+import { DEFAULT_BIARC_ANGLE_DEG, generateConcentricCollarSvgPath } from "@/components/Notch";
 import { SLIDES } from "@/utils/mockdata";
 import CarroselDock from "./CarroselDock/CarroselDock";
+import CarroselProgress from "./CarroselProgress/CarroselProgress";
 
 const AUTO_PLAY_DURATION = 8000;
+const PROGRESS_SEGMENT_WIDTH = 44;
+const PROGRESS_SEGMENT_GAP = 8;
+const PROGRESS_PAD_X = 8;
+const PROGRESS_NOTCH_HEIGHT = 44;
+const PROGRESS_RADIUS_BOTTOM = 80;
+const CANVAS_EDGE_INSET = 12;
+const IMAGE_EXIT_RADIUS = 34;
 
 export interface CarroselProps {
+  activeSurfaceColor?: string;
+  /** Angulação máxima da rampa suave do entalhe central e do recorte concêntrico da imagem (padrão: 38) */
+  notchAngle?: number | string;
   onSlideColorChange?: (colorToken: string) => void;
 }
 
-export function Carrosel({ onSlideColorChange }: CarroselProps) {
+export function Carrosel({
+  activeSurfaceColor,
+  notchAngle = DEFAULT_BIARC_ANGLE_DEG,
+  onSlideColorChange,
+}: CarroselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isContentHovered, setIsContentHovered] = useState(false);
   const [isDockActive, setIsDockActive] = useState(false);
+  const [isProgressHovered, setIsProgressHovered] = useState(false);
 
   const currentSlide = SLIDES[currentIndex];
-  const isPaused = isContentHovered || isDockActive;
+  const isPaused = isContentHovered || isDockActive || isProgressHovered;
 
   const progress = useMotionValue(0);
 
@@ -95,6 +112,23 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
     },
   };
 
+  const collarColor =
+    activeSurfaceColor ?? currentSlide?.surfaceColorToken ?? "var(--color-surface-slide-1)";
+
+  const flatWidth =
+    SLIDES.length * PROGRESS_SEGMENT_WIDTH +
+    Math.max(0, SLIDES.length - 1) * PROGRESS_SEGMENT_GAP +
+    PROGRESS_PAD_X * 2;
+
+  const collarGeometry = generateConcentricCollarSvgPath({
+    height: PROGRESS_NOTCH_HEIGHT,
+    flatHalfWidth: flatWidth / 2,
+    angleDeg: notchAngle,
+    radiusBottom: PROGRESS_RADIUS_BOTTOM,
+    gap: CANVAS_EDGE_INSET,
+    exitRadius: IMAGE_EXIT_RADIUS,
+  });
+
   return (
     <motion.div
       className={styles.wrapper}
@@ -104,6 +138,28 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
       aria-roledescription="carousel"
       aria-label="Destaques da Confeitaria"
     >
+      <CarroselProgress
+        slides={SLIDES}
+        currentIndex={currentIndex}
+        progress={progress}
+        angle={notchAngle}
+        notchHeight={PROGRESS_NOTCH_HEIGHT}
+        radiusBottom={PROGRESS_RADIUS_BOTTOM}
+        onSelectSlide={handleSelectSlide}
+        onHoverChange={setIsProgressHovered}
+      />
+
+      <svg
+        className={styles.imageNotchCollar}
+        width={collarGeometry.svgWidth}
+        height={collarGeometry.svgHeight}
+        viewBox={`0 0 ${collarGeometry.svgWidth} ${collarGeometry.svgHeight}`}
+        style={{ color: collarColor }}
+        aria-hidden="true"
+      >
+        <path d={collarGeometry.d} fill="currentColor" />
+      </svg>
+
       <div className={styles["content-wrapper"]}>
         <motion.div
           key={`content-${currentSlide?.id}`}
@@ -135,22 +191,24 @@ export function Carrosel({ onSlideColorChange }: CarroselProps) {
           onMouseMove={handleCanvasMouseMove}
           onMouseLeave={handleCanvasMouseLeave}
         >
-          <motion.div className={styles.parallaxLayer} style={{ x: smoothX, y: smoothY }}>
-            <AnimatePresence>
-              <motion.img
-                key={`img-${currentSlide?.id}`}
-                src={currentSlide?.image}
-                alt={currentSlide?.alt}
-                initial={{ x: 80, opacity: 0, scale: 0.95 }}
-                animate={{ x: 0, opacity: 1, scale: 1 }}
-                exit={{ x: -80, opacity: 0, scale: 0.98 }}
-                transition={{
-                  duration: 0.75,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              />
-            </AnimatePresence>
-          </motion.div>
+          <div className={styles.canvasFrame}>
+            <motion.div className={styles.parallaxLayer} style={{ x: smoothX, y: smoothY }}>
+              <AnimatePresence>
+                <motion.img
+                  key={`img-${currentSlide?.id}`}
+                  src={currentSlide?.image}
+                  alt={currentSlide?.alt}
+                  initial={{ x: 80, opacity: 0, scale: 0.95 }}
+                  animate={{ x: 0, opacity: 1, scale: 1 }}
+                  exit={{ x: -80, opacity: 0, scale: 0.98 }}
+                  transition={{
+                    duration: 0.75,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                />
+              </AnimatePresence>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
 

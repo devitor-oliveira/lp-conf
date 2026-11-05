@@ -3,9 +3,9 @@
 .hero {
   position: relative;
   display: flex;
-  margin: 8px;
-  width: calc(100% - 16px);
-  height: calc(90vh - 16px);
+  margin: var(--layout-stage-margin);
+  width: calc(100% - (var(--layout-stage-margin) * 2));
+  height: calc(90vh - (var(--layout-stage-margin) * 2));
   border-radius: var(--radius-max) var(--radius-max) 0 0;
   background-color: var(--color-surface);
   overflow: hidden;

@@ -1,6 +1,12 @@
 @use "tokens";
 @use "reset";
 
+@property --notch-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f8f4e8;
+}
+
 html {
   scroll-padding-top: 2rem;
 }

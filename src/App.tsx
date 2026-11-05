@@ -1,13 +1,14 @@
 import { MotionConfig } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-
+import { Header } from "@/components/Header/Header";
 import { Hero } from "@/sections/Hero";
 import styles from "./App.module.scss";
 
 export function App() {
-  const [activeTextColor, setActiveTextColor] = useState<string>(
-    "var(--color-text-slide-1)",
-  );
+  const [_activeTextColor, _setActiveTextColor] = useState<string>("var(--color-text-slide-1)");
+  void _activeTextColor;
+  void _setActiveTextColor;
+
   const [activeSurfaceColor, setActiveSurfaceColor] = useState<string>(
     "var(--color-surface-slide-1)",
   );
@@ -19,8 +20,11 @@ export function App() {
     if (!target) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsHeroInView(entry.isIntersecting);
+      (entries) => {
+        const firstEntry = entries[0];
+        if (firstEntry) {
+          setIsHeroInView(firstEntry.isIntersecting);
+        }
       },
       {
         threshold: 0.15,
@@ -31,22 +35,11 @@ export function App() {
     return () => observer.disconnect();
   }, []);
 
-  const headerNavBg = isHeroInView
-    ? activeSurfaceColor
-    : "var(--color-surface-default)";
+  const headerNavBg = isHeroInView ? activeSurfaceColor : "var(--color-surface-default)";
 
   return (
     <MotionConfig>
-      <header className={styles.header}>
-        <nav
-          aria-label="Navegação principal"
-          style={{ backgroundColor: headerNavBg }}
-        >
-          <a href="/">Inicio</a>
-          <a href="/">Conheça</a>
-          <a href="/">Encomende Já</a>
-        </nav>
-      </header>
+      <Header navBgColor={headerNavBg} />
       <main className={styles.main} id="conteudo" tabIndex={-1}>
         <Hero
           heroRef={heroSectionRef}
@@ -54,7 +47,7 @@ export function App() {
           onSlideColorChange={setActiveSurfaceColor}
         />
       </main>
-      <footer className={styles.footer}></footer>
+      <footer className={styles.footer} />
     </MotionConfig>
   );
 }

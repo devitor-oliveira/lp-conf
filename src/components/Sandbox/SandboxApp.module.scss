@@ -43,6 +43,27 @@
   padding: var(--slot-pad-edge) var(--slot-pad-channel) var(--slot-pad-channel) var(--slot-pad-edge);
 }
 
+.slotTopCenter {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 19;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 1rem;
+}
+
+.topCenterLabel {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
 .slotTopRight {
   position: absolute;
   top: 0;
