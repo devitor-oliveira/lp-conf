@@ -16,7 +16,20 @@ export {
   type TopCenterBiArcSvgParams,
   toCssAngle,
 } from "./biarc";
-export { calculateConcentricNotch, NotchContainer, toCssLength } from "./NotchContainer";
+
+export { NotchContainer } from "./NotchContainer";
+
+export {
+  buildNotchCssVars,
+  calculateConcentricNotch,
+  compactCssVars,
+  type NotchCssParams,
+  parseNumericPx,
+  sanitizeColor,
+  sanitizeDropShadow,
+  toCssLength,
+} from "./notchUtils";
+
 export type {
   ConcentricNotchConfig,
   NotchContainerProps,
@@ -25,3 +38,5 @@ export type {
   NotchPlacement,
   NotchVariant,
 } from "./types";
+
+export { type UseNotchOptions, useNotch } from "./useNotch";
