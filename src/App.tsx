@@ -1,6 +1,7 @@
 import { MotionConfig } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/Header/Header";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Hero } from "@/sections/Hero";
 import styles from "./App.module.scss";
 
@@ -40,6 +41,7 @@ export function App() {
   return (
     <MotionConfig>
       <Header navBgColor={headerNavBg} />
+      <ThemeToggle />
       <main className={styles.main} id="conteudo" tabIndex={-1}>
         <Hero
           heroRef={heroSectionRef}

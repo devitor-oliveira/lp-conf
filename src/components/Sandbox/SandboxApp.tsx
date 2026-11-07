@@ -1,5 +1,5 @@
-import { ArrowUpRight, Award, Moon, ShoppingBag, Sliders, Sparkles, Sun } from "lucide-react";
-import { type CSSProperties, useEffect, useState } from "react";
+import { ArrowUpRight, Award, Sliders, Sparkles } from "lucide-react";
+import { type CSSProperties, useState } from "react";
 import {
   calculateConcentricNotch,
   DEFAULT_BIARC_ANGLE_DEG,
@@ -7,6 +7,7 @@ import {
   type NotchCornerPlacement,
   solveBiArc,
 } from "@/components/Notch";
+import { type ThemeMode, ThemeToggle } from "@/components/ThemeToggle";
 import styles from "./SandboxApp.module.scss";
 
 interface SurfaceOption {
@@ -54,7 +55,12 @@ type StageCssVars = CSSProperties & {
 };
 
 export function SandboxApp() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<ThemeMode>(() =>
+    typeof document !== "undefined" &&
+    document.documentElement.getAttribute("data-theme") === "dark"
+      ? "dark"
+      : "light",
+  );
   const [selectedSurface, setSelectedSurface] = useState<SurfaceOption>(
     SURFACE_OPTIONS[0] ?? {
       id: "rubi",
@@ -81,14 +87,6 @@ export function SandboxApp() {
     "bottom-left": true,
     "bottom-right": true,
   });
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-    }
-  }, [theme]);
 
   const concentricConfig = {
     innerRadius,
@@ -184,34 +182,13 @@ export function SandboxApp() {
         </NotchContainer>
       )}
 
-      {/* 2. Canto Superior Direito: Ação Rápida + Alternador de Tema */}
+      {/* 2. Canto Superior Direito: Alternador de Tema Canônico */}
       {enabledCorners["top-right"] && (
-        <NotchContainer
-          as="div"
-          placement="top-right"
+        <ThemeToggle
           className={styles.slotTopRight}
+          onThemeChange={setTheme}
           {...sharedNotchProps}
-        >
-          <div className={styles.actionGroup}>
-            <button
-              type="button"
-              className={styles.iconPillButton}
-              onClick={() => setTheme((prev) => (prev === "light" ? "dark" : "light"))}
-              aria-label={theme === "light" ? "Ativar tema escuro" : "Ativar tema claro"}
-              title={theme === "light" ? "Ativar tema escuro" : "Ativar tema claro"}
-            >
-              {theme === "light" ? (
-                <Moon size={18} aria-hidden="true" />
-              ) : (
-                <Sun size={18} aria-hidden="true" />
-              )}
-            </button>
-            <button type="button" className={styles.ctaPillButton}>
-              <ShoppingBag size={16} aria-hidden="true" />
-              Encomendar Caixa
-            </button>
-          </div>
-        </NotchContainer>
+        />
       )}
 
       {/* Seção Principal (Fundo estilo Hero interagindo com os 4 entalhes) */}

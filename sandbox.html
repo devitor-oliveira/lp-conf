@@ -9,6 +9,22 @@
       content="Ambiente isolado de validação e demonstração do motor modular de entalhes côncavos (NotchContainer)."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem("lp-conf-theme");
+          const theme =
+            saved === "dark" || saved === "light"
+              ? saved
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          if (theme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+          }
+        } catch {}
+      })();
+    </script>
   </head>
   <body>
     <div id="sandbox-root"></div>

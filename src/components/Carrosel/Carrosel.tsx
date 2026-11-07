@@ -9,7 +9,7 @@ import type React from "react";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import styles from "@/components/Carrosel/Carrosel.module.scss";
-import { generateConcentricCollarSvgPath } from "@/components/Notch";
+import { generateConcentricCollarSvgPath, NotchContainer } from "@/components/Notch";
 import { SLIDES } from "@/utils/mockdata";
 import CarroselDock from "./CarroselDock/CarroselDock";
 import CarroselProgress from "./CarroselProgress/CarroselProgress";
@@ -223,6 +223,18 @@ export function Carrosel({
           onMouseMove={handleCanvasMouseMove}
           onMouseLeave={handleCanvasMouseLeave}
         >
+          <NotchContainer
+            as="div"
+            placement="top-right"
+            radius={52}
+            filletSize={16}
+            offsetX={CANVAS_EDGE_INSET}
+            offsetY={CANVAS_EDGE_INSET}
+            color={collarColor}
+            className={styles.themeToggleCollar}
+            aria-hidden="true"
+          />
+
           <div className={styles.canvasFrame}>
             <motion.div className={styles.parallaxLayer} style={{ x: smoothX, y: smoothY }}>
               <AnimatePresence>

@@ -78,6 +78,17 @@
   transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.themeToggleCollar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  z-index: 10;
+  pointer-events: none;
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .canvas {
   flex: 0 0 var(--canvas-width, 45%);
   max-width: var(--canvas-width, 45%);
@@ -115,7 +126,8 @@
 }
 
 @media (max-width: 900px) {
-  .imageNotchCollar {
+  .imageNotchCollar,
+  .themeToggleCollar {
     display: none;
   }
 

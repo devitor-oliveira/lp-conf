@@ -1,0 +1,48 @@
+.toggleContainer {
+  --toggle-size: 56px;
+  --toggle-inner-radius: 28px;
+  --toggle-pad-outer: 12px;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 30;
+  padding: var(--layout-stage-margin) var(--layout-stage-margin) var(--toggle-pad-outer)
+    var(--toggle-pad-outer);
+}
+
+.toggleButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pill-height, var(--toggle-size, 56px));
+  height: var(--pill-height, var(--toggle-size, 56px));
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-text);
+  color: var(--color-background);
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color 0.4s ease, color 0.4s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+@media (max-width: 900px) {
+  .toggleContainer {
+    --toggle-size: 44px;
+    --toggle-inner-radius: 22px;
+    --toggle-pad-outer: 8px;
+  }
+}
