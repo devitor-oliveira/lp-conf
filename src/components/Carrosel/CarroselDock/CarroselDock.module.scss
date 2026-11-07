@@ -33,7 +33,8 @@ $bar-height: 16px;
     justify-content: flex-start;
     width: 30%;
     min-width: min(100%, 480px);
-    padding-block: 0.35rem 0.45rem;
+    padding-top: 1px;
+    padding-bottom: 0.45rem;
     padding-inline: clamp(0.45rem, 1.8vw, 1.15rem);
     background: var(--color-background);
     border-radius: 20px 20px 0 0;
@@ -46,38 +47,113 @@ $bar-height: 16px;
   }
 
   .dockHandle {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 10px;
+    height: 16px;
     flex-shrink: 0;
+    color: var(--color-text);
+    transition: height 0.2s ease;
+
+    &:focus-visible {
+      outline: 2px solid var(--dock-active-color, var(--color-accent));
+      outline-offset: -2px;
+      border-radius: 6px;
+    }
+
+    .handleLabel {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+      opacity: 0.85;
+      transition:
+        opacity 0.2s ease,
+        transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.2s ease,
+        visibility 0.2s;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: opacity 0.12s ease, color 0.12s ease;
+      }
+    }
+
+    .handleChevron {
+      font-size: 0.65rem;
+      line-height: 1;
+      display: inline-block;
+      transform: translateY(-0.5px);
+    }
 
     .handleBar {
+      position: absolute;
       width: 36px;
       height: 3px;
       border-radius: 999px;
       background-color: var(--color-border);
+      opacity: 0;
+      transform: scaleX(0.6);
       transition:
+        opacity 0.2s ease,
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
         background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
         width 0.25s cubic-bezier(0.22, 1, 0.36, 1),
         height 0.2s ease;
 
       @media (prefers-reduced-motion: reduce) {
-        transition: background-color 0.15s ease;
+        transition: opacity 0.12s ease, background-color 0.15s ease;
       }
     }
-  }
-
-  &:hover .dockHandle .handleBar {
-    background-color: var(--dock-active-color, var(--color-accent));
-    width: 44px;
   }
 
   &.dockLocked .dockHandle .handleBar {
     background-color: var(--dock-active-color, var(--color-accent));
     width: 48px;
     height: 4px;
+  }
+
+  &.dockOpen .dockHandle {
+    height: 10px;
+
+    .handleLabel {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .handleBar {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  &:not(.dockOpen):hover .dockHandle {
+    .handleLabel {
+      opacity: 1;
+      color: var(--dock-active-color, var(--color-accent));
+    }
+
+    .handleBar {
+      background-color: var(--dock-active-color, var(--color-accent));
+      width: 44px;
+    }
+  }
+
+  &.dockOpen:hover .dockHandle .handleBar {
+    background-color: var(--dock-active-color, var(--color-accent));
+    width: 44px;
   }
 
   .pillsRow {
