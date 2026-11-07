@@ -5,6 +5,7 @@ import {
   type KeyboardEvent,
   type PointerEvent,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -148,6 +149,15 @@ export function CarroselDock({
     }
   };
 
+  const pillStyles = useMemo<PillCssVars[]>(
+    () =>
+      slides.map((slide) => ({
+        "--pill-active-bg": slide.surfaceColorToken,
+        "--pill-active-text": slide.textColorToken ?? "#ffffff",
+      })),
+    [slides],
+  );
+
   const dockStyle: DockCssVars = {
     "--dock-active-color": activeSlide?.surfaceColorToken ?? "var(--color-accent)",
   };
@@ -182,9 +192,21 @@ export function CarroselDock({
           shouldReduceMotion ? { duration: 0.12 } : { type: "spring", stiffness: 380, damping: 28 }
         }
       >
-        <div className={styles.dockHandle} aria-hidden="true">
-          <span className={styles.handleBar} />
-        </div>
+        <button
+          type="button"
+          className={styles.dockHandle}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleToggleDock();
+          }}
+          aria-expanded={isOpen}
+          aria-label={isOpen ? "Recolher cardápio de sabores" : "Ver sabores disponíveis"}
+        >
+          <span className={styles.handleLabel} aria-hidden="true">
+            Sabores <span className={styles.handleChevron}>▴</span>
+          </span>
+          <span className={styles.handleBar} aria-hidden="true" />
+        </button>
 
         <motion.div
           className={styles.pillsRow}
@@ -200,11 +222,6 @@ export function CarroselDock({
         >
           {slides.map((slide, idx) => {
             const isActive = idx === currentIndex;
-            const pillStyle: PillCssVars = {
-              "--pill-active-bg": slide.surfaceColorToken,
-              "--pill-active-text": slide.textColorToken ?? "#ffffff",
-            };
-
             const pillClassName = [styles.pill, isActive ? styles.activePill : ""]
               .filter(Boolean)
               .join(" ");
@@ -222,7 +239,7 @@ export function CarroselDock({
                 aria-controls={panelId}
                 tabIndex={isActive ? 0 : -1}
                 className={pillClassName}
-                style={pillStyle}
+                style={pillStyles[idx]}
                 onKeyDown={(e) => handleTabKeyDown(e, idx)}
                 onClick={(e) => {
                   e.stopPropagation();

@@ -192,7 +192,12 @@ export function Carrosel({
         </svg>
       )}
 
-      <div className={styles["content-wrapper"]} id="hero-slide-panel">
+      <div
+        className={styles["content-wrapper"]}
+        id="hero-slide-panel"
+        role="tabpanel"
+        aria-labelledby={currentSlide ? `dock-tab-${currentSlide.id}` : undefined}
+      >
         <motion.div
           key={`content-${currentSlide?.id}`}
           variants={contentContainerVariants}
