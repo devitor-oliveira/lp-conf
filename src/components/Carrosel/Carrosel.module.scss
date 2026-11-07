@@ -1,10 +1,10 @@
 .wrapper {
   --content-width: 55%;
   --canvas-width: 45%;
-  --progress-notch-height: 44px;
-  --progress-segment-width: 44px;
-  --progress-segment-gap: 8px;
-  --progress-pad-x: 8px;
+  --progress-notch-height: 32px;
+  --progress-segment-width: 38px;
+  --progress-segment-gap: 6px;
+  --progress-pad-x: 10px;
   --canvas-edge-inset: 12px;
 
   position: relative;
@@ -91,7 +91,7 @@
   .canvasFrame {
     position: absolute;
     inset: var(--canvas-edge-inset) var(--canvas-edge-inset) 1.5rem var(--canvas-edge-inset);
-    border-radius: var(--radius-large);
+    border-radius: 32px var(--radius-large) var(--radius-large) var(--radius-large);
     overflow: hidden;
     z-index: 1;
   }
@@ -115,6 +115,10 @@
 }
 
 @media (max-width: 900px) {
+  .imageNotchCollar {
+    display: none;
+  }
+
   .content-wrapper {
     flex-direction: column;
   }

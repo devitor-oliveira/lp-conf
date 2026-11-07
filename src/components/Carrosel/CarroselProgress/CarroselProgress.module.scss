@@ -7,20 +7,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--progress-notch-height, 44px);
-  padding: 0 var(--progress-pad-x, 8px);
+  height: var(--progress-notch-height, 32px);
+  padding: 0 var(--progress-pad-x, 10px);
 }
 
 .segmentsRow {
   display: inline-flex;
   align-items: center;
-  gap: var(--progress-segment-gap, 8px);
+  gap: var(--progress-segment-gap, 6px);
 }
 
 .track {
   position: relative;
   width: 100%;
-  height: 3.5px;
+  height: 3px;
   border-radius: 999px;
   background-color: color-mix(in srgb, var(--color-text) 16%, transparent);
   overflow: hidden;
@@ -31,8 +31,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--progress-segment-width, 44px);
-  height: 24px;
+  width: var(--progress-segment-width, 38px);
+  height: 20px;
   padding: 0;
   background: transparent;
   border: none;

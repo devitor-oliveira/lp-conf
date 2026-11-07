@@ -6,39 +6,61 @@ import {
   useSpring,
 } from "motion/react";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import styles from "@/components/Carrosel/Carrosel.module.scss";
-import { DEFAULT_BIARC_ANGLE_DEG, generateConcentricCollarSvgPath } from "@/components/Notch";
+import { generateConcentricCollarSvgPath } from "@/components/Notch";
 import { SLIDES } from "@/utils/mockdata";
 import CarroselDock from "./CarroselDock/CarroselDock";
 import CarroselProgress from "./CarroselProgress/CarroselProgress";
 
 const AUTO_PLAY_DURATION = 8000;
-const PROGRESS_SEGMENT_WIDTH = 44;
-const PROGRESS_SEGMENT_GAP = 8;
-const PROGRESS_PAD_X = 8;
-const PROGRESS_NOTCH_HEIGHT = 44;
-const PROGRESS_RADIUS_BOTTOM = 80;
+const PROGRESS_SEGMENT_WIDTH = 38;
+const PROGRESS_SEGMENT_GAP = 6;
+const PROGRESS_PAD_X = 10;
+const PROGRESS_NOTCH_HEIGHT = 32;
+const PROGRESS_NOTCH_ANGLE = 48;
+const PROGRESS_RADIUS_BOTTOM = 32;
 const CANVAS_EDGE_INSET = 12;
-const IMAGE_EXIT_RADIUS = 34;
+const IMAGE_EXIT_RADIUS = 32;
+const CONTENT_SPLIT_OFFSET_RATIO = 0.05; // 55% (.content) - 50% (centro do Hero)
 
 export interface CarroselProps {
   activeSurfaceColor?: string;
-  /** Angulação máxima da rampa suave do entalhe central e do recorte concêntrico da imagem (padrão: 38) */
+  /** Angulação máxima da rampa suave do entalhe central e do recorte concêntrico da imagem (padrão: 48) */
   notchAngle?: number | string;
   onSlideColorChange?: (colorToken: string) => void;
 }
 
 export function Carrosel({
   activeSurfaceColor,
-  notchAngle = DEFAULT_BIARC_ANGLE_DEG,
+  notchAngle = PROGRESS_NOTCH_ANGLE,
   onSlideColorChange,
 }: CarroselProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [wrapperWidth, setWrapperWidth] = useState(1440);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isContentHovered, setIsContentHovered] = useState(false);
   const [isDockActive, setIsDockActive] = useState(false);
   const [isProgressHovered, setIsProgressHovered] = useState(false);
+
+  useLayoutEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const updateWidth = () => {
+      if (el.clientWidth > 0) {
+        setWrapperWidth(el.clientWidth);
+      }
+    };
+
+    updateWidth();
+
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const currentSlide = SLIDES[currentIndex];
   const isPaused = isContentHovered || isDockActive || isProgressHovered;
@@ -120,17 +142,25 @@ export function Carrosel({
     Math.max(0, SLIDES.length - 1) * PROGRESS_SEGMENT_GAP +
     PROGRESS_PAD_X * 2;
 
-  const collarGeometry = generateConcentricCollarSvgPath({
-    height: PROGRESS_NOTCH_HEIGHT,
-    flatHalfWidth: flatWidth / 2,
-    angleDeg: notchAngle,
-    radiusBottom: PROGRESS_RADIUS_BOTTOM,
-    gap: CANVAS_EDGE_INSET,
-    exitRadius: IMAGE_EXIT_RADIUS,
-  });
+  const imageStartOffset = wrapperWidth * CONTENT_SPLIT_OFFSET_RATIO + CANVAS_EDGE_INSET;
+
+  const collarGeometry = useMemo(
+    () =>
+      generateConcentricCollarSvgPath({
+        height: PROGRESS_NOTCH_HEIGHT,
+        flatHalfWidth: flatWidth / 2,
+        angleDeg: notchAngle,
+        radiusBottom: PROGRESS_RADIUS_BOTTOM,
+        gap: CANVAS_EDGE_INSET,
+        imageStartOffset,
+        exitRadius: IMAGE_EXIT_RADIUS,
+      }),
+    [flatWidth, imageStartOffset, notchAngle],
+  );
 
   return (
     <motion.div
+      ref={wrapperRef}
       className={styles.wrapper}
       onMouseEnter={() => setIsContentHovered(true)}
       onMouseLeave={() => setIsContentHovered(false)}
@@ -149,16 +179,18 @@ export function Carrosel({
         onHoverChange={setIsProgressHovered}
       />
 
-      <svg
-        className={styles.imageNotchCollar}
-        width={collarGeometry.svgWidth}
-        height={collarGeometry.svgHeight}
-        viewBox={`0 0 ${collarGeometry.svgWidth} ${collarGeometry.svgHeight}`}
-        style={{ color: collarColor }}
-        aria-hidden="true"
-      >
-        <path d={collarGeometry.d} fill="currentColor" />
-      </svg>
+      {collarGeometry.d.length > 0 && (
+        <svg
+          className={styles.imageNotchCollar}
+          width={collarGeometry.svgWidth}
+          height={collarGeometry.svgHeight}
+          viewBox={`0 0 ${collarGeometry.svgWidth} ${collarGeometry.svgHeight}`}
+          style={{ color: collarColor }}
+          aria-hidden="true"
+        >
+          <path d={collarGeometry.d} fill="currentColor" />
+        </svg>
+      )}
 
       <div className={styles["content-wrapper"]}>
         <motion.div

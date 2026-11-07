@@ -1,5 +1,5 @@
 import { type MotionValue, motion } from "motion/react";
-import { DEFAULT_BIARC_ANGLE_DEG, NotchContainer } from "@/components/Notch";
+import { NotchContainer } from "@/components/Notch";
 import styles from "./CarroselProgress.module.scss";
 
 export interface ProgressSlideItem {
@@ -13,11 +13,11 @@ export interface CarroselProgressProps {
   progress: MotionValue<number>;
   onSelectSlide: (index: number) => void;
   onHoverChange?: (isHovered: boolean) => void;
-  /** Angulação máxima da rampa suave do entalhe em graus (padrão: 38) */
+  /** Angulação máxima da rampa suave do entalhe em graus (padrão: 48) */
   angle?: number | string;
-  /** Altura do entalhe em pixels (padrão: 44) */
+  /** Altura do entalhe em pixels (padrão: 32) */
   notchHeight?: number;
-  /** Raio convexo inferior desejado em pixels (padrão: 80) */
+  /** Raio convexo inferior desejado em pixels (padrão: 32) */
   radiusBottom?: number;
 }
 
@@ -27,9 +27,9 @@ export function CarroselProgress({
   progress,
   onSelectSlide,
   onHoverChange,
-  angle = DEFAULT_BIARC_ANGLE_DEG,
-  notchHeight = 44,
-  radiusBottom = 80,
+  angle = 48,
+  notchHeight = 32,
+  radiusBottom = 32,
 }: CarroselProgressProps) {
   return (
     <NotchContainer

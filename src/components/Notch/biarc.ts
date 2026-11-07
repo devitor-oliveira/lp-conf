@@ -44,7 +44,9 @@ export interface ConcentricCollarSvgParams extends BiArcParams {
   flatHalfWidth: number;
   /** Espessura constante do canal paralelo entre a aba e a imagem em pixels (padrão: 12) */
   gap?: number;
-  /** Raio convexo de saída na lateral esquerda da imagem em pixels (padrão: 34) */
+  /** Distância horizontal do centro (50%) até a borda esquerda da moldura da imagem (padrão: igual ao gap) */
+  imageStartOffset?: number;
+  /** Raio convexo de saída na lateral esquerda da imagem em pixels (padrão: 32) */
   exitRadius?: number;
 }
 
@@ -229,8 +231,9 @@ export function generateTopCenterBiArcSvgPath({
 }
 
 /**
- * Gera o colar concêntrico exato (curva paralela a distância G) para esculpir o canto superior esquerdo da imagem.
- * Pelo teorema de offset de círculos: R_top_collar = R_top - G e R_bottom_collar = R_bottom + G.
+ * Gera o colar concêntrico exato (curva paralela a distância G) para esculpir o canto superior esquerdo da imagem,
+ * calculando analiticamente a tangência G1 do arco convexo de saída com a borda esquerda real da foto (imageStartOffset)
+ * para eliminar qualquer quina reta de 90° em divisões assimétricas (ex.: 55% / 45%).
  */
 export function generateConcentricCollarSvgPath({
   height,
@@ -238,14 +241,15 @@ export function generateConcentricCollarSvgPath({
   angleDeg,
   radiusBottom,
   gap = 12,
-  exitRadius = 34,
+  imageStartOffset,
+  exitRadius = 32,
 }: ConcentricCollarSvgParams): GeneratedSvgGeometry {
   const safeGap = Math.max(0, gap);
   const biArc = solveBiArc({
     height,
     angleDeg,
     radiusBottom,
-    minRadiusTop: safeGap + 10,
+    minRadiusTop: safeGap + 14,
   });
 
   const sinTheta = Math.sin(biArc.angleRad);
@@ -258,36 +262,118 @@ export function generateConcentricCollarSvgPath({
   const xB = xA + biArc.transitionWidth;
 
   const xInfCollar = xA + rBottomCollar * sinTheta;
-  const yInfCollar = biArc.height - biArc.radiusBottom + rBottomCollar * cosTheta;
-
+  const yC2 = biArc.height - biArc.radiusBottom;
+  const yInfCollar = yC2 + rBottomCollar * cosTheta;
   const yCollarBottom = biArc.height + safeGap;
-  const safeExitRadius = Math.min(Math.max(0, exitRadius), Math.max(0, xA - safeGap));
 
-  const svgWidth = Math.ceil(xB) + 2;
-  const svgHeight = Math.ceil(yCollarBottom + safeExitRadius) + 2;
+  const xLeft = Math.max(0, imageStartOffset ?? safeGap);
+  const xCoverLeft = Math.max(0, xLeft - 2);
+  const maxAllowedExit = Math.max(4, rTopCollar - 4);
+  const rExit = Math.min(Math.max(0, exitRadius), maxAllowedExit);
+  const xc = xLeft + rExit;
 
-  const commands = [
-    "M 0 0",
-    `L ${fmt(svgWidth)} 0`,
-    `L ${fmt(svgWidth)} ${fmt(safeGap)}`,
-    `L ${fmt(xB)} ${fmt(safeGap)}`,
-    `A ${fmt(rTopCollar)} ${fmt(rTopCollar)} 0 0 0 ${fmt(xInfCollar)} ${fmt(yInfCollar)}`,
-    `A ${fmt(rBottomCollar)} ${fmt(rBottomCollar)} 0 0 1 ${fmt(xA)} ${fmt(yCollarBottom)}`,
-    `L ${fmt(safeGap + safeExitRadius)} ${fmt(yCollarBottom)}`,
-  ];
-
-  if (safeExitRadius > 0) {
-    commands.push(
-      `A ${fmt(safeExitRadius)} ${fmt(safeExitRadius)} 0 0 0 ${fmt(safeGap)} ${fmt(yCollarBottom + safeExitRadius)}`,
-    );
+  if (xc >= xB || rExit <= 0) {
+    return {
+      svgWidth: 0,
+      svgHeight: 0,
+      transitionWidth: biArc.transitionWidth,
+      d: "",
+    };
   }
 
-  commands.push(`L 0 ${fmt(yCollarBottom + safeExitRadius)}`, "Z");
+  const svgWidth = Math.ceil(xB) + 2;
+
+  // Regime 1: A concordância de saída ocorre no trecho horizontal plano (xc <= xA)
+  if (xc <= xA) {
+    const yc = yCollarBottom + rExit;
+    const svgHeight = Math.ceil(yc) + 2;
+
+    const commands = [
+      `M ${fmt(xCoverLeft)} 0`,
+      `L ${fmt(svgWidth)} 0`,
+      `L ${fmt(svgWidth)} ${fmt(safeGap)}`,
+      `L ${fmt(xB)} ${fmt(safeGap)}`,
+      `A ${fmt(rTopCollar)} ${fmt(rTopCollar)} 0 0 0 ${fmt(xInfCollar)} ${fmt(yInfCollar)}`,
+      `A ${fmt(rBottomCollar)} ${fmt(rBottomCollar)} 0 0 1 ${fmt(xA)} ${fmt(yCollarBottom)}`,
+      `L ${fmt(xc)} ${fmt(yCollarBottom)}`,
+      `A ${fmt(rExit)} ${fmt(rExit)} 0 0 0 ${fmt(xLeft)} ${fmt(yc)}`,
+      `L ${fmt(xCoverLeft)} ${fmt(yc)}`,
+      "Z",
+    ];
+
+    return {
+      svgWidth,
+      svgHeight,
+      transitionWidth: biArc.transitionWidth,
+      d: commands.join(" "),
+    };
+  }
+
+  // Regime 2: Tangência externa G1 direta entre o arco inferior C2 e o fillet convexo da borda da imagem
+  const dx2 = xc - xA;
+  const rSum2 = rBottomCollar + rExit;
+  if (dx2 < rSum2) {
+    const xTan2 = xA + (rBottomCollar / rSum2) * dx2;
+    if (xTan2 <= xInfCollar + 0.001) {
+      const dy2 = Math.sqrt(Math.max(0, rSum2 * rSum2 - dx2 * dx2));
+      const yc = yC2 + dy2;
+      const yTan2 = yC2 + (rBottomCollar / rSum2) * dy2;
+      const svgHeight = Math.ceil(yc) + 2;
+
+      const commands = [
+        `M ${fmt(xCoverLeft)} 0`,
+        `L ${fmt(svgWidth)} 0`,
+        `L ${fmt(svgWidth)} ${fmt(safeGap)}`,
+        `L ${fmt(xB)} ${fmt(safeGap)}`,
+        `A ${fmt(rTopCollar)} ${fmt(rTopCollar)} 0 0 0 ${fmt(xInfCollar)} ${fmt(yInfCollar)}`,
+        `A ${fmt(rBottomCollar)} ${fmt(rBottomCollar)} 0 0 1 ${fmt(xTan2)} ${fmt(yTan2)}`,
+        `A ${fmt(rExit)} ${fmt(rExit)} 0 0 0 ${fmt(xLeft)} ${fmt(yc)}`,
+        `L ${fmt(xCoverLeft)} ${fmt(yc)}`,
+        "Z",
+      ];
+
+      return {
+        svgWidth,
+        svgHeight,
+        transitionWidth: biArc.transitionWidth,
+        d: commands.join(" "),
+      };
+    }
+  }
+
+  // Regime 3: Tangência interna G1 direta entre o arco superior C1 e o fillet convexo da borda da imagem
+  const dx1 = xB - xc;
+  const rDiff1 = rTopCollar - rExit;
+  if (dx1 >= 0 && dx1 < rDiff1) {
+    const dy1 = Math.sqrt(Math.max(0, rDiff1 * rDiff1 - dx1 * dx1));
+    const yc = biArc.radiusTop - dy1;
+    const xTan1 = xB - (rTopCollar / rDiff1) * dx1;
+    const yTan1 = biArc.radiusTop - (rTopCollar / rDiff1) * dy1;
+    const svgHeight = Math.ceil(yc) + 2;
+
+    const commands = [
+      `M ${fmt(xCoverLeft)} 0`,
+      `L ${fmt(svgWidth)} 0`,
+      `L ${fmt(svgWidth)} ${fmt(safeGap)}`,
+      `L ${fmt(xB)} ${fmt(safeGap)}`,
+      `A ${fmt(rTopCollar)} ${fmt(rTopCollar)} 0 0 0 ${fmt(xTan1)} ${fmt(yTan1)}`,
+      `A ${fmt(rExit)} ${fmt(rExit)} 0 0 0 ${fmt(xLeft)} ${fmt(yc)}`,
+      `L ${fmt(xCoverLeft)} ${fmt(yc)}`,
+      "Z",
+    ];
+
+    return {
+      svgWidth,
+      svgHeight,
+      transitionWidth: biArc.transitionWidth,
+      d: commands.join(" "),
+    };
+  }
 
   return {
-    svgWidth,
-    svgHeight,
+    svgWidth: 0,
+    svgHeight: 0,
     transitionWidth: biArc.transitionWidth,
-    d: commands.join(" "),
+    d: "",
   };
 }
