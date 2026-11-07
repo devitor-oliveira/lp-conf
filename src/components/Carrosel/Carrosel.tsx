@@ -192,7 +192,7 @@ export function Carrosel({
         </svg>
       )}
 
-      <div className={styles["content-wrapper"]}>
+      <div className={styles["content-wrapper"]} id="hero-slide-panel">
         <motion.div
           key={`content-${currentSlide?.id}`}
           variants={contentContainerVariants}
@@ -249,7 +249,7 @@ export function Carrosel({
         currentIndex={currentIndex}
         onSelectSlide={handleSelectSlide}
         onActiveChange={setIsDockActive}
-        progress={progress}
+        panelId="hero-slide-panel"
       />
     </motion.div>
   );

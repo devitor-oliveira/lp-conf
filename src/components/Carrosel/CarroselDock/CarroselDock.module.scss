@@ -12,19 +12,37 @@ $bar-height: 16px;
   cursor: pointer;
   user-select: none;
 
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -8px 0 0 0;
+    pointer-events: auto;
+
+    @media (pointer: coarse) {
+      inset: -14px 0 0 0;
+    }
+  }
+
   .dockItems {
     position: relative;
+    z-index: 2;
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 20%;
-    min-width: 220px;
-    padding: 0.35rem 1rem 0.4rem 1rem;
+    width: 30%;
+    min-width: min(100%, 480px);
+    padding-block: 0.35rem 0.45rem;
+    padding-inline: clamp(0.45rem, 1.8vw, 1.15rem);
     background: var(--color-background);
     border-radius: 20px 20px 0 0;
     overflow: hidden;
-    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 -2px 12px rgb(0 0 0 / 0.05);
+
+    @supports (font-size: 1cqi) {
+      padding-inline: clamp(0.4rem, 2.5cqi, 1.15rem);
+    }
   }
 
   .dockHandle {
@@ -33,28 +51,47 @@ $bar-height: 16px;
     align-items: center;
     width: 100%;
     height: 10px;
+    flex-shrink: 0;
 
     .handleBar {
       width: 36px;
       height: 3px;
       border-radius: 999px;
       background-color: var(--color-border);
-      transition: background-color 0.2s ease, width 0.2s ease;
+      transition:
+        background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.2s ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: background-color 0.15s ease;
+      }
     }
   }
 
   &:hover .dockHandle .handleBar {
-    background-color: var(--color-accent);
+    background-color: var(--dock-active-color, var(--color-accent));
     width: 44px;
   }
 
-  .buttonsRow {
+  &.dockLocked .dockHandle .handleBar {
+    background-color: var(--dock-active-color, var(--color-accent));
+    width: 48px;
+    height: 4px;
+  }
+
+  .pillsRow {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.25rem;
+    flex-wrap: nowrap;
+    gap: clamp(0.35rem, 1.8vw, 1.5rem);
     width: 100%;
-    padding-top: 0.35rem;
+    padding-top: 0.4rem;
+
+    @supports (font-size: 1cqi) {
+      gap: clamp(0.35rem, 6.5cqi - 0.95rem, 1.5rem);
+    }
   }
 
   .left-bar,
@@ -62,54 +99,119 @@ $bar-height: 16px;
     position: relative;
     z-index: 1;
     height: $bar-height;
-    flex: 1;
+    flex: 1 1 0%;
+    min-width: 0;
     background: var(--color-background);
     border-radius: var(--radius-max) var(--radius-max) 0 0;
   }
 
-  button {
+  .pill {
+    appearance: none;
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
-    font-weight: 700;
-    width: 2.35rem;
-    height: 2.35rem;
-    padding: 0;
-    background-color: var(--color-background);
+    flex: 0 1 auto;
+    min-width: 0;
+    min-block-size: 32px;
+    padding-block: 0.35rem;
+    padding-inline: clamp(0.45rem, 1.8vw, 0.9rem);
+    border-radius: 9999px;
+    border: 1.5px solid var(--color-border);
+    background-color: transparent;
     color: var(--color-text);
-    border: 2px solid var(--color-border);
-    border-radius: 50%;
+    font-size: clamp(0.66rem, 2vw, 0.8rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
     cursor: pointer;
     box-shadow: none;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    transition:
+      background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.2s ease;
 
-    &:hover {
-      border-color: var(--color-accent);
-      color: var(--color-accent);
+    @supports (font-size: 1cqi) {
+      padding-inline: clamp(0.42rem, 2.3cqi, 0.9rem);
+      font-size: clamp(0.66rem, 2.85cqi, 0.8rem);
     }
 
-    &.activeButton {
-      background-color: var(--color-accent);
-      color: var(--color-background);
-      border-color: transparent;
+    @media (prefers-reduced-motion: reduce) {
+      transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
     }
-  }
 
-  .progressRing {
-    position: absolute;
-    inset: -4px;
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
-    transform: rotate(-90deg);
-    pointer-events: none;
-    color: var(--color-accent);
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border);
+      outline-offset: 2px;
+    }
+
+    &:hover:not(.activePill) {
+      background-color: color-mix(in oklab, var(--color-text) 8%, transparent);
+    }
+
+    &:active:not(.activePill) {
+      background-color: color-mix(in oklab, var(--color-text) 14%, transparent);
+    }
+
+    &.activePill {
+      background-color: var(--pill-active-bg);
+      border-color: var(--pill-active-bg);
+      color: var(--pill-active-text);
+      font-weight: 700;
+      box-shadow: 0 2px 10px color-mix(in oklab, var(--pill-active-bg) 28%, transparent);
+
+      &:hover {
+        filter: brightness(1.08);
+        box-shadow: 0 3px 14px color-mix(in oklab, var(--pill-active-bg) 36%, transparent);
+      }
+
+      &:active {
+        filter: brightness(0.96);
+      }
+
+      &:focus-visible {
+        outline-color: var(--pill-active-bg);
+      }
+    }
+
+    @media (forced-colors: active) {
+      border-color: ButtonBorder;
+      background-color: Canvas;
+      color: ButtonText;
+
+      &.activePill {
+        background-color: Highlight;
+        border-color: Highlight;
+        color: HighlightText;
+      }
+    }
   }
 }
 
 @media (max-width: 900px) {
   .dock .dockItems {
-    width: 60%;
+    width: 70%;
+  }
+}
+
+@media (max-width: 640px) {
+  .dock {
+    .dockItems {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .left-bar,
+    .right-bar {
+      display: none;
+    }
   }
 }
