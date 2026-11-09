@@ -2,6 +2,7 @@ import { MotionConfig } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/Header/Header";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { About } from "@/sections/About";
 import { Hero } from "@/sections/Hero";
 import styles from "./App.module.scss";
 
@@ -48,6 +49,7 @@ export function App() {
           activeColor={activeSurfaceColor}
           onSlideColorChange={setActiveSurfaceColor}
         />
+        <About />
       </main>
       <footer className={styles.footer} />
     </MotionConfig>
