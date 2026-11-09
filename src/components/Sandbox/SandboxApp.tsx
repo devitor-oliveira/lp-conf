@@ -7,7 +7,7 @@ import {
   type NotchCornerPlacement,
   solveBiArc,
 } from "@/components/Notch";
-import { type ThemeMode, ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeToggle, useTheme } from "@/components/ThemeToggle";
 import styles from "./SandboxApp.module.scss";
 
 interface SurfaceOption {
@@ -55,12 +55,7 @@ type StageCssVars = CSSProperties & {
 };
 
 export function SandboxApp() {
-  const [theme, setTheme] = useState<ThemeMode>(() =>
-    typeof document !== "undefined" &&
-    document.documentElement.getAttribute("data-theme") === "dark"
-      ? "dark"
-      : "light",
-  );
+  const { theme, setTheme } = useTheme();
   const [selectedSurface, setSelectedSurface] = useState<SurfaceOption>(
     SURFACE_OPTIONS[0] ?? {
       id: "rubi",

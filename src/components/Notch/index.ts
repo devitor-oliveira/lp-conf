@@ -22,6 +22,7 @@ export { NotchContainer } from "./NotchContainer";
 export {
   buildNotchCssVars,
   calculateConcentricNotch,
+  calculateConcentricSmoothHeight,
   compactCssVars,
   type NotchCssParams,
   parseNumericPx,

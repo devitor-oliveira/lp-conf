@@ -3,6 +3,7 @@ import { generateBiArcWingSvgPath } from "./biarc";
 import {
   buildNotchCssVars,
   calculateConcentricNotch,
+  calculateConcentricSmoothHeight,
   parseNumericPx,
   toCssLength,
 } from "./notchUtils";
@@ -21,7 +22,7 @@ export function useNotch(options: UseNotchOptions) {
     radius,
     filletSize,
     angle,
-    smoothHeight = 44,
+    smoothHeight,
     concentric,
     offsetX,
     offsetY,
@@ -42,8 +43,11 @@ export function useNotch(options: UseNotchOptions) {
   const resolvedFillet = toCssLength(filletSize) ?? concentricValues?.filletSize;
 
   const numericOffsetY = Math.max(0, parseNumericPx(offsetY, 0));
-  const numericRadiusBottom = parseNumericPx(radius, 80);
-  const safeSmoothHeight = Math.max(0, smoothHeight);
+  const numericRadiusBottom = parseNumericPx(resolvedRadius, 80);
+  const safeSmoothHeight =
+    smoothHeight !== undefined && Number.isFinite(smoothHeight)
+      ? Math.max(0, smoothHeight)
+      : calculateConcentricSmoothHeight(concentric, 44);
 
   // Memoiza cálculos trigonométricos pesados de bi-arco (G1 tangency)
   const wings = useMemo(() => {

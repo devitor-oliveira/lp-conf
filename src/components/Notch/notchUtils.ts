@@ -99,6 +99,23 @@ export function parseNumericPx(value: number | string | undefined, fallback: num
 }
 
 /**
+ * Deriva a queda vertical líquida (smoothHeight) a partir da configuração concêntrica:
+ * H = 2 * innerRadius + paddingOuter
+ */
+export function calculateConcentricSmoothHeight(
+  config: ConcentricNotchConfig | undefined,
+  fallback: number = 44,
+): number {
+  if (!config) return Math.max(0, fallback);
+  const inner = parseNumericPx(config.innerRadius, Number.NaN);
+  const outer = parseNumericPx(config.paddingOuter, Number.NaN);
+  if (Number.isFinite(inner) && Number.isFinite(outer)) {
+    return Math.max(0, inner * 2 + outer);
+  }
+  return Math.max(0, fallback);
+}
+
+/**
  * Cálculo analítico de concordância concêntrica para cantos.
  */
 export function calculateConcentricNotch(

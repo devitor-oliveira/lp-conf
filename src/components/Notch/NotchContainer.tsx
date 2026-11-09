@@ -18,7 +18,7 @@ export function NotchContainer<T extends ElementType = "div">({
   radius,
   filletSize,
   angle,
-  smoothHeight = 44,
+  smoothHeight,
   concentric,
   offsetX,
   offsetY,

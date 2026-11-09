@@ -1,42 +1,8 @@
 import { Moon, Sun } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ConcentricNotchConfig, NotchContainer } from "@/components/Notch";
 import styles from "./ThemeToggle.module.scss";
-
-export type ThemeMode = "light" | "dark";
-
-const THEME_STORAGE_KEY = "lp-conf-theme";
-
-function resolveInitialTheme(): ThemeMode {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
-  try {
-    const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-    if (saved === "dark" || saved === "light") {
-      return saved;
-    }
-  } catch {
-    // Ignora restrições de armazenamento privado
-  }
-
-  if (document.documentElement.getAttribute("data-theme") === "dark") {
-    return "dark";
-  }
-
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
-function applyDocumentTheme(theme: ThemeMode): void {
-  if (typeof document === "undefined") return;
-  if (theme === "dark") {
-    document.documentElement.setAttribute("data-theme", "dark");
-  } else {
-    document.documentElement.removeAttribute("data-theme");
-  }
-}
+import { type ThemeMode, useTheme } from "./useTheme";
 
 export interface ThemeToggleProps {
   /** Classe CSS adicional opcional para o container entalhado */
@@ -67,44 +33,8 @@ export function ThemeToggle({
   dropShadow,
   onThemeChange,
 }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<ThemeMode>(resolveInitialTheme);
-
-  useEffect(() => {
-    applyDocumentTheme(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleSystemChange = (event: MediaQueryListEvent) => {
-      try {
-        const hasManualPreference = window.localStorage.getItem(THEME_STORAGE_KEY);
-        if (hasManualPreference === "dark" || hasManualPreference === "light") {
-          return;
-        }
-      } catch {
-        // Segue preferência do sistema caso localStorage esteja indisponível
-      }
-      const nextTheme: ThemeMode = event.matches ? "dark" : "light";
-      setTheme(nextTheme);
-      onThemeChange?.(nextTheme);
-    };
-
-    mediaQuery.addEventListener("change", handleSystemChange);
-    return () => mediaQuery.removeEventListener("change", handleSystemChange);
-  }, [onThemeChange]);
-
-  const handleToggle = () => {
-    const nextTheme: ThemeMode = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-    try {
-      window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-    } catch {
-      // Ignora erros de quota/privacidade no localStorage
-    }
-    onThemeChange?.(nextTheme);
-  };
+  const { theme, toggleTheme } = useTheme(onThemeChange);
+  const shouldReduceMotion = useReducedMotion();
 
   const resolvedConcentric: ConcentricNotchConfig | undefined =
     radius !== undefined || filletSize !== undefined
@@ -117,12 +47,12 @@ export function ThemeToggle({
 
   const composedClassName = [styles.toggleContainer, className].filter(Boolean).join(" ");
   const actionLabel = theme === "light" ? "Alternar para tema escuro" : "Alternar para tema claro";
+  const isDark = theme === "dark";
 
   return (
     <NotchContainer
-      as="aside"
+      as="div"
       placement="top-right"
-      aria-label="Preferência de tema"
       className={composedClassName}
       radius={radius}
       filletSize={filletSize}
@@ -134,25 +64,28 @@ export function ThemeToggle({
       <motion.button
         type="button"
         className={styles.toggleButton}
-        onClick={handleToggle}
-        whileHover={{ scale: 1.07 }}
-        whileTap={{ scale: 0.92 }}
-        transition={{ type: "spring", stiffness: 450, damping: 20 }}
+        onClick={toggleTheme}
+        whileHover={shouldReduceMotion ? undefined : { scale: 1.07 }}
+        whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}
+        transition={
+          shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 450, damping: 20 }
+        }
         aria-label={actionLabel}
+        aria-pressed={isDark}
         title={actionLabel}
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={theme}
             className={styles.iconWrapper}
-            initial={{ rotate: -90, scale: 0.35, opacity: 0 }}
-            animate={{ rotate: 0, scale: 1, opacity: 1 }}
-            exit={{ rotate: 90, scale: 0.35, opacity: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 340,
-              damping: 20,
-            }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { rotate: -90, scale: 0.35, opacity: 0 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { rotate: 0, scale: 1, opacity: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { rotate: 90, scale: 0.35, opacity: 0 }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0.15 }
+                : { type: "spring", stiffness: 340, damping: 20 }
+            }
           >
             {theme === "light" ? (
               <Moon size={20} aria-hidden="true" />
