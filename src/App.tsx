@@ -4,6 +4,7 @@ import { Header } from "@/components/Header/Header";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { About } from "@/sections/About";
 import { Hero } from "@/sections/Hero";
+import { Menu } from "@/sections/Menu";
 import styles from "./App.module.scss";
 
 export function App() {
@@ -50,6 +51,7 @@ export function App() {
           onSlideColorChange={setActiveSurfaceColor}
         />
         <About />
+        <Menu />
       </main>
       <footer className={styles.footer} />
     </MotionConfig>
