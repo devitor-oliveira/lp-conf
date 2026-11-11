@@ -4,29 +4,27 @@
   position: relative;
   width: 100%;
   padding-block: clamp(3.5rem, 7vw, 6rem);
-  background-color: var(--color-background);
+  background-color: var(--color-surface);
   color: var(--color-text);
+  border-top: 1.5px solid var(--color-border);
+  border-bottom: 1.5px solid var(--color-border);
+  transition: background-color 0.4s ease;
 }
 
 .container {
   @include mixins.container;
 }
 
-.grid {
+.bentoShowcase {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 4.5fr 7.5fr;
   gap: var(--bento-gap, 16px);
-  width: 100%;
+  align-items: stretch;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-@media (max-width: 1040px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 680px) {
-  .grid {
+@media (max-width: 960px) {
+  .bentoShowcase {
     grid-template-columns: 1fr;
   }
 }

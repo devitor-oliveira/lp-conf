@@ -1,0 +1,226 @@
+.stageContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 580px;
+  border-radius: var(--radius-large, 24px);
+  border: 1.5px solid var(--color-border);
+  overflow: hidden;
+  background-color: var(--color-background);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.08);
+}
+
+.heroImageLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.scrimOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgb(0 0 0 / 0.94) 0%,
+    rgb(0 0 0 / 0.72) 42%,
+    rgb(0 0 0 / 0.25) 75%,
+    transparent 100%
+  );
+}
+
+.contentCard {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3.5vw, 2.75rem);
+  color: #ffffff;
+}
+
+.badgesRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sensoryBadge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background-color: rgb(255 255 255 / 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  border: 1px solid rgb(255 255 255 / 0.28);
+}
+
+.portionsBadge {
+  font-size: 0.75rem;
+  font-weight: 750;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background-color: var(--color-accent);
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffd166;
+}
+
+.title {
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  font-weight: 850;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #ffffff;
+}
+
+.description {
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  line-height: 1.65;
+  color: #e5e7eb;
+  margin: 0;
+  max-width: 680px;
+}
+
+.footerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-top: 1.25rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgb(255 255 255 / 0.2);
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+
+  .priceLabel {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9ca3af;
+  }
+
+  .priceValue {
+    font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.78rem 1.4rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  border-radius: 14px;
+  background-color: #ffffff;
+  color: #111827;
+  border: 1.5px solid #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-accent);
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.15);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 680px) {
+  .stageContainer {
+    min-height: 500px;
+  }
+
+  .contentCard {
+    padding: 1.25rem;
+  }
+
+  .footerActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .primaryBtn {
+    width: 100%;
+  }
+}
+
+@media (forced-colors: active) {
+  .stageContainer,
+  .sensoryBadge,
+  .portionsBadge,
+  .primaryBtn {
+    border-color: ButtonBorder;
+
+    &:hover {
+      border-color: Highlight;
+    }
+  }
+}

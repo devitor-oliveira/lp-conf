@@ -1,4 +1,10 @@
-export { MenuCard, type MenuCardProps } from "./MenuCard";
+export {
+  MenuFeaturedStage,
+  type MenuFeaturedStageProps,
+} from "./MenuFeaturedStage";
 export { MenuHeader } from "./MenuHeader";
-export { MenuTabs, type MenuTabsProps } from "./MenuTabs";
+export {
+  MenuSelectorRail,
+  type MenuSelectorRailProps,
+} from "./MenuSelectorRail";
 export { WhatsAppButton, type WhatsAppButtonProps } from "./WhatsAppButton";
