@@ -91,6 +91,16 @@
     background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.whatsappCta {
+  position: absolute;
+  right: var(--canvas-edge-inset);
+  bottom: 1.5rem;
+  z-index: 25;
+  transition:
+    --notch-bg 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .canvas {
   flex: 0 0 var(--canvas-width, 45%);
   max-width: var(--canvas-width, 45%);
