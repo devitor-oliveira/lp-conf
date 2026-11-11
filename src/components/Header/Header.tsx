@@ -1,9 +1,16 @@
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { NotchContainer } from "@/components/Notch";
+import { ThemeToggleButton } from "@/components/ThemeToggle";
 import styles from "./Header.module.scss";
 
 export interface HeaderProps {
-  /** Cor de fundo dinâmica da pílula de navegação */
+  /** Cor de fundo dinâmica da pílula de navegação ancorada no Hero */
   navBgColor?: string;
+  /** Define se o Header deve assumir o modo flutuante centralizado (opcional; se omitido, monitora a saída do header ancorado automaticamente) */
+  isFloating?: boolean;
+  /** Callback disparado quando o estado flutuante se altera */
+  onFloatingChange?: (isFloating: boolean) => void;
   /** Classe CSS adicional opcional */
   className?: string;
   /** Margem/offset de referência em relação à seção adjacente (padrão: token --layout-stage-margin) */
@@ -16,34 +23,125 @@ export interface HeaderProps {
   paddingInner?: number | string;
 }
 
+const NAV_LINKS = [
+  { href: "#inicio", label: "Inicio" },
+  { href: "#conheca", label: "Conheça" },
+  { href: "#encomende", label: "Encomende Já" },
+] as const;
+
 export function Header({
   navBgColor = "var(--color-surface-default)",
+  isFloating: isFloatingProp,
+  onFloatingChange,
   className,
   offset = "var(--layout-stage-margin)",
   innerRadius = 32,
   paddingOuter = 12,
   paddingInner = "var(--layout-stage-margin)",
 }: HeaderProps) {
-  const composedClassName = [styles.header, className].filter(Boolean).join(" ");
+  // Reduced motion temporariamente desligado a pedido do usuário
+  const shouldReduceMotion = false;
+  const dockedRef = useRef<HTMLElement>(null);
+  const [internalFloating, setInternalFloating] = useState(false);
+
+  const activeFloating = isFloatingProp !== undefined ? isFloatingProp : internalFloating;
+
+  useEffect(() => {
+    if (isFloatingProp !== undefined) return;
+
+    const target = dockedRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        // O header flutuante surge assim que o header ancorado sair pelo topo da tela
+        const isPastTop = !entry.isIntersecting && entry.boundingClientRect.bottom <= 0;
+        setInternalFloating(isPastTop);
+        onFloatingChange?.(isPastTop);
+      },
+      {
+        threshold: 0,
+      },
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [isFloatingProp, onFloatingChange]);
+
+  const composedDockedClassName = [styles.header, className].filter(Boolean).join(" ");
 
   return (
-    <NotchContainer
-      as="header"
-      placement="top-left"
-      className={composedClassName}
-      concentric={{
-        innerRadius,
-        paddingOuter,
-        paddingInner,
-      }}
-      offsetX={offset}
-      offsetY={offset}
-    >
-      <nav aria-label="Navegação principal" style={{ backgroundColor: navBgColor }}>
-        <a href="#inicio">Inicio</a>
-        <a href="#conheca">Conheça</a>
-        <a href="#encomende">Encomende Já</a>
-      </nav>
-    </NotchContainer>
+    <>
+      <NotchContainer
+        ref={dockedRef}
+        as="header"
+        placement="top-left"
+        className={composedDockedClassName}
+        concentric={{
+          innerRadius,
+          paddingOuter,
+          paddingInner,
+        }}
+        offsetX={offset}
+        offsetY={offset}
+        aria-hidden={activeFloating || undefined}
+      >
+        <nav aria-label="Navegação principal" style={{ backgroundColor: navBgColor }}>
+          {NAV_LINKS.map((link) => (
+            <a key={link.href} href={link.href} tabIndex={activeFloating ? -1 : undefined}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </NotchContainer>
+
+      <AnimatePresence>
+        {activeFloating && (
+          <motion.header
+            key="floating-header"
+            className={styles.floatingHeader}
+            initial={
+              shouldReduceMotion
+                ? { opacity: 0, x: "-50%", y: 0 }
+                : { y: -140, opacity: 0, x: "-50%" }
+            }
+            animate={{ y: 0, opacity: 1, x: "-50%" }}
+            exit={
+              shouldReduceMotion
+                ? { opacity: 0, x: "-50%", y: 0 }
+                : { y: -140, opacity: 0, x: "-50%" }
+            }
+            transition={
+              shouldReduceMotion
+                ? { duration: 0.2 }
+                : { type: "spring", stiffness: 280, damping: 24, mass: 0.8 }
+            }
+          >
+            <nav aria-label="Navegação principal" className={styles.floatingNav}>
+              {NAV_LINKS.map((link) => (
+                <a key={link.href} href={link.href}>
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            <motion.div
+              className={styles.floatingToggleWrapper}
+              initial={shouldReduceMotion ? { opacity: 0, scale: 1 } : { scale: 0, opacity: 0 }}
+              animate={shouldReduceMotion ? { opacity: 1, scale: 1 } : { scale: 1, opacity: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0, scale: 1 } : { scale: 0, opacity: 0 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0.15 }
+                  : { type: "spring", stiffness: 360, damping: 22 }
+              }
+            >
+              <ThemeToggleButton className={styles.floatingToggleButton} />
+            </motion.div>
+          </motion.header>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

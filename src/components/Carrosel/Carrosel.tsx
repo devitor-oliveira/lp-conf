@@ -13,6 +13,7 @@ import { generateConcentricCollarSvgPath, NotchContainer } from "@/components/No
 import { SLIDES } from "@/utils/mockdata";
 import CarroselDock from "./CarroselDock/CarroselDock";
 import CarroselProgress from "./CarroselProgress/CarroselProgress";
+import WhatsAppCTA from "./WhatsAppCTA";
 
 const AUTO_PLAY_DURATION = 8000;
 const PROGRESS_SEGMENT_WIDTH = 38;
@@ -30,12 +31,16 @@ export interface CarroselProps {
   /** Angulação máxima da rampa suave do entalhe central e do recorte concêntrico da imagem (padrão: 48) */
   notchAngle?: number | string;
   onSlideColorChange?: (colorToken: string) => void;
+  phone?: string;
+  whatsappMessage?: string;
 }
 
 export function Carrosel({
   activeSurfaceColor,
   notchAngle = PROGRESS_NOTCH_ANGLE,
   onSlideColorChange,
+  phone,
+  whatsappMessage,
 }: CarroselProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [wrapperWidth, setWrapperWidth] = useState(1440);
@@ -228,6 +233,9 @@ export function Carrosel({
           onMouseMove={handleCanvasMouseMove}
           onMouseLeave={handleCanvasMouseLeave}
         >
+          {/* Colarinho secundário concêntrico da foto no canto superior direito:
+              Anel 2 sobre o ThemeToggle creme (40px). 
+              Equação de fechamento da caixa de 80px: offset(12px) + raio(52px) + filete(16px) = 80px. */}
           <NotchContainer
             as="div"
             placement="top-right"
@@ -258,6 +266,13 @@ export function Carrosel({
               </AnimatePresence>
             </motion.div>
           </div>
+
+          <WhatsAppCTA
+            color={collarColor}
+            phone={phone}
+            message={whatsappMessage}
+            className={styles.whatsappCta}
+          />
         </motion.div>
       </div>
 

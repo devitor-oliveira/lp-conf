@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export type ThemeMode = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "lp-conf-theme";
+export const THEME_CHANGE_EVENT = "lp-conf-theme-change";
 export const THEME_META_LIGHT = "#F8F4E8";
 export const THEME_META_DARK = "#003049";
 
@@ -106,7 +107,7 @@ export function useTheme(onThemeChange?: (theme: ThemeMode) => void): UseThemeRe
     return () => mediaQuery.removeEventListener("change", handleSystemChange);
   }, []);
 
-  // Escuta sincronização multi-abas em tempo real (storage event)
+  // Escuta sincronização multi-abas (storage event) e intra-aba (custom event) em tempo real
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -119,8 +120,20 @@ export function useTheme(onThemeChange?: (theme: ThemeMode) => void): UseThemeRe
       }
     };
 
+    const handleCustomChange = (event: Event) => {
+      const customEvent = event as CustomEvent<ThemeMode>;
+      const newTheme = customEvent.detail;
+      if (newTheme === "dark" || newTheme === "light") {
+        setThemeState(newTheme);
+      }
+    };
+
     window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+    window.addEventListener(THEME_CHANGE_EVENT, handleCustomChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener(THEME_CHANGE_EVENT, handleCustomChange);
+    };
   }, []);
 
   const setTheme = useCallback((nextTheme: ThemeMode) => {
@@ -129,6 +142,9 @@ export function useTheme(onThemeChange?: (theme: ThemeMode) => void): UseThemeRe
       window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
     } catch {
       // Ignora restrições de quota/armazenamento
+    }
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent<ThemeMode>(THEME_CHANGE_EVENT, { detail: nextTheme }));
     }
     onThemeChangeRef.current?.(nextTheme);
   }, []);
