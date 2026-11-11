@@ -233,6 +233,9 @@ export function Carrosel({
           onMouseMove={handleCanvasMouseMove}
           onMouseLeave={handleCanvasMouseLeave}
         >
+          {/* Colarinho secundário concêntrico da foto no canto superior direito:
+              Anel 2 sobre o ThemeToggle creme (40px). 
+              Equação de fechamento da caixa de 80px: offset(12px) + raio(52px) + filete(16px) = 80px. */}
           <NotchContainer
             as="div"
             placement="top-right"
