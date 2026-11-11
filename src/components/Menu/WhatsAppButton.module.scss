@@ -1,0 +1,59 @@
+.whatsappBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 14px;
+  background-color: #25d366;
+  color: #0b2b16;
+  border: 1.5px solid #1fa350;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    background-color: #22bf5b;
+    box-shadow: 0 4px 14px rgb(37 211 102 / 0.3);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #25d366;
+    outline-offset: 2px;
+  }
+
+  &.whatsappTriggered {
+    background-color: #128c7e;
+    color: #ffffff;
+    border-color: #0d6359;
+  }
+}
+
+.contentRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (forced-colors: active) {
+  .whatsappBtn {
+    border-color: ButtonBorder;
+
+    &:hover {
+      border-color: Highlight;
+    }
+  }
+}

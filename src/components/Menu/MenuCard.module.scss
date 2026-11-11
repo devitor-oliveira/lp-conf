@@ -1,0 +1,200 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-large, 24px);
+  overflow: hidden;
+  transition:
+    border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.08);
+    transform: translateY(-2px);
+  }
+
+  &:focus-within {
+    border-color: var(--color-accent);
+  }
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--color-background);
+  border-bottom: 1.5px solid var(--color-border);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.sensoryBadgeList {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  z-index: 2;
+}
+
+.sensoryBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background-color: rgb(0 0 0 / 0.68);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 1px solid rgb(255 255 255 / 0.2);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.cardHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cardSubtitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+}
+
+.cardPortionsBadge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background-color: var(--color-background);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+}
+
+.cardTitle {
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  font-weight: 750;
+  line-height: 1.25;
+  margin: 0 0 0.5rem 0;
+  color: var(--color-text);
+}
+
+.cardDescription {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+  margin: 0 0 1.25rem 0;
+  flex: 1;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: 0.75rem;
+  margin-bottom: 1rem;
+  border-top: 1px dashed var(--color-border);
+  border-bottom: 1px dashed var(--color-border);
+
+  .priceLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  .priceValue {
+    font-size: 1.25rem;
+    font-weight: 850;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+}
+
+.actionsContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  margin-top: auto;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 14px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: 1.5px solid var(--color-border);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.15s ease;
+
+  &:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@media (forced-colors: active) {
+  .card,
+  .primaryBtn {
+    border-color: ButtonBorder;
+
+    &:hover {
+      border-color: Highlight;
+    }
+  }
+
+  .cardPortionsBadge,
+  .sensoryBadge {
+    border-color: ButtonBorder;
+    color: ButtonText;
+  }
+}
