@@ -1,9 +1,10 @@
 import { Clock, Gift, Leaf, Sparkles } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import styles from "./About.module.scss";
 
 export function About() {
-  const shouldReduceMotion = useReducedMotion();
+  // Reduced motion temporariamente desligado a pedido do usuário
+  const shouldReduceMotion = false;
 
   const containerVariants = {
     hidden: { opacity: 0 },
