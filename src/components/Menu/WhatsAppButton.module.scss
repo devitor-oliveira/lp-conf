@@ -40,6 +40,11 @@
     color: #ffffff;
     border-color: #0d6359;
   }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.95;
+  }
 }
 
 .contentRow {

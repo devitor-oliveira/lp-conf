@@ -1,12 +1,25 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { MenuCard, MenuHeader, MenuTabs } from "@/components/Menu";
-import { MENU_CATEGORIES, MENU_ITEMS, type MenuCategoryId } from "@/utils/mockdata";
+import { MENU_CATEGORIES, MENU_ITEMS, type MenuCategoryId, type MenuItem } from "@/utils/mockdata";
 import styles from "./Menu.module.scss";
 
 export function Menu() {
   const [activeCategory, setActiveCategory] = useState<MenuCategoryId>("todos");
   const shouldReduceMotion = useReducedMotion();
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<MenuCategoryId, number> = {
+      todos: MENU_ITEMS.length,
+      autorais: 0,
+      presentes: 0,
+      eventos: 0,
+    };
+    for (const item of MENU_ITEMS) {
+      counts[item.category] = (counts[item.category] ?? 0) + 1;
+    }
+    return counts;
+  }, []);
 
   const filteredItems = useMemo(() => {
     if (activeCategory === "todos") {
@@ -15,8 +28,11 @@ export function Menu() {
     return MENU_ITEMS.filter((item) => item.category === activeCategory);
   }, [activeCategory]);
 
-  const handleScrollToOrder = () => {
-    const target = document.querySelector("#encomende");
+  const handleScrollToOrder = (tier: MenuItem["targetServiceTier"]) => {
+    const tierTarget = document.querySelector(`#encomende-${tier}`);
+    const genericTarget = document.querySelector("#encomende");
+    const target = tierTarget ?? genericTarget;
+
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
@@ -33,6 +49,7 @@ export function Menu() {
         <MenuTabs
           categories={MENU_CATEGORIES}
           activeCategory={activeCategory}
+          counts={categoryCounts}
           onSelectCategory={setActiveCategory}
         />
 

@@ -5,11 +5,18 @@ import styles from "./MenuTabs.module.scss";
 export interface MenuTabsProps {
   readonly categories: readonly MenuCategory[];
   readonly activeCategory: MenuCategoryId;
+  readonly counts: Record<MenuCategoryId, number>;
   readonly onSelectCategory: (categoryId: MenuCategoryId) => void;
 }
 
-export function MenuTabs({ categories, activeCategory, onSelectCategory }: MenuTabsProps) {
+export function MenuTabs({ categories, activeCategory, counts, onSelectCategory }: MenuTabsProps) {
   const tabRefs = useRef<Map<MenuCategoryId, HTMLButtonElement>>(new Map());
+
+  const handleSelectTab = (id: MenuCategoryId) => {
+    onSelectCategory(id);
+    const targetElement = tabRefs.current.get(id);
+    targetElement?.scrollIntoView({ inline: "nearest", behavior: "smooth" });
+  };
 
   const handleKeyDownTab = (e: KeyboardEvent<HTMLButtonElement>, currentId: MenuCategoryId) => {
     const currentIndex = categories.findIndex((cat) => cat.id === currentId);
@@ -34,14 +41,22 @@ export function MenuTabs({ categories, activeCategory, onSelectCategory }: MenuT
         onSelectCategory(nextCategory.id);
         const targetElement = tabRefs.current.get(nextCategory.id);
         targetElement?.focus();
+        targetElement?.scrollIntoView({ inline: "nearest", behavior: "smooth" });
       }
     }
   };
 
   return (
-    <div role="tablist" aria-label="Filtrar cardápio por categoria" className={styles.tablist}>
+    <div
+      role="tablist"
+      aria-orientation="horizontal"
+      aria-label="Filtrar cardápio por categoria"
+      className={styles.tablist}
+    >
       {categories.map((cat) => {
         const isSelected = activeCategory === cat.id;
+        const count = counts[cat.id];
+
         return (
           <button
             key={cat.id}
@@ -59,10 +74,13 @@ export function MenuTabs({ categories, activeCategory, onSelectCategory }: MenuT
             aria-controls={`panel-${cat.id}`}
             tabIndex={isSelected ? 0 : -1}
             className={`${styles.tab} ${isSelected ? styles.active : ""}`}
-            onClick={() => onSelectCategory(cat.id)}
+            onClick={() => handleSelectTab(cat.id)}
             onKeyDown={(e) => handleKeyDownTab(e, cat.id)}
           >
             <span>{cat.label}</span>
+            <span className={styles.countBadge} aria-hidden="true">
+              {count}
+            </span>
           </button>
         );
       })}

@@ -37,9 +37,16 @@ export function WhatsAppButton({ presetMessage, productName, className }: WhatsA
   return (
     <button
       type="button"
+      disabled={isTriggered}
+      aria-busy={isTriggered}
+      aria-live="polite"
       className={`${styles.whatsappBtn} ${isTriggered ? styles.whatsappTriggered : ""} ${className ?? ""}`}
       onClick={handleClick}
-      aria-label={`Pedir ${productName} via WhatsApp`}
+      aria-label={
+        isTriggered
+          ? `Abrindo WhatsApp para pedir ${productName}...`
+          : `Pedir ${productName} via WhatsApp`
+      }
     >
       <AnimatePresence mode="wait" initial={false}>
         {isTriggered ? (

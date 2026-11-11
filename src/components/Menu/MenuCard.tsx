@@ -1,15 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import { memo } from "react";
 import type { MenuItem } from "@/utils/mockdata";
 import styles from "./MenuCard.module.scss";
 import { WhatsAppButton } from "./WhatsAppButton";
 
 export interface MenuCardProps {
   readonly item: MenuItem;
-  readonly onOrderClick: () => void;
+  readonly onOrderClick: (tier: MenuItem["targetServiceTier"]) => void;
 }
 
-export function MenuCard({ item, onOrderClick }: MenuCardProps) {
+export const MenuCard = memo(function MenuCard({ item, onOrderClick }: MenuCardProps) {
   const shouldReduceMotion = useReducedMotion();
 
   const cardVariants = {
@@ -66,7 +67,11 @@ export function MenuCard({ item, onOrderClick }: MenuCardProps) {
         </div>
 
         <div className={styles.actionsContainer}>
-          <button type="button" className={styles.primaryBtn} onClick={onOrderClick}>
+          <button
+            type="button"
+            className={styles.primaryBtn}
+            onClick={() => onOrderClick(item.targetServiceTier)}
+          >
             <span>Encomendar / Ver Opções</span>
             <ArrowRight size={16} aria-hidden="true" />
           </button>
@@ -76,4 +81,4 @@ export function MenuCard({ item, onOrderClick }: MenuCardProps) {
       </div>
     </motion.article>
   );
-}
+});
