@@ -12,14 +12,26 @@
   @include mixins.container;
 }
 
+.headerWrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+}
+
 .header {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 740px;
-  margin-inline: auto;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  align-items: flex-start;
+  text-align: left;
+  max-width: 680px;
 
   .eyebrow {
     display: inline-flex;
@@ -50,162 +62,42 @@
   }
 }
 
-.bentoGrid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: var(--bento-gap, 16px);
+.expandBtnWrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    padding-top: 0;
+    align-self: flex-start;
+  }
 }
 
-.card {
+.triptychGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: var(--bento-gap, 20px);
+  align-items: stretch;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+.gridItem {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(1.5rem, 2.8vw, 2.25rem);
-  background-color: var(--color-surface);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-large, 24px);
-  transition:
-    border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  height: 100%;
 
-  &:hover {
-    border-color: var(--color-accent);
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.06);
-  }
-
-  .cardHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.75rem;
-  }
-
-  .iconBadge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background-color: var(--color-background);
-    color: var(--color-accent);
-    border: 1px solid var(--color-border);
-  }
-
-  .tag {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.65rem;
-    border-radius: 999px;
-    background-color: var(--color-background);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-  }
-
-  .cardBody {
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-  }
-
-  .cardTitle {
-    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
-    font-weight: 750;
-    line-height: 1.25;
-    margin: 0;
-    color: var(--color-text);
-  }
-
-  .cardDescription {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--color-muted);
-    margin: 0;
+  > article {
+    flex: 1;
   }
 }
 
-/* Distribuição das áreas do Bento Grid */
-.cardHero {
-  grid-column: span 7;
-}
-
-.cardMetric {
-  grid-column: span 5;
-
-  .metricNumber {
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-    margin-bottom: 0.25rem;
-
-    .number {
-      font-size: clamp(2.75rem, 5vw, 4rem);
-      font-weight: 850;
-      line-height: 1;
-      color: var(--color-accent);
-      letter-spacing: -0.03em;
-    }
-
-    .unit {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--color-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-  }
-}
-
-.cardSensory {
-  grid-column: span 5;
-}
-
-.cardGifting {
-  grid-column: span 7;
-}
-
-/* Responsividade fluida */
-@media (max-width: 960px) {
-  .cardHero,
-  .cardMetric,
-  .cardSensory,
-  .cardGifting {
-    grid-column: span 6;
-  }
-}
-
-@media (max-width: 680px) {
-  .bentoGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .cardHero,
-  .cardMetric,
-  .cardSensory,
-  .cardGifting {
-    grid-column: 1 / -1;
-  }
-
-  .header {
-    text-align: left;
-    align-items: flex-start;
-  }
-}
-
-@media (forced-colors: active) {
-  .card {
-    border-color: ButtonBorder;
-
-    &:hover {
-      border-color: Highlight;
-    }
-  }
-
-  .iconBadge,
-  .tag {
-    border-color: ButtonBorder;
-    color: ButtonText;
+.gridItemFeatured {
+  @media (max-width: 1024px) {
+    order: -1;
   }
 }

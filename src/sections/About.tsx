@@ -1,10 +1,10 @@
-import { Clock, Gift, Leaf, Sparkles } from "lucide-react";
-import { motion } from "motion/react";
+import { Clock, Gift, Sparkles } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { MenuExpandButton, ServiceTierCard } from "../components/About";
 import styles from "./About.module.scss";
 
 export function About() {
-  // Reduced motion temporariamente desligado a pedido do usuário
-  const shouldReduceMotion = false;
+  const shouldReduceMotion = useReducedMotion();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -29,115 +29,114 @@ export function About() {
     },
   };
 
+  const handleScrollToSection = (targetId: string) => {
+    const element = document.querySelector(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+  };
+
   return (
     <section id="conheca" className={styles.about} aria-labelledby="about-title">
       <div className={styles.container}>
-        <motion.header
-          className={styles.header}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={containerVariants}
-        >
-          <motion.p className={styles.eyebrow} variants={itemVariants}>
-            <Sparkles size={14} aria-hidden="true" />
-            <span>O Atelier &amp; Filosofia</span>
-          </motion.p>
-          <motion.h2 id="about-title" className={styles.title} variants={itemVariants}>
-            Onde a confeitaria clássica encontra a botânica brasileira
-          </motion.h2>
-          <motion.p className={styles.lead} variants={itemVariants}>
-            Cada doce é concebido como uma joia sensorial efémera: açúcares calibrados, notas
-            florais da nossa flora e o mais puro cacau de pequenos produtores agroecológicos.
-          </motion.p>
-        </motion.header>
+        <div className={styles.headerWrapper}>
+          <motion.header
+            className={styles.header}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={containerVariants}
+          >
+            <motion.p className={styles.eyebrow} variants={itemVariants}>
+              <Sparkles size={14} aria-hidden="true" />
+              <span>O Atelier &amp; Filosofia</span>
+            </motion.p>
+            <motion.h2 id="about-title" className={styles.title} variants={itemVariants}>
+              Onde a confeitaria clássica encontra a botânica brasileira
+            </motion.h2>
+            <motion.p className={styles.lead} variants={itemVariants}>
+              Cada doce é concebido como uma joia sensorial efêmera: açúcares calibrados, notas
+              florais da nossa flora e o mais puro cacau de pequenos produtores agroecológicos.
+            </motion.p>
+          </motion.header>
+
+          <div className={styles.expandBtnWrapper}>
+            <MenuExpandButton />
+          </div>
+        </div>
 
         <motion.div
-          className={styles.bentoGrid}
+          className={styles.triptychGrid}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={containerVariants}
         >
-          {/* Card 1: Destaque Amplo (Cacau & Origem) */}
-          <motion.article className={`${styles.card} ${styles.cardHero}`} variants={itemVariants}>
-            <div className={styles.cardHeader}>
-              <span className={styles.iconBadge} aria-hidden="true">
-                <Leaf size={20} />
-              </span>
-              <span className={styles.tag}>100% Rastreável</span>
-            </div>
-            <div className={styles.cardBody}>
-              <h3 className={styles.cardTitle}>Cacau de Origem &amp; Ingredientes Vivos</h3>
-              <p className={styles.cardDescription}>
-                Trabalhamos exclusivamente com chocolate monovarietal de comunidades ribeirinhas e
-                frutas frescas colhidas no ápice de maturação. Sem conservantes, corantes sintéticos
-                ou gorduras hidrogenadas.
-              </p>
-            </div>
-          </motion.article>
+          {/* Card 1: Pronta-Entrega & Delivery Local (Esquerda) */}
+          <motion.div className={styles.gridItem} variants={itemVariants}>
+            <ServiceTierCard
+              id="delivery"
+              icon={<Clock size={20} />}
+              badgeText="80 caixas / dia"
+              regionTag="São Paulo & Região"
+              title="Pronta-Entrega & Delivery Local"
+              leadDescription="Para desejos imediatos e celebrações espontâneas. Receba seus doces preferidos com agilidade no conforto da sua casa ou escritório."
+              keyHighlights={[
+                "Entregas em 30 a 60 minutos na Grande SP",
+                "Lote diário limitado a 80 caixas para frescor absoluto",
+                "Pedidos diretos via WhatsApp e canais parceiros",
+              ]}
+              timeframeInfo="Disponível de Terça a Domingo • 11h às 20h"
+              actionLabel="Pedir Delivery Imediato"
+              href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20consultar%20a%20pronta-entrega%20do%20dia"
+            />
+          </motion.div>
 
-          {/* Card 2: Métrica Editorial (Produção Diária) */}
-          <motion.article className={`${styles.card} ${styles.cardMetric}`} variants={itemVariants}>
-            <div className={styles.cardHeader}>
-              <span className={styles.iconBadge} aria-hidden="true">
-                <Clock size={20} />
-              </span>
-              <span className={styles.tag}>Frescor Absoluto</span>
-            </div>
-            <div className={styles.cardBody}>
-              <div className={styles.metricNumber}>
-                <span className={styles.number}>80</span>
-                <span className={styles.unit}>caixas/dia</span>
-              </div>
-              <h3 className={styles.cardTitle}>Lotes Numerados Diários</h3>
-              <p className={styles.cardDescription}>
-                Produção deliberadamente reduzida para assegurar que cada doce chegue à sua mesa com
-                textura aveludada e acabamento impecável, do pedido individual ao lote especial.
-              </p>
-            </div>
-          </motion.article>
-
-          {/* Card 3: Equilíbrio Sensorial */}
-          <motion.article
-            className={`${styles.card} ${styles.cardSensory}`}
+          {/* Card 2: Grandes Encomendas & Eventos (CENTRO - CARRO-CHEFE) */}
+          <motion.div
+            className={`${styles.gridItem} ${styles.gridItemFeatured}`}
             variants={itemVariants}
           >
-            <div className={styles.cardHeader}>
-              <span className={styles.iconBadge} aria-hidden="true">
-                <Sparkles size={20} />
-              </span>
-              <span className={styles.tag}>Equilíbrio Sensorial</span>
-            </div>
-            <div className={styles.cardBody}>
-              <h3 className={styles.cardTitle}>Menos Doçura, Mais Expressão</h3>
-              <p className={styles.cardDescription}>
-                Reduzimos o dulçor tradicional em até 40% para exaltar a acidez viva das frutas, o
-                tostado das castanhas e as nuances terrosas do cacau brasileiro.
-              </p>
-            </div>
-          </motion.article>
+            <ServiceTierCard
+              id="encomendas"
+              isPrimaryFeatured={true}
+              icon={<Sparkles size={22} />}
+              badgeText="Lotes de 30 a 500+ un."
+              regionTag="Casamentos & Eventos"
+              title="Grandes Encomendas & Celebrações"
+              leadDescription="O coração do Atelier. Produzimos mesas de doces inesquecíveis para casamentos, recepções corporativas e celebrações marcantes com consultoria do chef."
+              keyHighlights={[
+                "Consultoria de terroir botânico e harmonização sob medida",
+                "Degustação guiada prévia para noivos e anfitriões",
+                "Acompanhamento técnico de montagem e suporte cerimonial",
+              ]}
+              timeframeInfo="Antecedência recomendada: 7 a 20 dias"
+              actionLabel="Solicitar Orçamento de Evento"
+              onActionClick={() => handleScrollToSection("#encomende")}
+            />
+          </motion.div>
 
-          {/* Card 4: Versatilidade de Serviços (Unidades, Encomendas & Delivery) */}
-          <motion.article
-            className={`${styles.card} ${styles.cardGifting}`}
-            variants={itemVariants}
-          >
-            <div className={styles.cardHeader}>
-              <span className={styles.iconBadge} aria-hidden="true">
-                <Gift size={20} />
-              </span>
-              <span className={styles.tag}>Unidades • Encomendas • Delivery</span>
-            </div>
-            <div className={styles.cardBody}>
-              <h3 className={styles.cardTitle}>Do Mimo Individual a Grandes Celebrações</h3>
-              <p className={styles.cardDescription}>
-                Pronta-entrega nos aplicativos de delivery, solicitações ágeis por WhatsApp para
-                unidades avulsas, e caixas rígidas exclusivas para presentes corporativos,
-                casamentos e eventos marcantes.
-              </p>
-            </div>
-          </motion.article>
+          {/* Card 3: Caixas para Presente & Envios Nacionais (Direita) */}
+          <motion.div className={styles.gridItem} variants={itemVariants}>
+            <ServiceTierCard
+              id="presentes"
+              icon={<Gift size={20} />}
+              badgeText="Entrega em Todo o Brasil"
+              regionTag="Envio Climatizado"
+              title="Caixas para Presente & Envios Nacionais"
+              leadDescription="Envie afeto e sofisticação para qualquer estado brasileiro. Caixas rígidas com berço anti-impacto preparadas para viagens de longa distância."
+              keyHighlights={[
+                "Caixas rígidas de design exclusivo com fecho magnético",
+                "Controle térmico vegetal que preserva textura e brilho",
+                "Lacre em cera botânica e rastreamento ponta a ponta",
+              ]}
+              timeframeInfo="Envio expresso para todas as capitais e cidades"
+              actionLabel="Enviar Presente pelo Brasil"
+              onActionClick={() => handleScrollToSection("#cardapio")}
+            />
+          </motion.div>
         </motion.div>
       </div>
     </section>

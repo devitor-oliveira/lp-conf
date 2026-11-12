@@ -1,0 +1,83 @@
+.expandButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.86rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.04);
+  transition:
+    background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.08);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+.iconBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background-color: var(--color-background);
+  color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.label {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-muted);
+  transition: color 0.2s ease;
+}
+
+.expandButton:hover .arrow {
+  color: var(--color-accent);
+}
+
+@media (forced-colors: active) {
+  .expandButton,
+  .iconBadge {
+    border-color: ButtonBorder;
+
+    &:hover {
+      border-color: Highlight;
+    }
+  }
+
+  .arrow {
+    color: ButtonText;
+  }
+}
