@@ -5,7 +5,7 @@
   --progress-segment-width: 38px;
   --progress-segment-gap: 6px;
   --progress-pad-x: 10px;
-  --canvas-edge-inset: 12px;
+  --canvas-edge-inset: 8px;
 
   position: relative;
   flex: 1;
@@ -82,8 +82,8 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 80px;
-  height: 80px;
+  width: 76px;
+  height: 76px;
   z-index: 10;
   pointer-events: none;
   transition:
@@ -114,7 +114,7 @@
   .canvasFrame {
     position: absolute;
     inset: var(--canvas-edge-inset) var(--canvas-edge-inset) 1.5rem var(--canvas-edge-inset);
-    border-radius: 32px var(--radius-large) var(--radius-large) var(--radius-large);
+    border-radius: 32px var(--radius-large) 0 var(--radius-large);
     overflow: hidden;
     z-index: 1;
   }

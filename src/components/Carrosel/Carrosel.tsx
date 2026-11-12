@@ -22,9 +22,9 @@ const PROGRESS_PAD_X = 10;
 const PROGRESS_NOTCH_HEIGHT = 32;
 const PROGRESS_NOTCH_ANGLE = 48;
 const PROGRESS_RADIUS_BOTTOM = 32;
-const CANVAS_EDGE_INSET = 12;
-const IMAGE_EXIT_RADIUS = 32;
 const CONTENT_SPLIT_OFFSET_RATIO = 0.05; // 55% (.content) - 50% (centro do Hero)
+const CANVAS_EDGE_INSET = 8;
+const IMAGE_EXIT_RADIUS = 32;
 
 export interface CarroselProps {
   activeSurfaceColor?: string;
@@ -233,14 +233,13 @@ export function Carrosel({
           onMouseMove={handleCanvasMouseMove}
           onMouseLeave={handleCanvasMouseLeave}
         >
-          {/* Colarinho secundário concêntrico da foto no canto superior direito:
-              Anel 2 sobre o ThemeToggle creme (40px). 
-              Equação de fechamento da caixa de 80px: offset(12px) + raio(52px) + filete(16px) = 80px. */}
+          {/* Anel 2 Concêntrico: Envolve o ThemeToggle creme com folga de 8px da Hero.
+              Equação de fechamento da caixa de 76px: offset(8px) + raio(48px) + filete(20px) = 76px. */}
           <NotchContainer
             as="div"
             placement="top-right"
-            radius={52}
-            filletSize={16}
+            radius={48}
+            filletSize={20}
             offsetX={CANVAS_EDGE_INSET}
             offsetY={CANVAS_EDGE_INSET}
             color={collarColor}
