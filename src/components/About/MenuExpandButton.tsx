@@ -1,4 +1,4 @@
-import { ArrowRight, UtensilsCrossed } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import styles from "./MenuExpandButton.module.scss";
@@ -25,9 +25,6 @@ export function MenuExpandButton() {
       onClick={handleScrollToMenu}
       aria-label="Navegar até o Cardápio e Coleções"
     >
-      <span className={styles.iconBadge} aria-hidden="true">
-        <UtensilsCrossed size={14} />
-      </span>
       <motion.span
         className={styles.label}
         animate={{
@@ -36,15 +33,9 @@ export function MenuExpandButton() {
       >
         {isHovered ? "Explorar Coleções" : "Ver Cardápio"}
       </motion.span>
-      <motion.span
-        className={styles.arrow}
-        animate={{
-          x: isHovered && !shouldReduceMotion ? 2 : 0,
-          opacity: isHovered ? 1 : 0.65,
-        }}
-      >
-        <ArrowRight size={14} aria-hidden="true" />
-      </motion.span>
+      <span className={styles.arrowBadge} aria-hidden="true">
+        <ArrowRight size={14} />
+      </span>
     </button>
   );
 }
