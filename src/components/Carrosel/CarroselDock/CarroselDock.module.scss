@@ -1,3 +1,5 @@
+@use "../../../styles/mixins" as mixins;
+
 $bar-height: 16px;
 
 .dock {
@@ -272,22 +274,14 @@ $bar-height: 16px;
   }
 }
 
-@media (max-width: 900px) {
+@include mixins.respond-to("mobile") {
   .dock .dockItems {
-    width: 70%;
+    width: 100%;
+    min-width: 0;
   }
-}
 
-@media (max-width: 640px) {
-  .dock {
-    .dockItems {
-      width: 100%;
-      min-width: 0;
-    }
-
-    .left-bar,
-    .right-bar {
-      display: none;
-    }
+  .left-bar,
+  .right-bar {
+    display: none;
   }
 }

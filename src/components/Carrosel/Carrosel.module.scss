@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as mixins;
+
 .wrapper {
   --content-width: 55%;
   --canvas-width: 45%;

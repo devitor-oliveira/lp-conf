@@ -1,4 +1,4 @@
-@use "@/styles/mixins" as mixins;
+@use "../../styles/mixins" as mixins;
 
 .sandboxWrapper {
   --stage-margin: 8px;
@@ -425,7 +425,8 @@
 }
 
 // Demonstração de responsividade via variáveis CSS fluidas em telas menores
-@media (max-width: 820px) {
+
+@include mixins.respond-to("mobile") {
   .sandboxWrapper {
     --pill-height: 44px;
     --pill-radius: 22px;

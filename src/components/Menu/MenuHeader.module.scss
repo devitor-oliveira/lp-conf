@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as mixins;
+
 .header {
   display: flex;
   flex-direction: column;
@@ -8,15 +10,8 @@
   margin-bottom: clamp(2rem, 4vw, 3rem);
 
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    @include mixins.eyebrow;
     margin-bottom: 0.75rem;
-    color: var(--color-accent);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
   }
 
   .title {
@@ -36,7 +31,7 @@
   }
 }
 
-@media (max-width: 680px) {
+@include mixins.respond-to("mobile") {
   .header {
     text-align: left;
     align-items: flex-start;

@@ -22,15 +22,8 @@
   margin-bottom: clamp(2.5rem, 5vw, 4rem);
 
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    @include mixins.eyebrow;
     margin-bottom: 0.75rem;
-    color: var(--color-accent);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
   }
 
   .title {
@@ -167,16 +160,7 @@
 }
 
 /* Responsividade fluida */
-@media (max-width: 960px) {
-  .cardHero,
-  .cardMetric,
-  .cardSensory,
-  .cardGifting {
-    grid-column: span 6;
-  }
-}
-
-@media (max-width: 680px) {
+@include mixins.respond-to("mobile") {
   .bentoGrid {
     grid-template-columns: 1fr;
   }
