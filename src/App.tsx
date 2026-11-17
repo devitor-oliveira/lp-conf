@@ -8,10 +8,6 @@ import { Menu } from "@/sections/Menu";
 import styles from "./App.module.scss";
 
 export function App() {
-  const [_activeTextColor, _setActiveTextColor] = useState<string>("var(--color-text-slide-1)");
-  void _activeTextColor;
-  void _setActiveTextColor;
-
   const [activeSurfaceColor, setActiveSurfaceColor] = useState<string>(
     "var(--color-surface-slide-1)",
   );
@@ -41,7 +37,7 @@ export function App() {
   const headerNavBg = isHeroInView ? activeSurfaceColor : "var(--color-surface-default)";
 
   return (
-    <MotionConfig>
+    <MotionConfig reducedMotion="never">
       <Header navBgColor={headerNavBg} />
       <ThemeToggle />
       <main className={styles.main} id="conteudo" tabIndex={-1}>
