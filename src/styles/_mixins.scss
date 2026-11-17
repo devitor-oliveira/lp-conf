@@ -20,6 +20,11 @@ $breakpoints: (
   margin-inline: auto;
 }
 
+@mixin container-large {
+  width: min(var(--container-width-large), calc(100% - (var(--space-4) * 2)));
+  margin-inline: auto;
+}
+
 @mixin focus-ring($color: var(--color-accent), $offset: 4px) {
   &:focus-visible {
     outline: 2px solid $color;
