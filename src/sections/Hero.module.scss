@@ -5,9 +5,15 @@
   display: flex;
   margin: var(--layout-stage-margin);
   width: calc(100% - (var(--layout-stage-margin) * 2));
-  height: calc(90vh - (var(--layout-stage-margin) * 2));
+  height: calc(90vh - (var(--layout-stage-margin) * 2)); // Fallback
   border-radius: var(--radius-max) var(--radius-max) 0 0;
   background-color: var(--color-surface);
   overflow: hidden;
   transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@supports (height: 90dvh) {
+  .hero {
+    height: calc(90dvh - (var(--layout-stage-margin) * 2));
+  }
 }
