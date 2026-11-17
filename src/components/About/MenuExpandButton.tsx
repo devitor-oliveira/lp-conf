@@ -1,41 +1,29 @@
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { motion } from "motion/react";
+import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./MenuExpandButton.module.scss";
 
 export function MenuExpandButton() {
-  const [isHovered, setIsHovered] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
-
   const handleScrollToMenu = () => {
-    const target = document.querySelector("#cardapio");
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    scrollToSection("#cardapio", { fallbackToBottom: true });
   };
 
   return (
     <button
       type="button"
       className={styles.expandButton}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocus={() => setIsHovered(true)}
-      onBlur={() => setIsHovered(false)}
       onClick={handleScrollToMenu}
       aria-label="Navegar até o Cardápio e Coleções"
     >
+      <span className={styles.label}>Explorar Cardápio</span>
       <motion.span
-        className={styles.label}
-        animate={{
-          width: isHovered && !shouldReduceMotion ? "auto" : "max-content",
-        }}
+        className={styles.arrowBadge}
+        aria-hidden="true"
+        whileHover={{ x: 2 }}
+        whileTap={{ scale: 0.95 }}
       >
-        {isHovered ? "Explorar Coleções" : "Ver Cardápio"}
-      </motion.span>
-      <span className={styles.arrowBadge} aria-hidden="true">
         <ArrowRight size={14} />
-      </span>
+      </motion.span>
     </button>
   );
 }

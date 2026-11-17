@@ -1,41 +1,45 @@
+@use "@/styles/mixins";
+
 .arrowBadge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-pill);
   background-color: var(--color-text);
   color: var(--color-background);
   flex-shrink: 0;
-  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--duration-fast, 150ms)
+    var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .expandButton {
+  @include mixins.button-base;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.45rem 0.55rem 0.45rem 1.25rem;
+  gap: var(--space-3, 0.75rem);
+  padding: var(--space-2, 0.45rem) var(--space-2, 0.55rem) var(--space-2, 0.45rem)
+    var(--space-5, 1.25rem);
   font-size: 0.88rem;
   font-weight: 650;
   letter-spacing: -0.01em;
-  border-radius: 999px;
-  border: 1px solid rgba(31, 41, 55, 0.2);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border, rgba(31, 41, 55, 0.2));
   background-color: transparent;
   color: var(--color-text);
   cursor: pointer;
-  outline: none;
   text-decoration: none;
   white-space: nowrap;
   transition:
-    background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.15s ease,
-    box-shadow 0.2s ease;
+    background-color var(--duration-fast, 150ms) var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1)),
+    border-color var(--duration-fast, 150ms) var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 150ms ease,
+    box-shadow var(--duration-fast, 150ms) ease;
 
   &:hover {
     border-color: var(--color-text);
-    background-color: rgba(31, 41, 55, 0.04);
+    background-color: var(--color-surface-hover, rgba(31, 41, 55, 0.04));
     transform: translateY(-1px);
 
     .arrowBadge {
@@ -47,10 +51,7 @@
     transform: scale(0.98);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--color-text);
-    outline-offset: 3px;
-  }
+  @include mixins.focus-ring;
 }
 
 .label {
