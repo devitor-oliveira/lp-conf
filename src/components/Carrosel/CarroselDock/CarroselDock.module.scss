@@ -11,14 +11,13 @@ $bar-height: 16px;
   display: flex;
   align-items: flex-end;
   justify-content: space-evenly;
-  cursor: pointer;
   user-select: none;
 
   &::before {
     content: "";
     position: absolute;
     inset: -8px 0 0 0;
-    pointer-events: auto;
+    pointer-events: none;
 
     @media (pointer: coarse) {
       inset: -14px 0 0 0;
@@ -181,6 +180,7 @@ $bar-height: 16px;
     min-width: 0;
     background: var(--color-background);
     border-radius: var(--radius-max) var(--radius-max) 0 0;
+    pointer-events: none;
   }
 
   .pill {

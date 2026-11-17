@@ -6,13 +6,15 @@ import {
   useSpring,
 } from "motion/react";
 import type React from "react";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import styles from "@/components/Carrosel/Carrosel.module.scss";
 import { generateConcentricCollarSvgPath, NotchContainer } from "@/components/Notch";
 import { SLIDES } from "@/utils/mockdata";
+import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import CarroselDock from "./CarroselDock/CarroselDock";
 import CarroselProgress from "./CarroselProgress/CarroselProgress";
+import { HeroHighlights } from "./HeroHighlights/HeroHighlights";
 import WhatsAppCTA from "./WhatsAppCTA";
 
 const AUTO_PLAY_DURATION = 8000;
@@ -25,6 +27,10 @@ const PROGRESS_RADIUS_BOTTOM = 32;
 const CONTENT_SPLIT_OFFSET_RATIO = 0.05; // 55% (.content) - 50% (centro do Hero)
 const CANVAS_EDGE_INSET = 8;
 const IMAGE_EXIT_RADIUS = 32;
+
+type ContentCssVars = CSSProperties & {
+  "--slide-text": string;
+};
 
 export interface CarroselProps {
   activeSurfaceColor?: string;
@@ -142,6 +148,10 @@ export function Carrosel({
   const collarColor =
     activeSurfaceColor ?? currentSlide?.surfaceColorToken ?? "var(--color-surface-slide-1)";
 
+  const contentStyle: ContentCssVars = {
+    "--slide-text": currentSlide?.textColorToken ?? "var(--color-text)",
+  };
+
   const flatWidth =
     SLIDES.length * PROGRESS_SEGMENT_WIDTH +
     Math.max(0, SLIDES.length - 1) * PROGRESS_SEGMENT_GAP +
@@ -209,21 +219,25 @@ export function Carrosel({
           initial="hidden"
           animate="visible"
           className={styles.content}
+          style={contentStyle}
         >
           <motion.h1 id="hero-title" variants={contentItemVariants}>
             {currentSlide?.title}
           </motion.h1>
           <motion.p variants={contentItemVariants}>{currentSlide?.description}</motion.p>
           <motion.div variants={contentItemVariants} className={styles.ctaWrapper}>
-            <motion.button
-              type="button"
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: "spring", stiffness: 450, damping: 22 }}
-              aria-label="Fazer pedido pelo WhatsApp"
+            <a
+              className={styles.ctaButton}
+              href={buildWhatsAppUrl(phone, whatsappMessage)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Pedir doces pelo WhatsApp (abre em nova aba)"
             >
               Pedir pelo WhatsApp
-            </motion.button>
+            </a>
+          </motion.div>
+          <motion.div variants={contentItemVariants}>
+            <HeroHighlights highlights={currentSlide?.highlights ?? []} />
           </motion.div>
         </motion.div>
 

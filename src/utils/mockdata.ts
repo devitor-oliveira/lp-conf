@@ -1,6 +1,7 @@
 import YellowHeroIMG from "@/assets/doce-amarelo.png";
 import GreenHeroIMG from "@/assets/doce-verde.png";
 import RedHeroIMG from "@/assets/doce-vermelho.png";
+import type { HeroHighlight } from "@/components/Carrosel/HeroHighlights/HeroHighlights";
 
 export interface Slide {
   id: number;
@@ -8,6 +9,7 @@ export interface Slide {
   name: string;
   title: string;
   description: string;
+  highlights: readonly HeroHighlight[];
   image: string;
   alt?: string;
   CTAColorToken?: string;
@@ -20,8 +22,14 @@ export const SLIDES: Slide[] = [
     id: 1,
     number: "01",
     name: "Cacau & Cereja",
-    title: "Display title 01",
-    description: "Doces artesanais produzidos com dedicação e ingredientes selecionados.",
+    title: "Artesanal de verdade.",
+    description:
+      "Artesanal de verdade. Cada peça é feita à mão, com ingredientes selecionados e tempo para o detalhe. Um doce pensado para quem valoriza o processo tanto quanto o sabor.",
+    highlights: [
+      { id: "01-hand", icon: "hand", label: "Feito à mão" },
+      { id: "01-layers", icon: "layers", label: "Pequeno lote" },
+      { id: "01-leaf", icon: "leaf", label: "Ingredientes selecionados" },
+    ],
     image: RedHeroIMG,
     alt: "Doce artesanal vermelho especial",
     surfaceColorToken: "var(--color-surface-slide-1)",
@@ -31,8 +39,14 @@ export const SLIDES: Slide[] = [
     id: 2,
     number: "02",
     name: "Cítrico Imperial",
-    title: "Display title 02",
-    description: "Sabor cítrico especial em edição exclusiva da nossa confeitaria.",
+    title: "Presentes que ficam.",
+    description:
+      "Presentes que ficam. Caixas e edições especiais para celebrar encontros e ocasiões. Você escolhe os sabores e nós cuidamos da apresentação.",
+    highlights: [
+      { id: "02-gift", icon: "gift", label: "Pronto para presentear" },
+      { id: "02-package", icon: "package", label: "Embalagem cuidada" },
+      { id: "02-sparkles", icon: "sparkles", label: "Para ocasiões especiais" },
+    ],
     image: YellowHeroIMG,
     alt: "Doce artesanal amarelo especial",
     surfaceColorToken: "var(--color-surface-slide-2)",
@@ -42,8 +56,14 @@ export const SLIDES: Slide[] = [
     id: 3,
     number: "03",
     name: "Pistache Silvestre",
-    title: "Display title 03",
-    description: "Texturas delicadas e acabamento refinado para ocasiões memoráveis.",
+    title: "Do ateliê para sua mesa.",
+    description:
+      "Do ateliê para sua mesa. Escolha os sabores e encomende pelo WhatsApp, com atendimento direto. Da seleção dos ingredientes ao acabamento, tudo passa pelo nosso ateliê.",
+    highlights: [
+      { id: "03-message", icon: "message", label: "Atendimento direto" },
+      { id: "03-sliders", icon: "sliders", label: "Sabores à escolha" },
+      { id: "03-store", icon: "store", label: "Feito no ateliê" },
+    ],
     image: GreenHeroIMG,
     alt: "Seleção especial de confeitaria",
     surfaceColorToken: "var(--color-surface-slide-3)",

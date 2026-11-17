@@ -1,0 +1,27 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  padding: var(--space-0-5) var(--space-1-5);
+  border: 1px solid color-mix(in oklab, currentColor 35%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, currentColor 8%, transparent);
+  color: inherit;
+  font-size: var(--font-caption);
+  line-height: 1.4;
+
+  svg {
+    width: var(--space-1-5);
+    height: var(--space-1-5);
+    flex: none;
+  }
+}
