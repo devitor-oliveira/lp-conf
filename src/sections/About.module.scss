@@ -1,3 +1,5 @@
+@use "@/styles/mixins";
+
 .about {
   position: relative;
   width: 100%;
@@ -7,21 +9,20 @@
 }
 
 .container {
-  width: min(88%, 1520px);
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 2vw, 2rem);
+  @include mixins.container-large;
+  padding-inline: clamp(0.5rem, 1vw, 1.5rem);
 }
 
 .headerGrid {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: flex-start;
   gap: clamp(2rem, 5vw, 6rem);
   margin-bottom: clamp(3rem, 6vw, 4.5rem);
 
-  @media (max-width: 960px) {
+  @include mixins.respond-to("mobile") {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: var(--space-3);
   }
 }
 
@@ -30,7 +31,7 @@
   flex-direction: column;
 
   .title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: var(--font-display);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.03em;
@@ -43,20 +44,15 @@
 .philosophyColumn {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  max-width: 780px;
+  gap: var(--space-1-5, 0.75rem);
+  max-width: 48rem;
 
   .eyebrow {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-muted);
-    margin: 0;
+    @include mixins.eyebrow;
   }
 
   .lead {
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    font-size: var(--font-lead);
     line-height: 1.6;
     color: var(--color-text);
     margin: 0;
@@ -68,9 +64,9 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-top: 0.5rem;
+  padding-top: var(--space-1, 0.5rem);
 
-  @media (max-width: 960px) {
+  @include mixins.respond-to("mobile") {
     justify-content: flex-start;
     padding-top: 0;
   }
@@ -78,12 +74,14 @@
 
 .triptychGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(2rem, 4vw, 3.5rem);
-  align-items: center;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: end;
 
-  @media (max-width: 960px) {
+  @include mixins.respond-to("mobile") {
     grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: var(--space-4);
   }
 }
 
@@ -94,7 +92,7 @@
 }
 
 .gridItemFeatured {
-  @media (max-width: 960px) {
+  @include mixins.respond-to("mobile") {
     order: -1;
   }
 }

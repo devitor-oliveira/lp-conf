@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { MenuFeaturedStage, MenuHeader, MenuSelectorRail } from "@/components/Menu";
 import { MENU_CATEGORIES, MENU_ITEMS, type MenuCategoryId, type MenuItem } from "@/utils/mockdata";
+import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./Menu.module.scss";
 
 export function Menu() {
@@ -42,15 +43,15 @@ export function Menu() {
   };
 
   const handleScrollToOrder = (tier: MenuItem["targetServiceTier"]) => {
-    const tierTarget = document.querySelector(`#encomende-${tier}`);
-    const genericTarget = document.querySelector("#encomende");
-    const target = tierTarget ?? genericTarget;
+    const tierTargetSelector = `#encomende-${tier}`;
+    const genericTargetSelector = "#encomende";
 
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (document.querySelector(tierTargetSelector)) {
+      scrollToSection(tierTargetSelector);
+    } else if (document.querySelector(genericTargetSelector)) {
+      scrollToSection(genericTargetSelector);
     } else {
-      // Fallback gracioso até a seção #encomende ser implementada
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      scrollToSection(tierTargetSelector, { fallbackToBottom: true });
     }
   };
 

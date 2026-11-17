@@ -1,25 +1,13 @@
 import YellowHeroIMG from "@/assets/doce-amarelo.png";
 import GreenHeroIMG from "@/assets/doce-verde.png";
 import RedHeroIMG from "@/assets/doce-vermelho.png";
+import { scrollToSection } from "@/utils/scrollToSection";
 import { MenuExpandButton, ServiceTierCard } from "../components/About";
 import styles from "./About.module.scss";
 
 export function About() {
-  const handleScrollToSection = (targetId: string) => {
-    const element = document.querySelector(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    }
-  };
-
   return (
-    <section
-      id="conheca"
-      className={styles.about}
-      aria-labelledby="about-title"
-    >
+    <section id="conheca" className={styles.about} aria-labelledby="about-title">
       <div className={styles.container}>
         <div className={styles.headerGrid}>
           <div className={styles.titleColumn}>
@@ -31,10 +19,9 @@ export function About() {
           <div className={styles.philosophyColumn}>
             <p className={styles.eyebrow}>Nossa Filosofia</p>
             <p className={styles.lead}>
-              Cada peça é concebida como uma joia sensorial efémera: açúcares
-              calibrados, notas florais da nossa flora e o mais puro cacau de
-              pequenos produtores agroecológicos, trazendo elegância tranquila
-              ao cotidiano.
+              Cada peça é concebida como uma joia sensorial efémera: açúcares calibrados, notas
+              florais da nossa flora e o mais puro cacau de pequenos produtores agroecológicos,
+              trazendo elegância tranquila ao cotidiano.
             </p>
           </div>
 
@@ -44,7 +31,6 @@ export function About() {
         </div>
 
         <div className={styles.triptychGrid}>
-          {/* Card 1: Delivery */}
           <div className={styles.gridItem}>
             <ServiceTierCard
               id="delivery"
@@ -59,7 +45,6 @@ export function About() {
             />
           </div>
 
-          {/* Card 2: Encomendas (Destaque) */}
           <div className={`${styles.gridItem} ${styles.gridItemFeatured}`}>
             <ServiceTierCard
               id="encomendas"
@@ -71,11 +56,10 @@ export function About() {
               title="Grandes Encomendas & Celebrações"
               leadDescription="O coração do Atelier. Mesas de doces inesquecíveis para casamentos e eventos corporativos com consultoria exclusiva."
               actionLabel="Solicitar Orçamento de Evento"
-              onActionClick={() => handleScrollToSection("#encomende")}
+              onActionClick={() => scrollToSection("#encomende", { fallbackToBottom: true })}
             />
           </div>
 
-          {/* Card 3: Presentes */}
           <div className={styles.gridItem}>
             <ServiceTierCard
               id="presentes"
@@ -86,7 +70,7 @@ export function About() {
               title="Caixas para Presente"
               leadDescription="Envie afeto para qualquer estado. Embalagens rígidas com controle térmico e proteção premium."
               actionLabel="Enviar Presente pelo Brasil"
-              onActionClick={() => handleScrollToSection("#cardapio")}
+              onActionClick={() => scrollToSection("#cardapio", { fallbackToBottom: true })}
             />
           </div>
         </div>
