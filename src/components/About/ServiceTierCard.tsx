@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import type { CSSProperties, ReactNode } from "react";
 import styles from "./ServiceTierCard.module.scss";
 
 export interface ServiceTierCardProps {
@@ -7,7 +6,6 @@ export interface ServiceTierCardProps {
   readonly isPrimaryFeatured?: boolean;
   readonly image: string;
   readonly alt: string;
-  readonly height?: string | number;
   readonly overlayTheme?: "neutral" | "cacau" | "pistache";
   readonly tag: string;
   readonly title: string;
@@ -15,15 +13,19 @@ export interface ServiceTierCardProps {
   readonly actionLabel: string;
   readonly onActionClick?: () => void;
   readonly href?: string;
-  readonly children?: ReactNode;
 }
+
+const OVERLAY_THEME_CLASSES = {
+  cacau: styles.themeCacau,
+  pistache: styles.themePistache,
+  neutral: styles.themeNeutral,
+} as const;
 
 export function ServiceTierCard({
   id,
   isPrimaryFeatured = false,
   image,
   alt,
-  height,
   overlayTheme = "neutral",
   tag,
   title,
@@ -32,27 +34,18 @@ export function ServiceTierCard({
   onActionClick,
   href,
 }: ServiceTierCardProps) {
-  const cardClassName = isPrimaryFeatured ? `${styles.card} ${styles.featuredCard}` : styles.card;
+  const cardClassName = [styles.card, isPrimaryFeatured && styles.featuredCard]
+    .filter(Boolean)
+    .join(" ");
 
-  const themeClassName =
-    overlayTheme === "cacau"
-      ? styles.themeCacau
-      : overlayTheme === "pistache"
-        ? styles.themePistache
-        : styles.themeNeutral;
+  const themeClassName = OVERLAY_THEME_CLASSES[overlayTheme] ?? styles.themeNeutral;
 
-  const cardStyle: CSSProperties = {
-    height: height ?? (isPrimaryFeatured ? "520px" : "460px"),
-  };
+  const isExternal = Boolean(href?.startsWith("http"));
+  const ActionTag = href ? "a" : "button";
 
   return (
-    <article
-      id={`servico-${id}`}
-      className={cardClassName}
-      style={cardStyle}
-      aria-labelledby={`title-${id}`}
-    >
-      <img src={image} alt={alt} className={styles.cardImage} />
+    <article id={`servico-${id}`} className={cardClassName} aria-labelledby={`title-${id}`}>
+      <img src={image} alt={alt} className={styles.cardImage} loading="lazy" decoding="async" />
 
       <div className={`${styles.glassOverlay} ${themeClassName}`}>
         <div className={styles.cardHeader}>
@@ -65,22 +58,15 @@ export function ServiceTierCard({
         <div className={styles.cardBody}>
           <p className={styles.cardDescription}>{leadDescription}</p>
 
-          {href ? (
-            <a
-              href={href}
-              className={styles.cardActionBtn}
-              onClick={onActionClick}
-              {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            >
-              <span>{actionLabel}</span>
-              <ArrowRight size={16} aria-hidden="true" />
-            </a>
-          ) : (
-            <button type="button" className={styles.cardActionBtn} onClick={onActionClick}>
-              <span>{actionLabel}</span>
-              <ArrowRight size={16} aria-hidden="true" />
-            </button>
-          )}
+          <ActionTag
+            {...(href ? { href } : { type: "button" })}
+            className={styles.cardActionBtn}
+            onClick={onActionClick}
+            {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
+            <span>{actionLabel}</span>
+            <ArrowRight size={16} aria-hidden="true" />
+          </ActionTag>
         </div>
       </div>
     </article>
