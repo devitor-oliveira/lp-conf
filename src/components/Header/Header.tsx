@@ -39,8 +39,6 @@ export function Header({
   paddingOuter = 12,
   paddingInner = "var(--layout-stage-margin)",
 }: HeaderProps) {
-  // Reduced motion temporariamente desligado a pedido do usuário
-  const shouldReduceMotion = false;
   const dockedRef = useRef<HTMLElement>(null);
   const [internalFloating, setInternalFloating] = useState(false);
 
@@ -101,22 +99,10 @@ export function Header({
           <motion.header
             key="floating-header"
             className={styles.floatingHeader}
-            initial={
-              shouldReduceMotion
-                ? { opacity: 0, x: "-50%", y: 0 }
-                : { y: -140, opacity: 0, x: "-50%" }
-            }
+            initial={{ y: -140, opacity: 0, x: "-50%" }}
             animate={{ y: 0, opacity: 1, x: "-50%" }}
-            exit={
-              shouldReduceMotion
-                ? { opacity: 0, x: "-50%", y: 0 }
-                : { y: -140, opacity: 0, x: "-50%" }
-            }
-            transition={
-              shouldReduceMotion
-                ? { duration: 0.2 }
-                : { type: "spring", stiffness: 280, damping: 24, mass: 0.8 }
-            }
+            exit={{ y: -140, opacity: 0, x: "-50%" }}
+            transition={{ type: "spring", stiffness: 280, damping: 24, mass: 0.8 }}
           >
             <nav aria-label="Navegação principal" className={styles.floatingNav}>
               {NAV_LINKS.map((link) => (
@@ -128,14 +114,10 @@ export function Header({
 
             <motion.div
               className={styles.floatingToggleWrapper}
-              initial={shouldReduceMotion ? { opacity: 0, scale: 1 } : { scale: 0, opacity: 0 }}
-              animate={shouldReduceMotion ? { opacity: 1, scale: 1 } : { scale: 1, opacity: 1 }}
-              exit={shouldReduceMotion ? { opacity: 0, scale: 1 } : { scale: 0, opacity: 0 }}
-              transition={
-                shouldReduceMotion
-                  ? { duration: 0.15 }
-                  : { type: "spring", stiffness: 360, damping: 22 }
-              }
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 360, damping: 22 }}
             >
               <ThemeToggleButton className={styles.floatingToggleButton} />
             </motion.div>

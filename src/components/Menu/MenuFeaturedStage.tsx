@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { memo } from "react";
 import type { MenuItem } from "@/utils/mockdata";
 import styles from "./MenuFeaturedStage.module.scss";
@@ -14,10 +14,8 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
   item,
   onOrderClick,
 }: MenuFeaturedStageProps) {
-  const shouldReduceMotion = useReducedMotion();
-
   const transitionConfig = {
-    duration: shouldReduceMotion ? 0.1 : 0.35,
+    duration: 0.35,
     ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
   };
 
@@ -27,7 +25,7 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
         <motion.div
           key={`image-${item.id}`}
           className={styles.heroImageLayer}
-          initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 1.04 }}
+          initial={{ opacity: 0, scale: 1.04 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={transitionConfig}
@@ -42,9 +40,9 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
         <motion.div
           key={`content-${item.id}`}
           className={styles.contentCard}
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
+          exit={{ opacity: 0, y: -10 }}
           transition={transitionConfig}
         >
           <div className={styles.badgesRow}>

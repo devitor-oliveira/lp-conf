@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as mixins;
+
 .stageContainer {
   position: relative;
   display: flex;
@@ -188,7 +190,7 @@
   }
 }
 
-@media (max-width: 680px) {
+@include mixins.respond-to("mobile") {
   .stageContainer {
     min-height: 500px;
   }

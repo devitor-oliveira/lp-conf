@@ -1,49 +1,85 @@
 :root {
   color-scheme: light;
-  --color-background: #F8F4E8;
-  --color-surface: #EAE2B7;
-  --color-text: #1F2937;
-  --color-muted: #6B7280;
-  --color-accent: #D62828;
-  --color-border: #1F2937;
-  // Cores carrosel
-  --color-surface-default: #EAE2B7;
-  --color-surface-slide-1: #751A1A;
-  --color-text-slide-1: #fff;
-  --color-surface-slide-2: #5A3620;
-  --color-text-slide-2: #fff;
-  --color-surface-slide-3: #2E5129;
-  --color-text-slide-3: #fff;
-  --radius-large: 24px;
-  --radius-max: 32px;
-  --bento-gap: 16px;
-  --container-width: 1160px;
-  --layout-stage-margin: 8px;
+
+  // --- Paleta Semântica (hex minúsculo canônico) ---
+  --color-background: #f8f4e8;
+  --color-surface: #eae2b7;
+  --color-text: #1f2937;
+  --color-muted: #6b7280;
+  --color-accent: #d62828;
+  --color-border: #1f2937;
+
+  // --- Superfícies Dinâmicas dos Slides ---
+  --color-surface-default: #eae2b7;
+  --color-surface-slide-1: #751a1a;
+  --color-text-slide-1: #ffffff;
+  --color-surface-slide-2: #5a3620;
+  --color-text-slide-2: #ffffff;
+  --color-surface-slide-3: #2e5129;
+  --color-text-slide-3: #ffffff;
+
+  // --- Tokens de Marca (WhatsApp) ---
+  --color-whatsapp: #25d366;
+  --color-whatsapp-hover: #22bf5b;
+  --color-whatsapp-dark: #128c7e;
+  --color-whatsapp-text: #0b2b16;
+
+  // --- Escala de Espaçamento 8pt (1rem = 16px padrão) ---
+  --space-0-5: 0.25rem; // 4px
+  --space-1: 0.5rem; // 8px (base)
+  --space-1-5: 0.75rem; // 12px
+  --space-2: 1rem; // 16px
+  --space-2-5: 1.25rem; // 20px
+  --space-3: 1.5rem; // 24px
+  --space-4: 2rem; // 32px
+  --space-5: 2.5rem; // 40px
+  --space-6: 3rem; // 48px
+  --space-7: 3.5rem; // 56px
+  --space-8: 4rem; // 64px
+  --space-10: 5rem; // 80px
+  --space-12: 6rem; // 96px
+
+  // --- Raios de Borda (Múltiplos de 8) ---
+  --radius-sm: 0.5rem; // 8px
+  --radius-base: 1rem; // 16px
+  --radius-large: 1.5rem; // 24px
+  --radius-max: 2rem; // 32px (idêntico no Light e Dark para CLS = 0)
+  --radius-pill: 9999px;
+
+  // --- Constantes Estruturais do Layout ---
+  --bento-gap: var(--space-2); // 16px (1rem)
+  --layout-stage-margin: var(--space-1); // 8px (0.5rem)
+  --container-width: 72.5rem; // 1160px
+
+  // --- Tipografia Fluida Acessível (rem + vw com clamp) ---
+  --font-display: clamp(2.5rem, 1.5rem + 4vw, 5.5rem); // 40px -> 88px
+  --font-h1: clamp(1.75rem, 1rem + 2.5vw, 3rem); // 28px -> 48px
+  --font-h2: clamp(1.35rem, 0.85rem + 1.5vw, 2rem); // 21.6px -> 32px
+  --font-h3: clamp(1.15rem, 0.85rem + 0.8vw, 1.5rem); // 18.4px -> 24px
+  --font-lead: clamp(1rem, 0.8rem + 0.6vw, 1.25rem); // 16px -> 20px
+  --font-body: clamp(0.95rem, 0.85rem + 0.3vw, 1rem); // 15.2px -> 16px
+  --font-caption: clamp(0.75rem, 0.65rem + 0.25vw, 0.85rem); // 12px -> 13.6px
+
+  // --- Easing e Transições ---
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.6s;
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
+
+  // Apenas overrides cromáticos. Variáveis estruturais nunca variam com o tema.
   --color-background: #003049;
-  --color-surface: #1D4533;
-  --color-surface-default: #1D4533;
-  --color-surface-slide-1: #5C1313;
-  --color-surface-slide-2: #7A6C1C;
-  --color-surface-slide-3: #5C2E15;
+  --color-surface: #1d4533;
+  --color-surface-default: #1d4533;
+  --color-surface-slide-1: #5c1313;
+  --color-surface-slide-2: #7a6c1c;
+  --color-surface-slide-3: #5c2e15;
   --color-text: #f0f3ed;
   --color-muted: #a9b4aa;
   --color-accent: #c7f880;
-  --color-border: rgb(48, 58, 49);
-  --radius-large: 24px;
-  --radius-max: 52px;
-  --bento-gap: 16px;
-  --container-width: 1160px;
-  --layout-stage-margin: 8px;
+  --color-border: #303a31;
 }
-
-/*
-colors:
-#003049 - #FCBF49
-#EAE2B7 - #D62828
-#8B1E1E
-#193819
-*/

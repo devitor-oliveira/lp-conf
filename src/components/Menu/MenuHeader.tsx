@@ -1,28 +1,26 @@
 import { Sparkles } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import styles from "./MenuHeader.module.scss";
 
 export function MenuHeader() {
-  const shouldReduceMotion = useReducedMotion();
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
-        delayChildren: shouldReduceMotion ? 0 : 0.04,
+        staggerChildren: 0.08,
+        delayChildren: 0.04,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.45,
+        duration: 0.45,
         ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       },
     },

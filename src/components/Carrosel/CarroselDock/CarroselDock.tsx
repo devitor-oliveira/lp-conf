@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import {
   type CSSProperties,
   type FocusEvent,
@@ -44,7 +44,6 @@ export function CarroselDock({
 }: CarroselDockProps) {
   const dockRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const shouldReduceMotion = useReducedMotion();
 
   const [isHovered, setIsHovered] = useState(false);
   const [isLockedClick, setIsLockedClick] = useState(false);
@@ -188,9 +187,7 @@ export function CarroselDock({
         animate={{
           height: isOpen ? 68 : 18,
         }}
-        transition={
-          shouldReduceMotion ? { duration: 0.12 } : { type: "spring", stiffness: 380, damping: 28 }
-        }
+        transition={{ type: "spring", stiffness: 380, damping: 28 }}
       >
         <button
           type="button"
@@ -215,9 +212,9 @@ export function CarroselDock({
           aria-orientation="horizontal"
           animate={{
             opacity: isOpen ? 1 : 0,
-            y: shouldReduceMotion ? 0 : isOpen ? 0 : 6,
+            y: isOpen ? 0 : 6,
           }}
-          transition={{ duration: shouldReduceMotion ? 0.1 : 0.2 }}
+          transition={{ duration: 0.2 }}
           style={{ pointerEvents: isOpen ? "auto" : "none" }}
         >
           {slides.map((slide, idx) => {

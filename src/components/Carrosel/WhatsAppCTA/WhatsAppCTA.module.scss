@@ -47,25 +47,7 @@
   line-height: 1;
 }
 
-@media (max-width: 900px) {
-  .ctaNotch {
-    padding: 10px 0 0 10px;
-  }
-
-  .ctaButton {
-    height: 44px;
-    padding: 0 1.1rem;
-    font-size: 0.85rem;
-    gap: 0.45rem;
-  }
-
-  .icon {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-@media (max-width: 480px) {
+@include mixins.respond-to("mobile") {
   .ctaNotch {
     padding: 8px 0 0 8px;
   }

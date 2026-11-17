@@ -1,0 +1,36 @@
+# lp-conf — Instruções do Projeto
+
+Landing page SPA de confeitaria artesanal com React 19, TypeScript 6, Vite 8, Motion 14, SCSS Modules, Lucide React e Biome.
+
+## Agentes disponíveis
+
+- `developer` — Engenheiro Frontend Líder. Use para arquitetura, refatoração, UI/UX, acessibilidade, animações e implementação de seções.
+- `code-review` — Senior Frontend Architect & Code Reviewer. Use para auditoria, revisão crítica, refatoração faseada e validação de UI/UX, acessibilidade e performance.
+
+## Comandos
+
+- `/plan` — cria um plano técnico detalhado em `.opencode/plans/<slug>.md` sem editar código.
+- `/grill-me` — conduz uma entrevista de alinhamento, uma pergunta por vez, antes de planejar ou implementar.
+
+## Skill
+
+- `notch-design-system` — carregue ao criar, revisar ou refatorar `NotchContainer`, `notch-corner`, entalhes concêntricos ou qualquer UI baseada no sistema de entalhe.
+
+## Regras rápidas
+
+- TypeScript estrito: proibido `any`, `@ts-ignore` cosmético e `as unknown as`.
+- Zero gambiarras, magic numbers, `!important` desnecessário ou HTML semanticamente incorreto.
+- Validação obrigatória antes de concluir: `npm run check`, `npm run typecheck`, `npm run build`.
+- Branch base de integração: `dev`. Features usam `feat/<escopo>`; refatorações usam `refactoring/<escopo>`; correções usam `fix/<escopo>`.
+- Trabalhe em worktree isolado em `.worktrees/<feature>` quando a tarefa exigir paralelismo.
+- Servidor local dedicado na porta 3001: `npm run dev -- --port 3001`.
+- Antes de tocar em entalhes, leia `docs/notch-design-system.md` ou carregue a skill `notch-design-system`.
+- Não edite a pasta `agent/`: ela é o arquivo legado do Antigravity.
+
+## Documentos canônicos
+
+- `docs/agents/developer-workflow.md`
+- `docs/agents/code-review-workflow.md`
+- `docs/notch-design-system.md`
+
+Após alterar `opencode.json`, agentes, comandos ou skills, reinicie o opencode para carregar a nova configuração.

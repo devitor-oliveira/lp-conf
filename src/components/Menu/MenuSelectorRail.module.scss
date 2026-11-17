@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as mixins;
+
 .railContainer {
   display: flex;
   flex-direction: column;
@@ -223,7 +225,7 @@
   }
 }
 
-@media (max-width: 960px) {
+@include mixins.respond-to("mobile") {
   .itemList {
     flex-direction: row;
     overflow-x: auto;

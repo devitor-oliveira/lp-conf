@@ -1,6 +1,65 @@
+@use "sass:map";
+
+// Breakpoint estritamente pontual (apenas para colapso estrutural mobile)
+$breakpoints: (
+  "mobile": 40rem,
+);
+
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (max-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoint '#{$breakpoint}' não permitido. Use 'mobile'.";
+  }
+}
+
 @mixin container {
-  width: min(var(--container-width), calc(100% - 2.5rem));
+  width: min(var(--container-width), calc(100% - (var(--space-2) * 2)));
   margin-inline: auto;
+}
+
+@mixin focus-ring($color: var(--color-accent), $offset: 4px) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: $offset;
+  }
+}
+
+@mixin eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-accent);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--space-6); // 48px (tap target ideal)
+  padding: var(--space-1-5) var(--space-2-5);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth),
+    transform 0.15s ease;
+
+  @include focus-ring();
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 // Inicializa variáveis CSS customizadas para controle reativo e responsivo do entalhe.

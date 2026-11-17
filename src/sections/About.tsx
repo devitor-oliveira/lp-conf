@@ -15,7 +15,11 @@ export function About() {
   };
 
   return (
-    <section id="conheca" className={styles.about} aria-labelledby="about-title">
+    <section
+      id="conheca"
+      className={styles.about}
+      aria-labelledby="about-title"
+    >
       <div className={styles.container}>
         <div className={styles.headerGrid}>
           <div className={styles.titleColumn}>
@@ -27,9 +31,10 @@ export function About() {
           <div className={styles.philosophyColumn}>
             <p className={styles.eyebrow}>Nossa Filosofia</p>
             <p className={styles.lead}>
-              Cada peça é concebida como uma joia sensorial efémera: açúcares calibrados, notas
-              florais da nossa flora e o mais puro cacau de pequenos produtores agroecológicos,
-              trazendo elegância tranquila ao cotidiano.
+              Cada peça é concebida como uma joia sensorial efémera: açúcares
+              calibrados, notas florais da nossa flora e o mais puro cacau de
+              pequenos produtores agroecológicos, trazendo elegância tranquila
+              ao cotidiano.
             </p>
           </div>
 

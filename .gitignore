@@ -9,5 +9,4 @@ dist/
 *.tsbuildinfo
 .vscode
 
-agent
-.worktrees
+/agent/
