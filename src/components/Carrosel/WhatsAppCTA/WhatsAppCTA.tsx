@@ -1,6 +1,11 @@
 import { motion } from "motion/react";
 import type { CSSProperties } from "react";
 import { NotchContainer } from "@/components/Notch";
+import {
+  buildWhatsAppUrl,
+  DEFAULT_WHATSAPP_MESSAGE,
+  DEFAULT_WHATSAPP_PHONE,
+} from "@/utils/whatsapp";
 import styles from "./WhatsAppCTA.module.scss";
 
 export interface WhatsAppCTAProps {
@@ -21,9 +26,6 @@ export interface WhatsAppCTAProps {
   offsetY?: number | string;
 }
 
-const DEFAULT_PHONE = "5511999999999";
-const DEFAULT_MESSAGE = "Olá! Gostaria de fazer uma encomenda dos doces artesanais.";
-
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -42,8 +44,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function WhatsAppCTA({
   color,
-  phone = DEFAULT_PHONE,
-  message = DEFAULT_MESSAGE,
+  phone = DEFAULT_WHATSAPP_PHONE,
+  message = DEFAULT_WHATSAPP_MESSAGE,
   className,
   style,
   innerRadius = 24,
@@ -52,8 +54,7 @@ export function WhatsAppCTA({
   offsetX = 0,
   offsetY = 0,
 }: WhatsAppCTAProps) {
-  const sanitizedPhone = phone.replace(/\D/g, "");
-  const waUrl = `https://wa.me/${sanitizedPhone}?text=${encodeURIComponent(message)}`;
+  const waUrl = buildWhatsAppUrl(phone, message);
 
   return (
     <NotchContainer

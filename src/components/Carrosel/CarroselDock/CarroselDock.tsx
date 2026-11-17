@@ -174,16 +174,15 @@ export function CarroselDock({
       ref={dockRef}
       className={dockClassName}
       style={dockStyle}
-      onPointerEnter={handlePointerEnter}
-      onPointerLeave={handlePointerLeave}
       onFocusCapture={handleFocusCapture}
       onBlurCapture={handleBlurCapture}
-      onClick={handleToggleDock}
     >
       <span className={styles["left-bar"]} aria-hidden="true" />
 
       <motion.div
         className={styles.dockItems}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
         animate={{
           height: isOpen ? 68 : 18,
         }}
@@ -192,10 +191,7 @@ export function CarroselDock({
         <button
           type="button"
           className={styles.dockHandle}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleToggleDock();
-          }}
+          onClick={handleToggleDock}
           aria-expanded={isOpen}
           aria-label={isOpen ? "Recolher cardápio de sabores" : "Ver sabores disponíveis"}
         >
@@ -238,10 +234,7 @@ export function CarroselDock({
                 className={pillClassName}
                 style={pillStyles[idx]}
                 onKeyDown={(e) => handleTabKeyDown(e, idx)}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelectSlide(idx);
-                }}
+                onClick={() => onSelectSlide(idx)}
               >
                 <span>{slide.name}</span>
               </button>

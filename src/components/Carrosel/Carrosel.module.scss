@@ -27,25 +27,25 @@
 .content {
   flex: 0 0 var(--content-width, 55%);
   display: flex;
-  gap: 4rem;
   flex-direction: column;
   justify-content: center;
+  gap: clamp(var(--space-3), 5vh, var(--space-8));
   padding: 1.5rem 2rem 1.5rem 4rem;
   max-width: var(--content-width, 55%);
 
   z-index: 1;
 
   h1 {
-    font-size: clamp(3.5rem, 6.5vw, 8rem);
-    color: var(--color-background);
+    font-size: var(--font-hero);
+    color: var(--slide-text, var(--color-text));
     line-height: 1.05;
     font-weight: 800;
     margin: 0;
   }
 
   p {
-    font-size: 1.15rem;
-    color: var(--color-background);
+    font-size: var(--font-lead);
+    color: var(--slide-text, var(--color-text));
     margin: 0;
     max-width: 90%;
   }
@@ -55,18 +55,17 @@
     align-self: flex-start;
   }
 
-  button {
-    padding: 0.9rem 1.75rem;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-text-muted);
+  .ctaButton {
+    @include mixins.button-base;
+
     background-color: var(--color-background);
-    // border: 2px solid var(--color-accent);
-    border-radius: 100px;
-    cursor: pointer;
-    box-shadow: none;
-    transform-origin: center;
-    // transition: background-color 0.2s ease, border-color 0.2s ease;
+    color: var(--color-text);
+    text-decoration: none;
+
+    // O CTA da Hero não usa movimento: apenas estados de foco e cor.
+    &:active {
+      transform: none;
+    }
   }
 }
 
@@ -116,9 +115,19 @@
   .canvasFrame {
     position: absolute;
     inset: var(--canvas-edge-inset) var(--canvas-edge-inset) 1.5rem var(--canvas-edge-inset);
-    border-radius: 32px var(--radius-large) 0 var(--radius-large);
+    border-radius: var(--radius-max) var(--radius-large) 0 var(--radius-large);
     overflow: hidden;
     z-index: 1;
+    box-shadow: var(--shadow-image-ambient), var(--shadow-image-direct);
+
+    // Scrim curto na base: protege o contraste do CTA sem apagar o doce.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--image-scrim) 0%, transparent 55%);
+      pointer-events: none;
+    }
   }
 
   .parallaxLayer {
