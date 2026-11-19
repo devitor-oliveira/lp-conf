@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -221,6 +222,12 @@ export function Carrosel({
           className={styles.content}
           style={contentStyle}
         >
+          {currentSlide?.eyebrow && (
+            <motion.p className={styles.eyebrow} variants={contentItemVariants}>
+              <Sparkles size={14} aria-hidden="true" />
+              <span>{currentSlide.eyebrow}</span>
+            </motion.p>
+          )}
           <motion.h1 id="hero-title" variants={contentItemVariants}>
             {currentSlide?.title}
           </motion.h1>

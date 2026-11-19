@@ -35,6 +35,14 @@
 
   z-index: 1;
 
+  .eyebrow {
+    @include mixins.eyebrow;
+
+    color: var(--slide-text, var(--color-text));
+    opacity: 0.88;
+    margin: 0;
+  }
+
   h1 {
     font-size: var(--font-hero);
     color: var(--slide-text, var(--color-text));

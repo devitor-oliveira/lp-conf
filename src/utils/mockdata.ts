@@ -7,6 +7,7 @@ export interface Slide {
   id: number;
   number: string;
   name: string;
+  eyebrow?: string;
   title: string;
   description: string;
   highlights: readonly HeroHighlight[];
@@ -22,9 +23,10 @@ export const SLIDES: Slide[] = [
     id: 1,
     number: "01",
     name: "Cacau & Cereja",
+    eyebrow: "Atelier de Alta Confeitaria",
     title: "Artesanal de verdade.",
     description:
-      "Artesanal de verdade. Cada peça é feita à mão, com ingredientes selecionados e tempo para o detalhe. Um doce pensado para quem valoriza o processo tanto quanto o sabor.",
+      "Doces frescos feitos à mão em pequenos lotes diários, com tempo dedicado a cada detalhe e dulçor na medida certa para exaltar o sabor puro do cacau.",
     highlights: [
       { id: "01-hand", icon: "hand", label: "Feito à mão" },
       { id: "01-layers", icon: "layers", label: "Pequeno lote" },
@@ -39,9 +41,10 @@ export const SLIDES: Slide[] = [
     id: 2,
     number: "02",
     name: "Cítrico Imperial",
+    eyebrow: "Edições Especiais",
     title: "Presentes que ficam.",
     description:
-      "Presentes que ficam. Caixas e edições especiais para celebrar encontros e ocasiões. Você escolhe os sabores e nós cuidamos da apresentação.",
+      "Coleções exclusivas e sabores finos preparados para transformar gestos de carinho em memórias inesquecíveis. Você escolhe as criações e nós cuidamos do encanto.",
     highlights: [
       { id: "02-gift", icon: "gift", label: "Pronto para presentear" },
       { id: "02-package", icon: "package", label: "Embalagem cuidada" },
@@ -56,9 +59,10 @@ export const SLIDES: Slide[] = [
     id: 3,
     number: "03",
     name: "Pistache Silvestre",
+    eyebrow: "Grandes Celebrações",
     title: "Do ateliê para sua mesa.",
     description:
-      "Do ateliê para sua mesa. Escolha os sabores e encomende pelo WhatsApp, com atendimento direto. Da seleção dos ingredientes ao acabamento, tudo passa pelo nosso ateliê.",
+      "Da seleção criteriosa à finalização delicada, levamos a experiência autoral do nosso ateliê para momentos especiais, recepções e celebrações com quem você ama.",
     highlights: [
       { id: "03-message", icon: "message", label: "Atendimento direto" },
       { id: "03-sliders", icon: "sliders", label: "Sabores à escolha" },
