@@ -3,26 +3,27 @@
 .about {
   position: relative;
   width: 100%;
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(4rem, 2.5rem + 5vw, 7rem);
   background-color: var(--color-background);
   color: var(--color-text);
 }
 
 .container {
   @include mixins.container-large;
-  padding-inline: clamp(0.5rem, 1vw, 1.5rem);
+  container-type: inline-size;
+  padding-inline: clamp(0.5rem, 0.25rem + 0.8vw, 1.5rem);
 }
 
 .headerGrid {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: flex-start;
-  gap: clamp(2rem, 5vw, 6rem);
-  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  gap: clamp(2rem, 0.75rem + 4.5vw, 6rem);
+  margin-bottom: clamp(3rem, 2.25rem + 2.5vw, 4.5rem);
 
   @include mixins.respond-to("mobile") {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: var(--space-3);
   }
 }
 
@@ -31,7 +32,7 @@
   flex-direction: column;
 
   .title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: var(--font-section-title);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.03em;
@@ -44,20 +45,15 @@
 .philosophyColumn {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  max-width: 780px;
+  gap: var(--space-1-5);
+  max-width: var(--content-width-editorial);
 
   .eyebrow {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-muted);
-    margin: 0;
+    @include mixins.eyebrow-editorial;
   }
 
   .lead {
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    font-size: var(--font-lead-editorial);
     line-height: 1.6;
     color: var(--color-text);
     margin: 0;
@@ -69,7 +65,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-top: 0.5rem;
+  padding-top: var(--space-1);
 
   @include mixins.respond-to("mobile") {
     justify-content: flex-start;
@@ -79,8 +75,8 @@
 
 .triptychGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21.5rem), 1fr));
+  gap: clamp(1.25rem, 0.75rem + 1.25vw, 2rem);
   align-items: end;
 
   @include mixins.respond-to("mobile") {
@@ -96,8 +92,23 @@
   width: 100%;
 }
 
-.gridItemFeatured {
-  @include mixins.respond-to("mobile") {
-    order: -1;
+@container (min-width: 62rem) {
+  .triptychGrid {
+    grid-template-columns: 1fr 1.1fr 1fr;
+  }
+
+  .gridItemDelivery {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .gridItemFeatured {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .gridItemGifting {
+    grid-column: 3;
+    grid-row: 1;
   }
 }

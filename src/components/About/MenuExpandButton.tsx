@@ -3,27 +3,41 @@ import { motion } from "motion/react";
 import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./MenuExpandButton.module.scss";
 
+const buttonVariants = {
+  hover: {},
+  tap: { scale: 0.97 },
+};
+
+const arrowVariants = {
+  hover: { x: 3 },
+  tap: { scale: 0.95 },
+};
+
 export function MenuExpandButton() {
   const handleScrollToMenu = () => {
     scrollToSection("#cardapio", { fallbackToBottom: true });
   };
 
   return (
-    <button
+    <motion.button
       type="button"
       className={styles.expandButton}
       onClick={handleScrollToMenu}
       aria-label="Navegar até o Cardápio e Coleções"
+      variants={buttonVariants}
+      whileHover="hover"
+      whileTap="tap"
+      transition={{ type: "spring", stiffness: 450, damping: 28 }}
     >
       <span className={styles.label}>Explorar Cardápio</span>
       <motion.span
         className={styles.arrowBadge}
         aria-hidden="true"
-        whileHover={{ x: 2 }}
-        whileTap={{ scale: 0.95 }}
+        variants={arrowVariants}
+        transition={{ type: "spring", stiffness: 450, damping: 28 }}
       >
-        <ArrowRight size={14} />
+        <ArrowRight size={14} strokeWidth={2.2} />
       </motion.span>
-    </button>
+    </motion.button>
   );
 }

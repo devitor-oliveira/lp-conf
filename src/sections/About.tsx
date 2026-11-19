@@ -1,11 +1,19 @@
-import YellowHeroIMG from "@/assets/doce-amarelo.png";
-import GreenHeroIMG from "@/assets/doce-verde.png";
-import RedHeroIMG from "@/assets/doce-vermelho.png";
+import { MenuExpandButton, ServiceTierCard } from "@/components/About";
+import {
+  ABOUT_SERVICE_IMAGES,
+  DEFAULT_WHATSAPP_PHONE,
+  getWhatsAppUrl,
+  WHATSAPP_PRESET_MESSAGES,
+} from "@/utils/constants";
 import { scrollToSection } from "@/utils/scrollToSection";
-import { MenuExpandButton, ServiceTierCard } from "../components/About";
 import styles from "./About.module.scss";
 
 export function About() {
+  const deliveryWhatsAppUrl = getWhatsAppUrl(
+    DEFAULT_WHATSAPP_PHONE,
+    WHATSAPP_PRESET_MESSAGES.delivery,
+  );
+
   return (
     <section id="conheca" className={styles.about} aria-labelledby="about-title">
       <div className={styles.container}>
@@ -31,26 +39,12 @@ export function About() {
         </div>
 
         <div className={styles.triptychGrid}>
-          <div className={styles.gridItem}>
-            <ServiceTierCard
-              id="delivery"
-              image={RedHeroIMG}
-              alt="Doce artesanal vermelho especial"
-              overlayTheme="neutral"
-              tag="São Paulo & Região • 30-60min"
-              title="Pronta-Entrega & Delivery"
-              leadDescription="Para desejos imediatos. Receba nossos doces artesanais com agilidade no conforto da sua casa."
-              actionLabel="Pedir Delivery Imediato"
-              href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20consultar%20a%20pronta-entrega%20do%20dia"
-            />
-          </div>
-
           <div className={`${styles.gridItem} ${styles.gridItemFeatured}`}>
             <ServiceTierCard
               id="encomendas"
               isPrimaryFeatured={true}
-              image={YellowHeroIMG}
-              alt="Doce artesanal amarelo especial"
+              image={ABOUT_SERVICE_IMAGES.encomendas}
+              alt="Mesa de doces de celebração com torre de macarons e arranjos florais"
               overlayTheme="cacau"
               tag="Lotes de 30 a 500+ un."
               title="Grandes Encomendas & Celebrações"
@@ -60,11 +54,25 @@ export function About() {
             />
           </div>
 
-          <div className={styles.gridItem}>
+          <div className={`${styles.gridItem} ${styles.gridItemDelivery}`}>
+            <ServiceTierCard
+              id="delivery"
+              image={ABOUT_SERVICE_IMAGES.delivery}
+              alt="Sobremesa artesanal em camadas servida em pote de vidro para pronta-entrega"
+              overlayTheme="neutral"
+              tag="São Paulo & Região • 30-60min"
+              title="Pronta-Entrega & Delivery"
+              leadDescription="Para desejos imediatos. Receba nossos doces artesanais com agilidade no conforto da sua casa."
+              actionLabel="Pedir Delivery Imediato"
+              href={deliveryWhatsAppUrl}
+            />
+          </div>
+
+          <div className={`${styles.gridItem} ${styles.gridItemGifting}`}>
             <ServiceTierCard
               id="presentes"
-              image={GreenHeroIMG}
-              alt="Seleção especial de confeitaria"
+              image={ABOUT_SERVICE_IMAGES.presentes}
+              alt="Caixa rígida presenteável com laço de fita e chocolates artesanais"
               overlayTheme="pistache"
               tag="Envio Climatizado • Todo o Brasil"
               title="Caixas para Presente"
