@@ -6,6 +6,15 @@ export const WHATSAPP_PRESET_MESSAGES = {
   presentes: "Olá, gostaria de informações sobre as caixas para presente",
 } as const;
 
+export const ABOUT_SERVICE_IMAGES = {
+  delivery:
+    "https://images.pexels.com/photos/11757843/pexels-photo-11757843.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  encomendas:
+    "https://images.pexels.com/photos/19717706/pexels-photo-19717706/free-photo-of-close-up-of-a-table-with-confectionery.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  presentes:
+    "https://images.pexels.com/photos/36663543/pexels-photo-36663543/free-photo-of-elegant-gift-box-with-purple-ribbon-and-chocolates.jpeg?auto=compress&cs=tinysrgb&w=1000",
+} as const;
+
 /**
  * Constrói URL canônica do WhatsApp sanitizando dígitos do telefone e codificando a mensagem.
  */
