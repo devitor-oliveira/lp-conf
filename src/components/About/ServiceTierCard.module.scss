@@ -7,14 +7,13 @@
   justify-content: flex-end;
   padding: 0;
   background-color: var(--color-surface);
-  border-radius: var(--radius-base);
+  border-radius: var(--radius-md);
   border: none;
   overflow: hidden;
   aspect-ratio: 3.5 / 4.8;
   min-height: clamp(24rem, 36vw, 30rem);
-  transition: transform var(--duration-normal, 300ms)
-    var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1));
-  box-shadow: 0 16px 40px -12px rgb(0 0 0 / 0.12), 0 4px 16px rgb(0 0 0 / 0.04);
+  transition: transform var(--duration-normal) var(--ease-smooth);
+  box-shadow: var(--shadow-card);
 
   &:hover {
     transform: translateY(-8px);
@@ -24,7 +23,7 @@
 .featuredCard {
   aspect-ratio: 3.2 / 5.2;
   min-height: clamp(28rem, 42vw, 35rem);
-  box-shadow: 0 24px 54px -14px rgb(0 0 0 / 0.18), 0 6px 20px rgb(0 0 0 / 0.06);
+  box-shadow: var(--shadow-card-featured);
 }
 
 .cardImage {
@@ -33,7 +32,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 600ms var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1));
+  transition: transform var(--duration-card-zoom) var(--ease-smooth);
 
   .card:hover & {
     transform: scale(1.05);
@@ -46,62 +45,62 @@
   left: 0;
   right: 0;
   height: 65%;
-  padding: var(--space-5, 1.25rem);
-  border-radius: var(--radius-base) var(--radius-base) 0 0;
+  padding: var(--space-2-5);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: var(--space-3, 0.75rem);
+  gap: var(--space-1-5);
   z-index: 2;
   background: linear-gradient(
     to top,
-    var(--card-overlay-base, rgba(20, 20, 24, 0.95)) 0%,
-    var(--card-overlay-mid, rgba(20, 20, 24, 0.65)) 55%,
-    var(--card-overlay-fade, rgba(20, 20, 24, 0.15)) 85%,
+    var(--card-overlay-base, var(--card-overlay-neutral-base)) 0%,
+    var(--card-overlay-mid, var(--card-overlay-neutral-mid)) 55%,
+    var(--card-overlay-fade, var(--card-overlay-neutral-fade)) 85%,
     transparent 100%
   );
   mask-image: linear-gradient(to top, black 50%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to top, black 50%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
-  transition: background 300ms ease;
+  transition: background var(--duration-normal) ease;
 
   .card:hover & {
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.95) 0%,
-      rgba(0, 0, 0, 0.75) 65%,
-      rgba(0, 0, 0, 0.25) 90%,
+      var(--card-overlay-hover-base) 0%,
+      var(--card-overlay-hover-mid) 65%,
+      var(--card-overlay-hover-fade) 90%,
       transparent 100%
     );
   }
 }
 
 .themeNeutral {
-  --card-overlay-base: rgba(20, 20, 24, 0.92);
-  --card-overlay-mid: rgba(20, 20, 24, 0.6);
-  --card-overlay-fade: rgba(20, 20, 24, 0.1);
+  --card-overlay-base: var(--card-overlay-neutral-base);
+  --card-overlay-mid: var(--card-overlay-neutral-mid);
+  --card-overlay-fade: var(--card-overlay-neutral-fade);
 }
 .themeCacau {
-  --card-overlay-base: rgba(48, 28, 17, 0.94);
-  --card-overlay-mid: rgba(48, 28, 17, 0.62);
-  --card-overlay-fade: rgba(48, 28, 17, 0.12);
+  --card-overlay-base: var(--card-overlay-cacau-base);
+  --card-overlay-mid: var(--card-overlay-cacau-mid);
+  --card-overlay-fade: var(--card-overlay-cacau-fade);
 }
 .themePistache {
-  --card-overlay-base: rgba(26, 40, 25, 0.94);
-  --card-overlay-mid: rgba(26, 40, 25, 0.62);
-  --card-overlay-fade: rgba(26, 40, 25, 0.12);
+  --card-overlay-base: var(--card-overlay-pistache-base);
+  --card-overlay-mid: var(--card-overlay-pistache-mid);
+  --card-overlay-fade: var(--card-overlay-pistache-fade);
 }
 
 .cardHeader {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1, 0.25rem);
+  gap: var(--space-0-5);
 }
 
 .tag {
-  font-size: 0.75rem;
+  font-size: var(--font-card-tag);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -109,7 +108,7 @@
 }
 
 .cardTitle {
-  font-size: 1.35rem;
+  font-size: var(--font-card-title);
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
@@ -118,11 +117,11 @@
 .cardBody {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3, 0.75rem);
+  gap: var(--space-1-5);
 }
 
 .cardDescription {
-  font-size: 0.9rem;
+  font-size: var(--font-card-desc);
   line-height: 1.45;
   opacity: 0.9;
   margin: 0;
@@ -133,30 +132,7 @@
 }
 
 .cardActionBtn {
-  @include mixins.button-base;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-2, 0.75rem) var(--space-3, 1rem);
-  font-size: 0.82rem;
-  font-weight: 700;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background-color: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    background-color var(--duration-fast, 150ms) ease,
-    transform var(--duration-fast, 150ms) ease,
-    box-shadow var(--duration-fast, 150ms) ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
-  }
-
-  @include mixins.focus-ring;
+  @include mixins.button-card;
 }
 
 @include mixins.respond-to("mobile") {
