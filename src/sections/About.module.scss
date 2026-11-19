@@ -75,8 +75,8 @@
 
 .triptychGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
-  gap: clamp(2.5rem, 1.75rem + 2.5vw, 4.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21.5rem), 1fr));
+  gap: clamp(1.25rem, 0.75rem + 1.25vw, 2rem);
   align-items: end;
 
   @include mixins.respond-to("mobile") {
@@ -93,6 +93,10 @@
 }
 
 @container (min-width: 62rem) {
+  .triptychGrid {
+    grid-template-columns: 1fr 1.1fr 1fr;
+  }
+
   .gridItemDelivery {
     grid-column: 1;
     grid-row: 1;
