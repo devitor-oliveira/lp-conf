@@ -43,6 +43,15 @@ $breakpoints: (
   letter-spacing: 0.12em;
 }
 
+@mixin eyebrow-editorial {
+  font-size: var(--font-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  margin: 0;
+}
+
 @mixin button-base {
   display: inline-flex;
   align-items: center;
@@ -64,6 +73,26 @@ $breakpoints: (
 
   &:active {
     transform: scale(0.98);
+  }
+}
+
+@mixin button-card {
+  @include button-base;
+  justify-content: space-between;
+  padding: var(--space-1-5) var(--space-2);
+  font-size: var(--font-expand-button);
+  border: 1px solid rgb(255 255 255 / 0.25);
+  background-color: rgb(255 255 255 / 0.12);
+  color: #ffffff;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-smooth),
+    box-shadow var(--duration-fast) var(--ease-smooth);
+
+  &:hover {
+    background-color: rgb(255 255 255 / 0.25);
+    transform: translateY(-1px);
   }
 }
 

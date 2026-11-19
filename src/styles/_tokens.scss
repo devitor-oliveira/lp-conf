@@ -42,6 +42,7 @@
   // --- Raios de Borda (Múltiplos de 8) ---
   --radius-sm: 0.5rem; // 8px
   --radius-base: 1rem; // 16px
+  --radius-md: 1.25rem; // 20px
   --radius-large: 1.5rem; // 24px
   --radius-max: 2rem; // 32px (idêntico no Light e Dark para CLS = 0)
   --radius-pill: 9999px;
@@ -51,6 +52,9 @@
   --layout-stage-margin: var(--space-1); // 8px (0.5rem)
   --container-width: 72.5rem; // 1160px
   --container-width-large: 95rem; // 1520px (variante oficial para seções editoriais largas como About)
+  --content-width-editorial: 48.75rem; // 780px
+  --badge-size-compact: 1.75rem; // 28px
+  --padding-expand-button: 0.45rem 0.55rem 0.45rem 1.25rem;
 
   // --- Tipografia Fluida Acessível (rem + vw com clamp) ---
   --font-hero: clamp(3.5rem, 6.5vw, 8rem); // 56px -> 128px
@@ -61,11 +65,32 @@
   --font-lead: clamp(1rem, 0.8rem + 0.6vw, 1.25rem); // 16px -> 20px
   --font-body: clamp(0.95rem, 0.85rem + 0.3vw, 1rem); // 15.2px -> 16px
   --font-caption: clamp(0.75rem, 0.65rem + 0.25vw, 0.85rem); // 12px -> 13.6px
+  --font-section-title: clamp(2.5rem, 1.25rem + 3.2vw, 4rem); // 40px -> 64px
+  --font-lead-editorial: clamp(1rem, 0.92rem + 0.25vw, 1.1rem); // 16px -> 17.6px
+  --font-eyebrow: clamp(0.82rem, 0.76rem + 0.25vw, 0.9rem); // 13.1px -> 14.4px
+  --font-card-title: clamp(1.25rem, 1.05rem + 0.8vw, 1.45rem); // 20px -> 23.2px
+  --font-card-desc: clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem); // 13.6px -> 15.2px
+  --font-card-tag: clamp(0.7rem, 0.65rem + 0.2vw, 0.78rem); // 11.2px -> 12.5px
+  --font-expand-button: clamp(0.82rem, 0.78rem + 0.2vw, 0.9rem); // 13.1px -> 14.4px
 
   // --- Integração da imagem (scrim + profundidade) ---
   --image-scrim: rgb(0 0 0 / 0.25);
   --shadow-image-ambient: 0 12px 28px rgb(0 0 0 / 0.14);
   --shadow-image-direct: 0 2px 6px rgb(0 0 0 / 0.18);
+  --shadow-card: 0 16px 40px -12px rgb(0 0 0 / 0.12), 0 4px 16px rgb(0 0 0 / 0.04);
+  --shadow-card-featured: 0 24px 54px -14px rgb(0 0 0 / 0.18), 0 6px 20px rgb(0 0 0 / 0.06);
+  --card-overlay-neutral-base: rgb(20 20 24 / 0.92);
+  --card-overlay-neutral-mid: rgb(20 20 24 / 0.6);
+  --card-overlay-neutral-fade: rgb(20 20 24 / 0.1);
+  --card-overlay-cacau-base: rgb(48 28 17 / 0.94);
+  --card-overlay-cacau-mid: rgb(48 28 17 / 0.62);
+  --card-overlay-cacau-fade: rgb(48 28 17 / 0.12);
+  --card-overlay-pistache-base: rgb(26 40 25 / 0.94);
+  --card-overlay-pistache-mid: rgb(26 40 25 / 0.62);
+  --card-overlay-pistache-fade: rgb(26 40 25 / 0.12);
+  --card-overlay-hover-base: rgb(0 0 0 / 0.95);
+  --card-overlay-hover-mid: rgb(0 0 0 / 0.75);
+  --card-overlay-hover-fade: rgb(0 0 0 / 0.25);
 
   // --- Easing e Transições ---
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
@@ -73,6 +98,7 @@
   --duration-fast: 0.2s;
   --duration-normal: 0.4s;
   --duration-slow: 0.6s;
+  --duration-card-zoom: 0.6s;
 }
 
 [data-theme="dark"] {
