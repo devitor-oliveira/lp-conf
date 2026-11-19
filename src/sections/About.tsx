@@ -1,11 +1,21 @@
 import YellowHeroIMG from "@/assets/doce-amarelo.png";
 import GreenHeroIMG from "@/assets/doce-verde.png";
 import RedHeroIMG from "@/assets/doce-vermelho.png";
+import { MenuExpandButton, ServiceTierCard } from "@/components/About";
+import {
+  DEFAULT_WHATSAPP_PHONE,
+  getWhatsAppUrl,
+  WHATSAPP_PRESET_MESSAGES,
+} from "@/utils/constants";
 import { scrollToSection } from "@/utils/scrollToSection";
-import { MenuExpandButton, ServiceTierCard } from "../components/About";
 import styles from "./About.module.scss";
 
 export function About() {
+  const deliveryWhatsAppUrl = getWhatsAppUrl(
+    DEFAULT_WHATSAPP_PHONE,
+    WHATSAPP_PRESET_MESSAGES.delivery,
+  );
+
   return (
     <section id="conheca" className={styles.about} aria-labelledby="about-title">
       <div className={styles.container}>
@@ -31,20 +41,6 @@ export function About() {
         </div>
 
         <div className={styles.triptychGrid}>
-          <div className={styles.gridItem}>
-            <ServiceTierCard
-              id="delivery"
-              image={RedHeroIMG}
-              alt="Doce artesanal vermelho especial"
-              overlayTheme="neutral"
-              tag="São Paulo & Região • 30-60min"
-              title="Pronta-Entrega & Delivery"
-              leadDescription="Para desejos imediatos. Receba nossos doces artesanais com agilidade no conforto da sua casa."
-              actionLabel="Pedir Delivery Imediato"
-              href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20consultar%20a%20pronta-entrega%20do%20dia"
-            />
-          </div>
-
           <div className={`${styles.gridItem} ${styles.gridItemFeatured}`}>
             <ServiceTierCard
               id="encomendas"
@@ -60,7 +56,21 @@ export function About() {
             />
           </div>
 
-          <div className={styles.gridItem}>
+          <div className={`${styles.gridItem} ${styles.gridItemDelivery}`}>
+            <ServiceTierCard
+              id="delivery"
+              image={RedHeroIMG}
+              alt="Doce artesanal vermelho especial"
+              overlayTheme="neutral"
+              tag="São Paulo & Região • 30-60min"
+              title="Pronta-Entrega & Delivery"
+              leadDescription="Para desejos imediatos. Receba nossos doces artesanais com agilidade no conforto da sua casa."
+              actionLabel="Pedir Delivery Imediato"
+              href={deliveryWhatsAppUrl}
+            />
+          </div>
+
+          <div className={`${styles.gridItem} ${styles.gridItemGifting}`}>
             <ServiceTierCard
               id="presentes"
               image={GreenHeroIMG}
