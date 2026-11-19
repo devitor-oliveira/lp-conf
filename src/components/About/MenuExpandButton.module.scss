@@ -7,9 +7,12 @@
   width: var(--badge-size-compact);
   height: var(--badge-size-compact);
   border-radius: var(--radius-pill);
-  background-color: var(--color-text);
-  color: var(--color-background);
+  background-color: var(--color-background);
+  color: var(--color-text);
   flex-shrink: 0;
+  transition:
+    background-color var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth);
 }
 
 .expandButton {
@@ -21,23 +24,23 @@
   font-weight: 650;
   letter-spacing: -0.01em;
   border-radius: var(--radius-pill);
-  border: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);
-  background-color: transparent;
-  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  background-color: var(--color-text);
+  color: var(--color-background);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
+  box-shadow: var(--shadow-image-direct);
   transition:
     background-color var(--duration-fast) var(--ease-smooth),
-    border-color var(--duration-fast) var(--ease-smooth),
-    box-shadow var(--duration-fast) ease;
+    border-color var(--duration-fast) var(--ease-smooth);
 
   &:hover {
-    border-color: var(--color-text);
-    background-color: color-mix(in srgb, var(--color-text) 4%, transparent);
+    background-color: color-mix(in srgb, var(--color-text) 88%, var(--color-background));
+    border-color: color-mix(in srgb, var(--color-text) 88%, var(--color-background));
   }
 
-  @include mixins.focus-ring(var(--color-text), 3px);
+  @include mixins.focus-ring(var(--color-accent), 3px);
 }
 
 .label {

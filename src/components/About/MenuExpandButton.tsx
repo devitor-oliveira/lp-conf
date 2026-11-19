@@ -4,12 +4,12 @@ import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./MenuExpandButton.module.scss";
 
 const buttonVariants = {
-  hover: { y: -1 },
-  tap: { scale: 0.98 },
+  hover: {},
+  tap: { scale: 0.97 },
 };
 
 const arrowVariants = {
-  hover: { x: 2 },
+  hover: { x: 3 },
   tap: { scale: 0.95 },
 };
 
@@ -27,16 +27,16 @@ export function MenuExpandButton() {
       variants={buttonVariants}
       whileHover="hover"
       whileTap="tap"
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      transition={{ type: "spring", stiffness: 450, damping: 28 }}
     >
       <span className={styles.label}>Explorar Cardápio</span>
       <motion.span
         className={styles.arrowBadge}
         aria-hidden="true"
         variants={arrowVariants}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        transition={{ type: "spring", stiffness: 450, damping: 28 }}
       >
-        <ArrowRight size={14} />
+        <ArrowRight size={14} strokeWidth={2.2} />
       </motion.span>
     </motion.button>
   );
