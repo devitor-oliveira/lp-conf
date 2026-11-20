@@ -4,40 +4,44 @@ import { NotchContainer } from "@/components/Notch";
 import { ThemeToggleButton } from "@/components/ThemeToggle";
 import styles from "./Header.module.scss";
 
+const STAGE_MARGIN_PX = 8; // Equivalente ao token --layout-stage-margin (0.5rem)
+const HEADER_NOTCH_ANGLE = 48;
+const HEADER_NOTCH_HEIGHT = 32;
+const HEADER_RADIUS_BOTTOM = 32;
+const HEADER_LEFT_FILLET = 32; // Equivalente ao token --radius-max (2rem) da Hero
+
 export interface HeaderProps {
-  /** Cor de fundo dinâmica da pílula de navegação ancorada no Hero */
-  navBgColor?: string;
   /** Define se o Header deve assumir o modo flutuante centralizado (opcional; se omitido, monitora a saída do header ancorado automaticamente) */
   isFloating?: boolean;
   /** Callback disparado quando o estado flutuante se altera */
   onFloatingChange?: (isFloating: boolean) => void;
   /** Classe CSS adicional opcional */
   className?: string;
-  /** Margem/offset de referência em relação à seção adjacente (padrão: token --layout-stage-margin) */
-  offset?: number | string;
-  /** Raio interno base da pílula para o cálculo concêntrico (padrão: 32px) */
-  innerRadius?: number | string;
-  /** Espaçamento voltado para o interior da seção (padrão: 12px) */
-  paddingOuter?: number | string;
-  /** Espaçamento voltado para a borda externa da janela (padrão: token --layout-stage-margin) */
-  paddingInner?: number | string;
+  /** Margem/offset de referência em pixels até a seção adjacente (padrão: 8, equivalente a --layout-stage-margin) */
+  offset?: number;
+  /** Angulação máxima da rampa suave do entalhe em graus (padrão: 48, igual ao CarroselProgress) */
+  angle?: number | string;
+  /** Altura líquida do entalhe em pixels abaixo do offset superior (padrão: 32, igual ao CarroselProgress) */
+  notchHeight?: number;
+  /** Raio convexo inferior desejado em pixels (padrão: 32, igual ao CarroselProgress) */
+  radiusBottom?: number;
 }
 
 const NAV_LINKS = [
   { href: "#inicio", label: "Inicio" },
   { href: "#conheca", label: "Conheça" },
+  { href: "#cardapio", label: "Cardápio" },
   { href: "#encomende", label: "Encomende Já" },
 ] as const;
 
 export function Header({
-  navBgColor = "var(--color-surface-default)",
   isFloating: isFloatingProp,
   onFloatingChange,
   className,
-  offset = "var(--layout-stage-margin)",
-  innerRadius = 32,
-  paddingOuter = 12,
-  paddingInner = "var(--layout-stage-margin)",
+  offset = STAGE_MARGIN_PX,
+  angle = HEADER_NOTCH_ANGLE,
+  notchHeight = HEADER_NOTCH_HEIGHT,
+  radiusBottom = HEADER_RADIUS_BOTTOM,
 }: HeaderProps) {
   const dockedRef = useRef<HTMLElement>(null);
   const [internalFloating, setInternalFloating] = useState(false);
@@ -75,17 +79,17 @@ export function Header({
         ref={dockedRef}
         as="header"
         placement="top-left"
-        className={composedDockedClassName}
-        concentric={{
-          innerRadius,
-          paddingOuter,
-          paddingInner,
-        }}
+        variant="smooth"
+        angle={angle}
+        radius={radiusBottom}
+        smoothHeight={notchHeight}
+        filletSize={HEADER_LEFT_FILLET}
         offsetX={offset}
         offsetY={offset}
+        className={composedDockedClassName}
         aria-hidden={activeFloating || undefined}
       >
-        <nav aria-label="Navegação principal" style={{ backgroundColor: navBgColor }}>
+        <nav aria-label="Navegação principal">
           {NAV_LINKS.map((link) => (
             <a key={link.href} href={link.href} tabIndex={activeFloating ? -1 : undefined}>
               {link.label}
