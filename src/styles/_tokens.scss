@@ -5,12 +5,19 @@
   --color-background: #f8f4e8;
   --color-surface: #eae2b7;
   --color-text: #1f2937;
-  --color-muted: #6b7280;
-  --color-accent: #d62828;
+  --color-muted: #525866;
+  --color-accent: #b91c1c;
+  --color-on-accent: #ffffff;
   --color-border: #1f2937;
 
-  // --- Superfícies Dinâmicas dos Slides ---
+  // --- Superfícies Dinâmicas & Papéis Semânticos ---
   --color-surface-default: #eae2b7;
+  --color-on-surface-default: var(--color-text);
+  --color-on-slide: #ffffff;
+  --color-on-media: #ffffff;
+  --color-on-media-muted: #e5e7eb;
+  --color-on-media-subtle: #d1d5db;
+  --color-on-media-accent: #ffd166;
   --color-surface-slide-1: #751a1a;
   --color-text-slide-1: #ffffff;
   --color-surface-slide-2: #5a3620;
@@ -21,8 +28,11 @@
   // --- Tokens de Marca (WhatsApp) ---
   --color-whatsapp: #25d366;
   --color-whatsapp-hover: #22bf5b;
-  --color-whatsapp-dark: #128c7e;
+  --color-whatsapp-border: #1fa350;
+  --color-whatsapp-dark: #0e7468;
+  --color-whatsapp-dark-border: #0a584f;
   --color-whatsapp-text: #0b2b16;
+  --color-whatsapp-icon-surface: #0e7468;
 
   // --- Escala de Espaçamento 8pt (1rem = 16px padrão) ---
   --space-0-5: 0.25rem; // 4px
@@ -104,15 +114,19 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  // Apenas overrides cromáticos. Variáveis estruturais nunca variam com o tema.
-  --color-background: #003049;
-  --color-surface: #1d4533;
-  --color-surface-default: #1d4533;
+  // Apenas overrides cromáticos (cacau/espresso quente + rubi). Variáveis estruturais nunca variam com o tema.
+  --color-background: #171210;
+  --color-surface: #241c18;
+  --color-surface-default: #241c18;
+  --color-on-surface-default: var(--color-text);
+  --color-on-slide: #ffffff;
   --color-surface-slide-1: #5c1313;
-  --color-surface-slide-2: #7a6c1c;
-  --color-surface-slide-3: #5c2e15;
-  --color-text: #f0f3ed;
-  --color-muted: #a9b4aa;
-  --color-accent: #c7f880;
-  --color-border: #303a31;
+  --color-surface-slide-2: #4a2c1a;
+  --color-surface-slide-3: #254121;
+  --color-text: #f5efe6;
+  --color-muted: #c4b8aa;
+  --color-accent: #f26b6b;
+  --color-on-accent: #171210;
+  --color-border: #7d6c61;
+  --color-whatsapp-icon-surface: #25d366;
 }

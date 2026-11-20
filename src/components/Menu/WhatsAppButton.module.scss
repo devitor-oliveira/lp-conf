@@ -9,9 +9,9 @@
   font-size: 0.9rem;
   font-weight: 700;
   border-radius: 14px;
-  background-color: #25d366;
-  color: #0b2b16;
-  border: 1.5px solid #1fa350;
+  background-color: var(--color-whatsapp);
+  color: var(--color-whatsapp-text);
+  border: 1.5px solid var(--color-whatsapp-border);
   cursor: pointer;
   outline: none;
   transition:
@@ -21,7 +21,7 @@
     transform 0.15s ease;
 
   &:hover {
-    background-color: #22bf5b;
+    background-color: var(--color-whatsapp-hover);
     box-shadow: 0 4px 14px rgb(37 211 102 / 0.3);
     transform: translateY(-1px);
   }
@@ -31,14 +31,14 @@
   }
 
   &:focus-visible {
-    outline: 2px solid #25d366;
+    outline: 2px solid var(--color-whatsapp);
     outline-offset: 2px;
   }
 
   &.whatsappTriggered {
-    background-color: #128c7e;
-    color: #ffffff;
-    border-color: #0d6359;
+    background-color: var(--color-whatsapp-dark);
+    color: var(--color-on-media);
+    border-color: var(--color-whatsapp-dark-border);
   }
 
   &:disabled {
