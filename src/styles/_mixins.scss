@@ -83,7 +83,7 @@ $breakpoints: (
   font-size: var(--font-expand-button);
   border: 1px solid rgb(255 255 255 / 0.25);
   background-color: rgb(255 255 255 / 0.12);
-  color: #ffffff;
+  color: var(--color-on-media);
   text-decoration: none;
   transition:
     background-color var(--duration-fast) var(--ease-smooth),
