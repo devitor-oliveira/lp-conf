@@ -31,7 +31,7 @@ export function NotchContainer<T extends ElementType = "div">({
 }: NotchContainerProps<T>) {
   const Component = (as ?? "div") as ElementType;
 
-  const { isSmoothTopCenter, wings, mergedStyle } = useNotch({
+  const { isSmooth, isSmoothTopCenter, isSmoothTopLeft, wings, mergedStyle } = useNotch({
     placement,
     variant,
     radius,
@@ -48,34 +48,40 @@ export function NotchContainer<T extends ElementType = "div">({
 
   const placementClass = isSmoothTopCenter
     ? styles.smoothTopCenter
-    : (PLACEMENT_CLASS_MAP[placement] ?? "");
+    : isSmoothTopLeft
+      ? styles.smoothTopLeft
+      : (PLACEMENT_CLASS_MAP[placement] ?? "");
 
   const composedClassName = [styles.notch, placementClass, className].filter(Boolean).join(" ");
 
   return (
     <Component className={composedClassName} style={mergedStyle} {...restProps}>
-      {isSmoothTopCenter && wings && (
+      {isSmooth && wings && (
         <>
-          <svg
-            className={styles.smoothWingLeft}
-            width={wings.left.svgWidth}
-            height={wings.left.svgHeight}
-            viewBox={`0 0 ${wings.left.svgWidth} ${wings.left.svgHeight}`}
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path className={styles.smoothWingPath} d={wings.left.d} />
-          </svg>
-          <svg
-            className={styles.smoothWingRight}
-            width={wings.right.svgWidth}
-            height={wings.right.svgHeight}
-            viewBox={`0 0 ${wings.right.svgWidth} ${wings.right.svgHeight}`}
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path className={styles.smoothWingPath} d={wings.right.d} />
-          </svg>
+          {wings.left && (
+            <svg
+              className={styles.smoothWingLeft}
+              width={wings.left.svgWidth}
+              height={wings.left.svgHeight}
+              viewBox={`0 0 ${wings.left.svgWidth} ${wings.left.svgHeight}`}
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path className={styles.smoothWingPath} d={wings.left.d} />
+            </svg>
+          )}
+          {wings.right && (
+            <svg
+              className={styles.smoothWingRight}
+              width={wings.right.svgWidth}
+              height={wings.right.svgHeight}
+              viewBox={`0 0 ${wings.right.svgWidth} ${wings.right.svgHeight}`}
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path className={styles.smoothWingPath} d={wings.right.d} />
+            </svg>
+          )}
         </>
       )}
       {children}

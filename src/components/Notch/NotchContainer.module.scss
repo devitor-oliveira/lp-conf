@@ -28,11 +28,27 @@
   @include mixins.notch-corner("top-center");
 }
 
-.smoothTopCenter {
+.smoothTopCenter,
+.smoothTopLeft {
   height: var(--notch-smooth-total-height, 44px);
   padding-top: var(--notch-offset-y, 0px);
   background-color: var(--notch-bg, var(--color-background));
   filter: var(--notch-shadow, none);
+}
+
+.smoothTopLeft::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: calc(var(--notch-offset-x, 0px) + var(--notch-fillet, 32px));
+  height: var(--notch-fillet, 32px);
+  background: radial-gradient(
+    circle at 100% 100%,
+    transparent var(--notch-fillet, 32px),
+    var(--notch-bg, var(--color-background)) calc(var(--notch-fillet, 32px) + var(--notch-aa, 0.75px))
+  );
+  pointer-events: none;
 }
 
 .smoothWingLeft,

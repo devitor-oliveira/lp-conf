@@ -32,12 +32,14 @@ export function useNotch(options: UseNotchOptions) {
   } = options;
 
   const isSmoothTopCenter = variant === "smooth" && placement === "top-center";
+  const isSmoothTopLeft = variant === "smooth" && placement === "top-left";
+  const isSmooth = isSmoothTopCenter || isSmoothTopLeft;
 
   // Cálculos concêntricos caso habilitados
   const concentricValues = useMemo(() => {
-    if (isSmoothTopCenter || !concentric) return undefined;
+    if (isSmooth || !concentric) return undefined;
     return calculateConcentricNotch(concentric, offsetX ?? offsetY ?? 0);
-  }, [isSmoothTopCenter, concentric, offsetX, offsetY]);
+  }, [isSmooth, concentric, offsetX, offsetY]);
 
   const resolvedRadius = toCssLength(radius) ?? concentricValues?.radius;
   const resolvedFillet = toCssLength(filletSize) ?? concentricValues?.filletSize;
@@ -51,7 +53,7 @@ export function useNotch(options: UseNotchOptions) {
 
   // Memoiza cálculos trigonométricos pesados de bi-arco (G1 tangency)
   const wings = useMemo(() => {
-    if (!isSmoothTopCenter) return null;
+    if (!isSmooth) return null;
 
     const commonParams = {
       height: safeSmoothHeight,
@@ -62,10 +64,10 @@ export function useNotch(options: UseNotchOptions) {
     };
 
     return {
-      left: generateBiArcWingSvgPath({ ...commonParams, side: "left" }),
+      left: isSmoothTopCenter ? generateBiArcWingSvgPath({ ...commonParams, side: "left" }) : null,
       right: generateBiArcWingSvgPath({ ...commonParams, side: "right" }),
     };
-  }, [isSmoothTopCenter, safeSmoothHeight, angle, numericRadiusBottom, numericOffsetY]);
+  }, [isSmooth, isSmoothTopCenter, safeSmoothHeight, angle, numericRadiusBottom, numericOffsetY]);
 
   // Montagem declarativa de estilo e variáveis CSS via Padrão 1
   const mergedStyle = useMemo<CSSProperties>(() => {
@@ -77,7 +79,7 @@ export function useNotch(options: UseNotchOptions) {
       offsetY,
       color,
       dropShadow,
-      smoothTotalHeight: isSmoothTopCenter ? numericOffsetY + safeSmoothHeight : undefined,
+      smoothTotalHeight: isSmooth ? numericOffsetY + safeSmoothHeight : undefined,
     });
 
     return {
@@ -92,14 +94,16 @@ export function useNotch(options: UseNotchOptions) {
     offsetY,
     color,
     dropShadow,
-    isSmoothTopCenter,
+    isSmooth,
     numericOffsetY,
     safeSmoothHeight,
     style,
   ]);
 
   return {
+    isSmooth,
     isSmoothTopCenter,
+    isSmoothTopLeft,
     wings,
     mergedStyle,
   };
