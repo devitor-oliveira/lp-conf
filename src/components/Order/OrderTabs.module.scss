@@ -1,0 +1,70 @@
+@use "@/styles/mixins";
+
+.tabsWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: clamp(2rem, 3.5vw, 3rem);
+}
+
+.tablist {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  padding: var(--space-0-5);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+
+  @include mixins.respond-to("mobile") {
+    flex-direction: column;
+    width: 100%;
+    border-radius: var(--radius-large);
+  }
+}
+
+.tabButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--space-6); // 48px tap target
+  padding: var(--space-1-5) var(--space-3);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-smooth);
+
+  @include mixins.focus-ring();
+
+  @include mixins.respond-to("mobile") {
+    width: 100%;
+  }
+
+  &:hover:not(.tabActive) {
+    color: var(--color-accent);
+  }
+}
+
+.activePill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-text);
+  z-index: 0;
+}
+
+.tabContent {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.tabActive {
+  color: var(--color-background);
+}

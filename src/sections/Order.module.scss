@@ -1,0 +1,66 @@
+@use "@/styles/mixins";
+
+.order {
+  position: relative;
+  width: 100%;
+  scroll-margin-top: 2rem;
+  padding-block: clamp(4rem, 2.5rem + 5vw, 7rem);
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+.container {
+  @include mixins.container-large;
+  padding-inline: clamp(0.5rem, 0.25rem + 0.8vw, 1.5rem);
+}
+
+.headerGrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: flex-start;
+  gap: clamp(2rem, 0.75rem + 4.5vw, 6rem);
+  margin-bottom: clamp(3rem, 2.25rem + 2.5vw, 4.5rem);
+
+  @include mixins.respond-to("mobile") {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+.titleColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: var(--font-section-title);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.leadColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  max-width: var(--content-width-editorial);
+}
+
+.eyebrow {
+  @include mixins.eyebrow-editorial;
+}
+
+.lead {
+  font-size: var(--font-lead-editorial);
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0;
+  font-weight: 450;
+}
+
+.channelPanelContainer {
+  min-height: 18rem;
+}

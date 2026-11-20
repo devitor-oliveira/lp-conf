@@ -3,8 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/Header/Header";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { About } from "@/sections/About";
+import { Footer } from "@/sections/Footer";
 import { Hero } from "@/sections/Hero";
 import { Menu } from "@/sections/Menu";
+import { Order } from "@/sections/Order";
 import styles from "./App.module.scss";
 
 export function App() {
@@ -48,8 +50,9 @@ export function App() {
         />
         <About />
         <Menu />
+        <Order />
       </main>
-      <footer className={styles.footer} />
+      <Footer />
     </MotionConfig>
   );
 }

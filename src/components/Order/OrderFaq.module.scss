@@ -1,0 +1,95 @@
+@use "@/styles/mixins";
+
+.faqSection {
+  margin-top: clamp(3.5rem, 6vw, 5.5rem);
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  align-items: start;
+
+  @include mixins.respond-to("mobile") {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+.faqHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.eyebrow {
+  @include mixins.eyebrow-editorial;
+}
+
+.heading {
+  font-size: var(--font-h2);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--color-accent);
+  transition: transform var(--duration-fast) var(--ease-smooth);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.faqItem {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+
+  &[open] .chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.faqQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: var(--space-6); // 48px tap target
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-body);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text);
+  cursor: pointer;
+  list-style: none;
+
+  @include mixins.focus-ring();
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:hover {
+    color: var(--color-accent);
+  }
+}
+
+.faqAnswer {
+  padding: 0 var(--space-3) var(--space-2-5);
+  font-size: var(--font-card-desc);
+  line-height: 1.6;
+  color: var(--color-muted);
+
+  p {
+    margin: 0;
+  }
+}
