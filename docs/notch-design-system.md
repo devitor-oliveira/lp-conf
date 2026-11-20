@@ -65,9 +65,9 @@ Cada quadrante de `placement` projeta sua concavidade para o interior da seção
 | **`bottom-left`**  | `border-top-right-radius`    | Direita (`bottom: 0; left: 100%`)<br>Acima (`bottom: 100%; left: 0`)    | `padding: paddingOuter paddingOuter offsetY offsetX` |
 | **`bottom-right`** | `border-top-left-radius`     | Esquerda (`bottom: 0; right: 100%`)<br>Acima (`bottom: 100%; right: 0`) | `padding: paddingOuter offsetX offsetY paddingOuter` |
 
-### `top-center` e variante `smooth`
+### `top-center`, `top-left` e variante `smooth`
 
-`NotchContainer` também aceita `placement="top-center"`. A variante `smooth` é usada no `CarroselProgress` e gera asas SVG com bi-arcos:
+`NotchContainer` suporta `variant="smooth"` em `placement="top-center"` (usado no `CarroselProgress`) e em `placement="top-left"` (usado no `Header`), gerando asas SVG com bi-arcos:
 
 ```tsx
 <NotchContainer
@@ -83,10 +83,11 @@ Cada quadrante de `placement` projeta sua concavidade para o interior da seção
 </NotchContainer>;
 ```
 
-- `variant="smooth"` só tem efeito visual com `placement="top-center"`.
+- `variant="smooth"` tem efeito visual em `placement="top-center"` (duas asas SVG laterais) e `placement="top-left"` (asa SVG à direita + filete côncavo inferior esquerdo `::after` via `filletSize`).
 - `angle` é a angulação máxima da rampa (graus ou string com `deg`).
 - `radius` é o raio convexo inferior desejado.
 - `smoothHeight` é a altura líquida da aba; quando omitido, é derivado de `2 * innerRadius + paddingOuter`.
+- Em `variant="smooth"`, `offsetX` e `offsetY` devem ser valores numéricos em pixels (ex.: `8` para `--layout-stage-margin`) para que o cálculo trigonométrico do SVG em `biarc.ts` coincida com o CSS.
 - A geometria é gerada em `src/components/Notch/biarc.ts` e memoizada em `src/components/Notch/useNotch.ts`.
 - As asas SVG são decorativas (`aria-hidden`) e usam `pointer-events: none`.
 
@@ -208,7 +209,7 @@ Quando o entalhe precisa acompanhar a cor viva da Hero/Carrossel, o wrapper do c
 
 ## 7. Exemplos atuais no projeto
 
-- **Header**: `top-left`, `innerRadius=32`, `paddingOuter=12`, `paddingInner=var(--layout-stage-margin)`, offset `var(--layout-stage-margin)`.
+- **Header**: `top-left`, `variant="smooth"`, `angle=48`, `radius=32`, `smoothHeight=32`, `filletSize=32`, `offsetX=8`, `offsetY=8`.
 - **ThemeToggle**: `top-right`, `innerRadius=28`, `paddingOuter=12` no desktop e `8` no mobile, offset `var(--layout-stage-margin)`.
 - **WhatsAppCTA**: `bottom-right`, `innerRadius=24`, `paddingOuter=12`, `paddingInner=0`, offsets `0`.
 - **CarroselProgress**: `top-center`, `variant="smooth"`, `angle=48`, `radius=32`, `smoothHeight=32`, `offsetY=0`.
@@ -237,5 +238,5 @@ Quando o entalhe precisa acompanhar a cor viva da Hero/Carrossel, o wrapper do c
 - Usar `paddingOuter` no lugar de `offsetX`/`offsetY` (ou vice-versa).
 - Aplicar padding no lado errado do quadrante e eliminar o colarinho.
 - Assumir que a transição de 0.6s vem do componente base; ela precisa estar no wrapper.
-- Usar `variant="smooth"` com placement diferente de `top-center`.
+- Usar `variant="smooth"` com placement diferente de `top-center` ou `top-left`.
 - Introduzir links absolutos `file:///` ou valores mágicos fora dos tokens.
