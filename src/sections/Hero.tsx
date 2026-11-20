@@ -1,17 +1,14 @@
-import type React from "react";
 import Carrosel from "@/components/Carrosel/Carrosel";
 import styles from "./Hero.module.scss";
 
 export interface HeroProps {
   onSlideColorChange?: (colorToken: string) => void;
   activeColor?: string;
-  heroRef?: React.Ref<HTMLElement>;
 }
 
-export function Hero({ onSlideColorChange, activeColor, heroRef }: HeroProps) {
+export function Hero({ onSlideColorChange, activeColor }: HeroProps) {
   return (
     <section
-      ref={heroRef}
       className={styles.hero}
       id="inicio"
       aria-labelledby="hero-title"
