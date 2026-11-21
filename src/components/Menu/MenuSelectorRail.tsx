@@ -1,26 +1,14 @@
 import { type KeyboardEvent, useRef } from "react";
-import type { MenuCategory, MenuCategoryId, MenuItem } from "@/utils/mockdata";
+import type { MenuItem } from "@/utils/mockdata";
 import styles from "./MenuSelectorRail.module.scss";
 
 export interface MenuSelectorRailProps {
   readonly items: readonly MenuItem[];
-  readonly categories: readonly MenuCategory[];
-  readonly activeCategory: MenuCategoryId;
-  readonly counts: Record<MenuCategoryId, number>;
   readonly selectedItemId: string;
-  readonly onSelectCategory: (cat: MenuCategoryId) => void;
   readonly onSelectItem: (id: string) => void;
 }
 
-export function MenuSelectorRail({
-  items,
-  categories,
-  activeCategory,
-  counts,
-  selectedItemId,
-  onSelectCategory,
-  onSelectItem,
-}: MenuSelectorRailProps) {
+export function MenuSelectorRail({ items, selectedItemId, onSelectItem }: MenuSelectorRailProps) {
   const itemRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
   const handleKeyDownItem = (e: KeyboardEvent<HTMLButtonElement>, currentId: string) => {
@@ -53,31 +41,7 @@ export function MenuSelectorRail({
 
   return (
     <aside className={styles.railContainer} aria-label="Seletor de doces do atelier">
-      <div className={styles.railHeader}>
-        <h3 className={styles.railTitle}>Coleções &amp; Criações</h3>
-        <div role="tablist" aria-label="Filtrar por categoria" className={styles.categoryPills}>
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                className={`${styles.categoryPill} ${isActive ? styles.activePill : ""}`}
-                onClick={() => onSelectCategory(cat.id)}
-              >
-                <span>{cat.label}</span>
-                <span className={styles.pillCount} aria-hidden="true">
-                  {counts[cat.id]}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div role="listbox" aria-label="Doces e coleções disponíveis" className={styles.itemList}>
+      <div role="listbox" aria-label="Doces e coleções disponíveis" className={styles.thumbList}>
         {items.map((item) => {
           const isSelected = item.id === selectedItemId;
 
@@ -95,24 +59,15 @@ export function MenuSelectorRail({
               role="option"
               aria-selected={isSelected}
               tabIndex={isSelected ? 0 : -1}
-              className={`${styles.itemCard} ${isSelected ? styles.activeCard : ""}`}
+              className={`${styles.thumbItem} ${isSelected ? styles.activeThumb : ""}`}
               onClick={() => onSelectItem(item.id)}
               onKeyDown={(e) => handleKeyDownItem(e, item.id)}
             >
-              <div className={styles.thumbWrapper}>
+              <div className={styles.thumbFrame}>
                 <img src={item.image} alt={item.alt} loading="lazy" decoding="async" />
               </div>
 
-              <div className={styles.itemMeta}>
-                <span className={styles.itemCategoryTag}>{item.subtitle}</span>
-                <span className={styles.itemName}>{item.name}</span>
-                <div className={styles.itemPriceRow}>
-                  <span className={styles.itemPrice}>{item.priceDisplay}</span>
-                  <span className={styles.itemPortions}>{item.portionsInfo}</span>
-                </div>
-              </div>
-
-              <span className={styles.activeIndicatorDot} aria-hidden="true" />
+              <span className={styles.thumbLabel}>{item.name}</span>
             </button>
           );
         })}

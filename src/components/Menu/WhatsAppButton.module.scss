@@ -1,64 +1,58 @@
+@use "../../styles/mixins" as mixins;
+
 .whatsappBtn {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  border-radius: 14px;
-  background-color: var(--color-whatsapp);
-  color: var(--color-whatsapp-text);
-  border: 1.5px solid var(--color-whatsapp-border);
+  flex-shrink: 0;
+  width: var(--space-7);
+  height: var(--space-7);
+  padding: 0;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-menu-cta-bg, var(--color-text));
+  background-color: var(--color-menu-cta-bg, var(--color-text));
+  color: var(--color-background);
+  text-decoration: none;
   cursor: pointer;
-  outline: none;
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.15s ease;
+    background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 
   &:hover {
-    background-color: var(--color-whatsapp-hover);
-    box-shadow: 0 4px 14px rgb(37 211 102 / 0.3);
+    background-color: color-mix(
+      in srgb,
+      var(--color-menu-cta-bg, var(--color-text)) 88%,
+      var(--color-background)
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--color-menu-cta-bg, var(--color-text)) 88%,
+      var(--color-background)
+    );
     transform: translateY(-1px);
   }
 
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-whatsapp);
-    outline-offset: 2px;
+    @include mixins.focus-ring;
   }
 
-  &.whatsappTriggered {
+  &[data-confirming="true"] {
     background-color: var(--color-whatsapp-dark);
-    color: var(--color-on-media);
-    border-color: var(--color-whatsapp-dark-border);
+    border-color: var(--color-whatsapp-dark);
+    color: var(--color-text-slide-1);
   }
 
-  &:disabled {
-    cursor: wait;
-    opacity: 0.95;
-  }
-}
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
 
-.contentRow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-@media (forced-colors: active) {
-  .whatsappBtn {
-    border-color: ButtonBorder;
-
-    &:hover {
-      border-color: Highlight;
+    &:hover,
+    &:active {
+      transform: none;
     }
   }
 }

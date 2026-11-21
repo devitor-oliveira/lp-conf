@@ -1,26 +1,34 @@
-@use "../styles/mixins" as mixins;
+@use "@/styles/mixins";
 
 .menu {
+  --color-surface: var(--color-menu-surface);
+  --color-background: var(--color-menu-canvas);
+  --color-text: var(--color-menu-text);
+  --color-muted: var(--color-menu-muted);
+  --color-accent: var(--color-menu-accent);
+  --color-border: var(--color-menu-border);
+
   position: relative;
   width: 100%;
-  padding-block: clamp(3.5rem, 7vw, 6rem);
+  padding-block: clamp(2rem, 1.25rem + 2vw, 3.25rem);
   background-color: var(--color-surface);
   color: var(--color-text);
-  border-top: 1.5px solid var(--color-border);
-  border-bottom: 1.5px solid var(--color-border);
-  transition: background-color 0.4s ease;
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 22%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 22%, transparent);
+  transition: background-color var(--duration-normal) var(--ease-smooth);
 }
 
 .container {
-  @include mixins.container;
+  @include mixins.container-large;
+  container-type: inline-size;
+  padding-inline: clamp(0.5rem, 0.25rem + 0.8vw, 1.5rem);
 }
 
 .bentoShowcase {
   display: grid;
-  grid-template-columns: 4.5fr 7.5fr;
-  gap: var(--bento-gap, 16px);
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem);
   align-items: stretch;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 @include mixins.respond-to("mobile") {

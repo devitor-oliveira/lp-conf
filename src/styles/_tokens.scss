@@ -65,6 +65,7 @@
   --content-width-editorial: 48.75rem; // 780px
   --badge-size-compact: 1.75rem; // 28px
   --padding-expand-button: 0.45rem 0.55rem 0.45rem 1.25rem;
+  --menu-thumb-size: clamp(4.75rem, 4rem + 2vw, 6rem); // 76px -> 96px
 
   // --- Tipografia Fluida Acessível (rem + vw com clamp) ---
   --font-hero: clamp(3.5rem, 6.5vw, 8rem); // 56px -> 128px
@@ -82,6 +83,8 @@
   --font-card-desc: clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem); // 13.6px -> 15.2px
   --font-card-tag: clamp(0.7rem, 0.65rem + 0.2vw, 0.78rem); // 11.2px -> 12.5px
   --font-expand-button: clamp(0.82rem, 0.78rem + 0.2vw, 0.9rem); // 13.1px -> 14.4px
+  --font-menu-item-title: clamp(1.75rem, 1.15rem + 2.2vw, 2.75rem); // 28px -> 44px
+  --font-menu-price: clamp(1.15rem, 0.95rem + 0.6vw, 1.4rem); // 18.4px -> 22.4px
 
   // --- Integração da imagem (scrim + profundidade) ---
   --image-scrim: rgb(0 0 0 / 0.25);
@@ -109,6 +112,15 @@
   --duration-normal: 0.4s;
   --duration-slow: 0.6s;
   --duration-card-zoom: 0.6s;
+
+  // --- Superfície Editorial Chocolate da Seção Cardápio (#cardapio) ---
+  --color-menu-surface: var(--color-surface-slide-2); // #5a3620 (Cacau Torrado)
+  --color-menu-canvas: #301c11; // Cacau Amargo 70%
+  --color-menu-text: #f8f4e8;
+  --color-menu-muted: #e5dcc8;
+  --color-menu-accent: #c7f880;
+  --color-menu-border: #f8f4e8;
+  --color-menu-cta-bg: #eae2b7;
 }
 
 [data-theme="dark"] {
@@ -129,4 +141,10 @@
   --color-on-accent: #171210;
   --color-border: #7d6c61;
   --color-whatsapp-icon-surface: #25d366;
+  --color-menu-surface: #301c11; // Cacau Amargo 70%
+  --color-menu-canvas: #1c1009;
+  --color-menu-text: #f0f3ed;
+  --color-menu-muted: #d6cec2;
+  --color-menu-accent: #c7f880;
+  --color-menu-border: #e5dcc8;
 }

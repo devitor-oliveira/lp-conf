@@ -2,6 +2,7 @@ import YellowHeroIMG from "@/assets/doce-amarelo.png";
 import GreenHeroIMG from "@/assets/doce-verde.png";
 import RedHeroIMG from "@/assets/doce-vermelho.png";
 import type { HeroHighlight } from "@/components/Carrosel/HeroHighlights/HeroHighlights";
+import { MENU_ITEM_IMAGES } from "@/utils/constants";
 
 export interface Slide {
   id: number;
@@ -77,19 +78,11 @@ export const SLIDES: Slide[] = [
 
 // --- Seção Cardápio & Coleções (#cardapio) ---
 
-export type MenuCategoryId = "todos" | "autorais" | "presentes" | "eventos";
-
-export interface MenuCategory {
-  readonly id: MenuCategoryId;
-  readonly label: string;
-}
-
 export interface MenuItem {
   readonly id: string;
-  readonly category: Exclude<MenuCategoryId, "todos">;
   readonly name: string;
   readonly subtitle: string;
-  readonly description: string;
+  readonly features: readonly string[];
   readonly image: string;
   readonly alt: string;
   readonly sensoryNotes: readonly string[];
@@ -99,68 +92,73 @@ export interface MenuItem {
   readonly whatsappPresetMessage: string;
 }
 
-export const MENU_CATEGORIES: readonly MenuCategory[] = [
-  { id: "todos", label: "Todos" },
-  { id: "autorais", label: "Doces Autorais" },
-  { id: "presentes", label: "Caixas para Presente" },
-  { id: "eventos", label: "Lotes para Eventos" },
-] as const;
-
 export const MENU_ITEMS: readonly MenuItem[] = [
   {
     id: "cacau-cereja-unit",
-    category: "autorais",
     name: "Cacau & Cereja Selvagem",
     subtitle: "Trufa artesanal monovarietal",
-    description:
-      "Cacau 70% de origem agroecológica, ganache aveludada e redução pura de cerejas frescas da estação.",
-    image: RedHeroIMG,
-    alt: "Doce autoral vermelho com cacau e cereja",
+    features: [
+      "Cacau 70% de origem agroecológica",
+      "Ganache aveludada de textura cremosa",
+      "Redução pura de cerejas frescas da estação",
+      "Unidade de 45g com doçura equilibrada",
+    ],
+    image: MENU_ITEM_IMAGES.cacauCereja,
+    alt: "Trufas artesanais de chocolate amargo 70% cacau com acabamento aveludado",
     sensoryNotes: ["Cacau 70%", "Frutas Vermelhas", "Doçura Reduzida"],
     priceDisplay: "R$ 12,00",
-    portionsInfo: "Unidade individual (45g)",
+    portionsInfo: "Unidade (45g)",
     targetServiceTier: "pedidos-whatsapp",
     whatsappPresetMessage: "Olá! Gostaria de pedir unidades do doce Cacau & Cereja Selvagem.",
   },
   {
     id: "citrico-imperial-unit",
-    category: "autorais",
     name: "Cítrico Imperial",
     subtitle: "Pâte de fruits com flor de laranjeira",
-    description:
-      "Equilíbrio refinado entre o azedinho do limão siciliano, cumaru brasileiro e infusão floral delicada.",
-    image: YellowHeroIMG,
-    alt: "Doce artesanal amarelo sabor cítrico imperial",
+    features: [
+      "Pâte de fruits artesanal com limão siciliano fresco",
+      "Infusão aromática de flor de laranjeira",
+      "Toque especiado de cumaru brasileiro",
+      "Unidade de 45g com acabamento cítrico brilhante",
+    ],
+    image: MENU_ITEM_IMAGES.citricoImperial,
+    alt: "Tartelete e confeitaria fina de limão siciliano com acabamento cítrico brilhante",
     sensoryNotes: ["Limão Siciliano", "Flor de Laranjeira", "Cumaru"],
     priceDisplay: "R$ 12,00",
-    portionsInfo: "Unidade individual (45g)",
+    portionsInfo: "Unidade (45g)",
     targetServiceTier: "pedidos-whatsapp",
     whatsappPresetMessage: "Olá! Gostaria de pedir unidades do doce Cítrico Imperial.",
   },
   {
     id: "pistache-silvestre-unit",
-    category: "autorais",
     name: "Pistache Silvestre",
     subtitle: "Bombom lapidado de pistache puro",
-    description:
-      "Pistache iraniano moído lentamente na pedra com chocolate branco artesanal e flor de sal.",
-    image: GreenHeroIMG,
-    alt: "Doce fino verde de pistache silvestre",
+    features: [
+      "Pistache iraniano selecionado e moído na pedra",
+      "Base cremosa de chocolate branco artesanal",
+      "Realce sutil com cristais de flor de sal",
+      "Bombom lapidado de 45g",
+    ],
+    image: MENU_ITEM_IMAGES.pistacheSilvestre,
+    alt: "Doce fino folhado e lapidado coberto por pistache verde moído na pedra",
     sensoryNotes: ["Pistache Puro", "Flor de Sal", "Textura Crocante"],
     priceDisplay: "R$ 14,00",
-    portionsInfo: "Unidade individual (45g)",
+    portionsInfo: "Unidade (45g)",
     targetServiceTier: "pedidos-whatsapp",
     whatsappPresetMessage: "Olá! Gostaria de pedir unidades do doce Pistache Silvestre.",
   },
   {
     id: "caixa-degustacao-8",
-    category: "presentes",
-    name: "Caixa Degustação Atelier (8 unids)",
+    name: "Caixa Degustação Atelier",
     subtitle: "A seleção completa dos sabores ícones",
-    description:
-      "Caixa rígida com fecho magnético contendo seleção balanceada dos três doces ícones e edições do mês.",
-    image: RedHeroIMG,
-    alt: "Caixa de presente com doces finos artesanais",
+    features: [
+      "Seleção balanceada dos três doces ícones da casa",
+      "Edições sazonais selecionadas do mês",
+      "Caixa rígida premium com fecho magnético",
+      "Acabamento presenteável com fita de gorgurão",
+    ],
+    image: MENU_ITEM_IMAGES.caixaDegustacao8,
+    alt: "Caixa rígida escura de degustação com bombons e pralines artesanais sortidos",
     sensoryNotes: ["Embalagem Rígida", "Fita de Gorgurão", "Seleção Mista"],
     priceDisplay: "R$ 96,00",
     portionsInfo: "Caixa com 8 unidades",
@@ -169,13 +167,16 @@ export const MENU_ITEMS: readonly MenuItem[] = [
   },
   {
     id: "caixa-luxo-16",
-    category: "presentes",
-    name: "Caixa Coleção Botânica (16 unids)",
+    name: "Caixa Coleção Botânica",
     subtitle: "O presente definitivo para ocasiões especiais",
-    description:
-      "Apresentação em caixa rígida luxuosa com lacre em cera vegetal, fita de algodão e menu explicativo de terroir.",
-    image: GreenHeroIMG,
-    alt: "Caixa luxuosa de presentes com 16 doces finos",
+    features: [
+      "Sortimento completo com 16 doces autorais",
+      "Caixa rígida luxuosa com lacre em cera vegetal",
+      "Finalização em fita de algodão artesanal",
+      "Acompanha menu explicativo de origem e terroir",
+    ],
+    image: MENU_ITEM_IMAGES.caixaLuxo16,
+    alt: "Caixa dourada luxuosa de presente com coleção de 16 bombons finos artesanais",
     sensoryNotes: ["Edição Especial", "Lacre em Cera", "Pronta para Presente"],
     priceDisplay: "R$ 180,00",
     portionsInfo: "Caixa com 16 unidades",
@@ -184,13 +185,16 @@ export const MENU_ITEMS: readonly MenuItem[] = [
   },
   {
     id: "lote-eventos-50",
-    category: "eventos",
     name: "Mesa de Degustação para Eventos",
     subtitle: "Lotes a partir de 30 a 200+ unidades",
-    description:
-      "Doces finos lapidados para casamentos, batizados e eventos corporativos com montagem personalizada e degustação prévia.",
-    image: YellowHeroIMG,
-    alt: "Seleção de doces finos para mesa de eventos e casamentos",
+    features: [
+      "Lotes sob medida a partir de 30 a 200+ unidades",
+      "Curadoria personalizada para casamentos e eventos",
+      "Degustação prévia agendada com a equipe do atelier",
+      "Montagem e apresentação coordenadas para a mesa",
+    ],
+    image: MENU_ITEM_IMAGES.loteEventos50,
+    alt: "Seleção colorida de doces finos e macarons alinhados para mesa de eventos e celebrações",
     sensoryNotes: ["Degustação Prévia", "Sob Medida", "Lotes Numerados"],
     priceDisplay: "A partir de R$ 320,00",
     portionsInfo: "Lotes a partir de 30 unidades",

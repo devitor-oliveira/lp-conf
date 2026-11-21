@@ -1,39 +1,32 @@
-@use "../../styles/mixins" as mixins;
+@use "@/styles/mixins";
 
 .header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 760px;
-  margin-inline: auto;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-
-  .eyebrow {
-    @include mixins.eyebrow;
-    margin-bottom: 0.75rem;
-  }
-
-  .title {
-    font-size: clamp(2rem, 4vw, 3.25rem);
-    font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin: 0 0 1.25rem 0;
-    color: var(--color-text);
-  }
-
-  .lead {
-    font-size: clamp(1rem, 1.8vw, 1.15rem);
-    line-height: 1.65;
-    color: var(--color-muted);
-    margin: 0;
-  }
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-1-5);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 20%, transparent);
 }
 
-@include mixins.respond-to("mobile") {
-  .header {
-    text-align: left;
-    align-items: flex-start;
-  }
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.eyebrow {
+  @include mixins.eyebrow-editorial;
+}
+
+.title {
+  font-size: var(--font-section-title);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--color-text);
+  text-transform: uppercase;
 }
