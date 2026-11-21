@@ -1,6 +1,6 @@
 import { Check, MessageCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { DEFAULT_WHATSAPP_PHONE, getWhatsAppUrl } from "@/utils/constants";
+import { buildWhatsAppUrl, DEFAULT_WHATSAPP_PHONE } from "@/utils/whatsapp";
 import styles from "./WhatsAppButton.module.scss";
 
 export interface WhatsAppButtonProps {
@@ -33,7 +33,7 @@ export function WhatsAppButton({ presetMessage, productName }: WhatsAppButtonPro
     }, CONFIRM_DURATION_MS);
   };
 
-  const whatsappUrl = getWhatsAppUrl(DEFAULT_WHATSAPP_PHONE, presetMessage);
+  const whatsappUrl = buildWhatsAppUrl(DEFAULT_WHATSAPP_PHONE, presetMessage);
   const accessibleLabel = isConfirming
     ? `Abrindo WhatsApp para pedir ${productName}`
     : `Pedir ${productName} no WhatsApp`;

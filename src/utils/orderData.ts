@@ -1,4 +1,4 @@
-import { WHATSAPP_PRESET_MESSAGES } from "./constants";
+import { WHATSAPP_PRESET_MESSAGES } from "./whatsapp";
 
 export interface OrderProcessStep {
   readonly number: string;

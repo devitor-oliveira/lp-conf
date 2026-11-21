@@ -1,5 +1,5 @@
-export { MenuExpandButton } from "./MenuExpandButton";
+export { MenuExpandButton } from "./MenuExpandButton/MenuExpandButton";
 export {
   ServiceTierCard,
   type ServiceTierCardProps,
-} from "./ServiceTierCard";
+} from "./ServiceTierCard/ServiceTierCard";

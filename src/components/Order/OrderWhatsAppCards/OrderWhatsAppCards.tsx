@@ -1,7 +1,7 @@
 import { ArrowUpRight, Check, MessageCircle } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { DEFAULT_WHATSAPP_PHONE, getWhatsAppUrl } from "@/utils/constants";
 import type { OrderWhatsAppChannel } from "@/utils/orderData";
+import { buildWhatsAppUrl, DEFAULT_WHATSAPP_PHONE } from "@/utils/whatsapp";
 import styles from "./OrderWhatsAppCards.module.scss";
 
 export interface OrderWhatsAppCardsProps {
@@ -19,7 +19,7 @@ export function OrderWhatsAppCards({ channels }: OrderWhatsAppCardsProps) {
       className={styles.cardsGrid}
     >
       {channels.map((channel) => {
-        const whatsappHref = getWhatsAppUrl(DEFAULT_WHATSAPP_PHONE, channel.whatsappMessage);
+        const whatsappHref = buildWhatsAppUrl(DEFAULT_WHATSAPP_PHONE, channel.whatsappMessage);
         const isFeatured = Boolean(channel.isFeatured);
 
         return (
