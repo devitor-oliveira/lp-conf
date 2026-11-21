@@ -21,3 +21,14 @@ export const MENU_ITEM_IMAGES = {
   loteEventos50:
     "https://images.pexels.com/photos/10281287/pexels-photo-10281287.jpeg?auto=compress&cs=tinysrgb&w=1000",
 } as const;
+
+export const ATELIER_CONTACT_INFO = {
+  brandName: "Atelier de Alta Confeitaria",
+  tagline: "Cacau agroecológico, botânica brasileira e confeitaria de tempo lento.",
+  addressLine1: "Rua dos Pinheiros, 840 — Pinheiros",
+  addressLine2: "São Paulo, SP • CEP 05422-001",
+  hoursLabel: "Terça a Domingo, das 10h às 19h",
+  email: "atendimento@atelierconfeitaria.com.br",
+  instagramUrl: "https://instagram.com/atelierconfeitaria",
+  instagramHandle: "@atelierconfeitaria",
+} as const;

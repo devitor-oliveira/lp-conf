@@ -121,6 +121,15 @@
   --color-menu-accent: #c7f880;
   --color-menu-border: #f8f4e8;
   --color-menu-cta-bg: #eae2b7;
+
+  // --- Superfície Editorial do Rodapé (Footer) ---
+  --color-footer-surface: #1c1410;
+  --color-footer-text: #f5efe6;
+  --color-footer-muted: #c9bfb2;
+  --color-footer-accent: #c7f880;
+  --color-footer-border: rgb(245 239 230 / 0.16);
+  --color-footer-cta-bg: #eae2b7;
+  --color-footer-cta-text: #1c1410;
 }
 
 [data-theme="dark"] {
@@ -147,4 +156,5 @@
   --color-menu-muted: #d6cec2;
   --color-menu-accent: #c7f880;
   --color-menu-border: #e5dcc8;
+  --color-footer-surface: #0f0b09;
 }

@@ -20,6 +20,8 @@ Landing page SPA de confeitaria artesanal com React 19, TypeScript 6, Vite 8, Mo
 
 - TypeScript estrito: proibido `any`, `@ts-ignore` cosmético e `as unknown as`.
 - Zero gambiarras, magic numbers, `!important` desnecessário ou HTML semanticamente incorreto.
+- **`button-base` é extensível**: `@mixin button-base` (`src/styles/_mixins.scss`) é um estilo de base, não definitivo; sobrescritas pontuais de estilos dessa base por botões ou componentes específicos são válidas e não devem ser classificadas automaticamente como erro.
+- **Reduced Motion centralizado**: o controle de `reducedMotion` concentra-se no `<MotionConfig>` em `src/App.tsx` e permanece desativado (`reducedMotion="never"`) durante o desenvolvimento para testes; não altere essa configuração nem adicione controles locais de `reducedMotion` a menos que explicitamente ordenado.
 - Validação obrigatória antes de concluir: `npm run check`, `npm run typecheck`, `npm run build`.
 - Branch base de integração: `dev`. Features usam `feat/<escopo>`; refatorações usam `refactoring/<escopo>`; correções usam `fix/<escopo>`.
 - Trabalhe em worktree isolado em `.worktrees/<feature>` quando a tarefa exigir paralelismo.

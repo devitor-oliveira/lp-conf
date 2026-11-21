@@ -1,5 +1,6 @@
 export interface ScrollToSectionOptions {
   fallbackToBottom?: boolean;
+  focusTarget?: boolean;
 }
 
 export function scrollToSection(selector: string, options: ScrollToSectionOptions = {}): void {
@@ -9,6 +10,12 @@ export function scrollToSection(selector: string, options: ScrollToSectionOption
 
   if (element) {
     element.scrollIntoView({ behavior, block: "start" });
+    if (options.focusTarget && element instanceof HTMLElement) {
+      if (!element.hasAttribute("tabindex")) {
+        element.tabIndex = -1;
+      }
+      element.focus({ preventScroll: true });
+    }
   } else if (options.fallbackToBottom) {
     window.scrollTo({ top: document.body.scrollHeight, behavior });
   }
