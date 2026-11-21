@@ -5,7 +5,7 @@ import { ThemeToggleButton } from "@/components/ThemeToggle";
 import styles from "./Header.module.scss";
 
 const STAGE_MARGIN_PX = 12; // Equivalente ao token --layout-stage-margin (0.5rem)
-const HEADER_NOTCH_ANGLE = 56;
+const HEADER_NOTCH_ANGLE = 58;
 const HEADER_NOTCH_HEIGHT = 38;
 const HEADER_RADIUS_BOTTOM = 32;
 const HEADER_LEFT_FILLET = 32; // Equivalente ao token --radius-max (2rem) da Hero
