@@ -23,6 +23,7 @@ Landing page SPA de confeitaria artesanal com React 19, TypeScript 6, Vite 8, Mo
 - Validação obrigatória antes de concluir: `npm run check`, `npm run typecheck`, `npm run build`.
 - Branch base de integração: `dev`. Features usam `feat/<escopo>`; refatorações usam `refactoring/<escopo>`; correções usam `fix/<escopo>`.
 - Trabalhe em worktree isolado em `.worktrees/<feature>` quando a tarefa exigir paralelismo.
+- **Conflitos de merge**: sempre que `git merge` resultar em conflito, **interrompa imediatamente** qualquer edição de resolução, reporte os arquivos afetados e explique o motivo da divergência ao usuário sem exceção, aguardando instrução explícita antes de resolver ou abortar.
 - Servidor local dedicado na porta 3001: `npm run dev -- --port 3001`.
 - Antes de tocar em entalhes, leia `docs/notch-design-system.md` ou carregue a skill `notch-design-system`.
 - Não edite a pasta `agent/`: ela é o arquivo legado do Antigravity.

@@ -1,7 +1,7 @@
 @mixin nav-link-interactive {
   position: relative;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
   letter-spacing: 0.03em;
   white-space: nowrap;
   transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -75,7 +75,8 @@
   top: 0;
   left: 0;
   z-index: 30;
-  padding-top: 2px;
+  padding-top: 8px;
+  // margin-top: 0.3rem;
 
   nav {
     display: flex;
@@ -83,7 +84,9 @@
     height: 100%;
     gap: 1.75rem;
     padding-right: 0.5rem;
-    padding-left: calc(var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.75rem);
+    padding-left: calc(
+      var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.75rem
+    );
     color: var(--color-text);
 
     a {
@@ -117,7 +120,9 @@
   .header nav {
     gap: 1.25rem;
     padding-right: 0.35rem;
-    padding-left: calc(var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.75rem);
+    padding-left: calc(
+      var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.75rem
+    );
 
     a {
       font-size: 0.9rem;
@@ -129,7 +134,9 @@
   .header nav {
     gap: 0.875rem;
     padding-right: 0.35rem;
-    padding-left: calc(var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.5rem);
+    padding-left: calc(
+      var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.5rem
+    );
 
     a {
       font-size: 0.85rem;

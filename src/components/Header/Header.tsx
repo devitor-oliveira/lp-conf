@@ -4,9 +4,9 @@ import { NotchContainer } from "@/components/Notch";
 import { ThemeToggleButton } from "@/components/ThemeToggle";
 import styles from "./Header.module.scss";
 
-const STAGE_MARGIN_PX = 8; // Equivalente ao token --layout-stage-margin (0.5rem)
-const HEADER_NOTCH_ANGLE = 48;
-const HEADER_NOTCH_HEIGHT = 32;
+const STAGE_MARGIN_PX = 12; // Equivalente ao token --layout-stage-margin (0.5rem)
+const HEADER_NOTCH_ANGLE = 56;
+const HEADER_NOTCH_HEIGHT = 38;
 const HEADER_RADIUS_BOTTOM = 32;
 const HEADER_LEFT_FILLET = 32; // Equivalente ao token --radius-max (2rem) da Hero
 
@@ -46,7 +46,8 @@ export function Header({
   const dockedRef = useRef<HTMLElement>(null);
   const [internalFloating, setInternalFloating] = useState(false);
 
-  const activeFloating = isFloatingProp !== undefined ? isFloatingProp : internalFloating;
+  const activeFloating =
+    isFloatingProp !== undefined ? isFloatingProp : internalFloating;
 
   useEffect(() => {
     if (isFloatingProp !== undefined) return;
@@ -58,7 +59,8 @@ export function Header({
       ([entry]) => {
         if (!entry) return;
         // O header flutuante surge assim que o header ancorado sair pelo topo da tela
-        const isPastTop = !entry.isIntersecting && entry.boundingClientRect.bottom <= 0;
+        const isPastTop =
+          !entry.isIntersecting && entry.boundingClientRect.bottom <= 0;
         setInternalFloating(isPastTop);
         onFloatingChange?.(isPastTop);
       },
@@ -71,7 +73,9 @@ export function Header({
     return () => observer.disconnect();
   }, [isFloatingProp, onFloatingChange]);
 
-  const composedDockedClassName = [styles.header, className].filter(Boolean).join(" ");
+  const composedDockedClassName = [styles.header, className]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <>
@@ -91,7 +95,11 @@ export function Header({
       >
         <nav aria-label="Navegação principal">
           {NAV_LINKS.map((link) => (
-            <a key={link.href} href={link.href} tabIndex={activeFloating ? -1 : undefined}>
+            <a
+              key={link.href}
+              href={link.href}
+              tabIndex={activeFloating ? -1 : undefined}
+            >
               {link.label}
             </a>
           ))}
@@ -106,9 +114,17 @@ export function Header({
             initial={{ y: -140, opacity: 0, x: "-50%" }}
             animate={{ y: 0, opacity: 1, x: "-50%" }}
             exit={{ y: -140, opacity: 0, x: "-50%" }}
-            transition={{ type: "spring", stiffness: 280, damping: 24, mass: 0.8 }}
+            transition={{
+              type: "spring",
+              stiffness: 280,
+              damping: 24,
+              mass: 0.8,
+            }}
           >
-            <nav aria-label="Navegação principal" className={styles.floatingNav}>
+            <nav
+              aria-label="Navegação principal"
+              className={styles.floatingNav}
+            >
               {NAV_LINKS.map((link) => (
                 <a key={link.href} href={link.href}>
                   {link.label}
