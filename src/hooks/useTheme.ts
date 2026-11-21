@@ -4,8 +4,8 @@ export type ThemeMode = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "lp-conf-theme";
 export const THEME_CHANGE_EVENT = "lp-conf-theme-change";
-export const THEME_META_LIGHT = "#F8F4E8";
-export const THEME_META_DARK = "#003049";
+export const THEME_META_LIGHT = "#f8f4e8";
+export const THEME_META_DARK = "#171210";
 
 /**
  * Resolve o tema inicial seguindo a hierarquia de fontes de verdade:
@@ -52,9 +52,8 @@ export function applyThemeToDocument(theme: ThemeMode): void {
     root.style.colorScheme = "light";
   }
 
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
   const targetColor = theme === "dark" ? THEME_META_DARK : THEME_META_LIGHT;
-  if (metaThemeColor) {
+  for (const metaThemeColor of document.querySelectorAll('meta[name="theme-color"]')) {
     metaThemeColor.setAttribute("content", targetColor);
   }
 }

@@ -1,15 +1,15 @@
 import { MenuExpandButton, ServiceTierCard } from "@/components/About";
-import {
-  ABOUT_SERVICE_IMAGES,
-  DEFAULT_WHATSAPP_PHONE,
-  getWhatsAppUrl,
-  WHATSAPP_PRESET_MESSAGES,
-} from "@/utils/constants";
+import { ABOUT_SERVICE_IMAGES } from "@/utils/constants";
 import { scrollToSection } from "@/utils/scrollToSection";
+import {
+  buildWhatsAppUrl,
+  DEFAULT_WHATSAPP_PHONE,
+  WHATSAPP_PRESET_MESSAGES,
+} from "@/utils/whatsapp";
 import styles from "./About.module.scss";
 
 export function About() {
-  const deliveryWhatsAppUrl = getWhatsAppUrl(
+  const deliveryWhatsAppUrl = buildWhatsAppUrl(
     DEFAULT_WHATSAPP_PHONE,
     WHATSAPP_PRESET_MESSAGES.delivery,
   );

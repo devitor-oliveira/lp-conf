@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { memo } from "react";
 import { NotchContainer } from "@/components/Notch";
 import type { MenuItem } from "@/utils/mockdata";
+import { WhatsAppButton } from "../WhatsAppButton/WhatsAppButton";
 import styles from "./MenuFeaturedStage.module.scss";
-import { WhatsAppButton } from "./WhatsAppButton";
 
 export interface MenuFeaturedStageProps {
   readonly item: MenuItem;

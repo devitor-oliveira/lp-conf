@@ -1,10 +1,10 @@
 export {
   MenuFeaturedStage,
   type MenuFeaturedStageProps,
-} from "./MenuFeaturedStage";
-export { MenuHeader } from "./MenuHeader";
+} from "./MenuFeaturedStage/MenuFeaturedStage";
+export { MenuHeader } from "./MenuHeader/MenuHeader";
 export {
   MenuSelectorRail,
   type MenuSelectorRailProps,
-} from "./MenuSelectorRail";
-export { WhatsAppButton, type WhatsAppButtonProps } from "./WhatsAppButton";
+} from "./MenuSelectorRail/MenuSelectorRail";
+export { WhatsAppButton, type WhatsAppButtonProps } from "./WhatsAppButton/WhatsAppButton";

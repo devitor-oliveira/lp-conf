@@ -1,7 +1,7 @@
 import type { ElementType } from "react";
+import { useNotch } from "@/hooks/useNotch";
 import styles from "./NotchContainer.module.scss";
 import type { NotchContainerProps, NotchPlacement } from "./types";
-import { useNotch } from "./useNotch";
 
 const PLACEMENT_CLASS_MAP: Record<NotchPlacement, string | undefined> = {
   "top-left": styles.topLeft,
@@ -90,4 +90,4 @@ export function NotchContainer<T extends ElementType = "div">({
 }
 
 // Re-exportações canônicas para manter retrocompatibilidade com importações diretas
-export { calculateConcentricNotch, toCssLength } from "./notchUtils";
+export { calculateConcentricNotch, toCssLength } from "@/utils/notch";

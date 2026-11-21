@@ -1,11 +1,11 @@
 import { ArrowUp, AtSign, Clock, Mail, MapPin, MessageCircle } from "lucide-react";
-import {
-  DEFAULT_WHATSAPP_PHONE,
-  getWhatsAppUrl,
-  WHATSAPP_PRESET_MESSAGES,
-} from "@/utils/constants";
 import { ATELIER_CONTACT_INFO } from "@/utils/orderData";
 import { scrollToSection } from "@/utils/scrollToSection";
+import {
+  buildWhatsAppUrl,
+  DEFAULT_WHATSAPP_PHONE,
+  WHATSAPP_PRESET_MESSAGES,
+} from "@/utils/whatsapp";
 import styles from "./Footer.module.scss";
 
 const FOOTER_NAV_LINKS: readonly { readonly href: string; readonly label: string }[] = [
@@ -17,7 +17,7 @@ const FOOTER_NAV_LINKS: readonly { readonly href: string; readonly label: string
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const whatsappUrl = getWhatsAppUrl(DEFAULT_WHATSAPP_PHONE, WHATSAPP_PRESET_MESSAGES.delivery);
+  const whatsappUrl = buildWhatsAppUrl(DEFAULT_WHATSAPP_PHONE, WHATSAPP_PRESET_MESSAGES.delivery);
 
   const handleNavClick = (href: string) => {
     scrollToSection(href);

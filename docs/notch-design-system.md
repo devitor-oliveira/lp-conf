@@ -88,7 +88,7 @@ Cada quadrante de `placement` projeta sua concavidade para o interior da seção
 - `radius` é o raio convexo inferior desejado.
 - `smoothHeight` é a altura líquida da aba; quando omitido, é derivado de `2 * innerRadius + paddingOuter`.
 - Em `variant="smooth"`, `offsetX` e `offsetY` devem ser valores numéricos em pixels (ex.: `8` para `--layout-stage-margin`) para que o cálculo trigonométrico do SVG em `biarc.ts` coincida com o CSS.
-- A geometria é gerada em `src/components/Notch/biarc.ts` e memoizada em `src/components/Notch/useNotch.ts`.
+- A geometria é gerada em `src/utils/notch/biarc.ts` (com utilitários em `src/utils/notch/notchUtils.ts`) e memoizada em `src/hooks/useNotch.ts`.
 - As asas SVG são decorativas (`aria-hidden`) e usam `pointer-events: none`.
 
 ---

@@ -1,5 +1,5 @@
+import type { ConcentricNotchConfig } from "@/components/Notch/types";
 import { toCssAngle } from "./biarc";
-import type { ConcentricNotchConfig } from "./types";
 
 export interface NotchCssParams {
   radius?: string;
