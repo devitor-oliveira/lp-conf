@@ -28,7 +28,7 @@ export interface HeaderProps {
 }
 
 const NAV_LINKS = [
-  { href: "#inicio", label: "Inicio" },
+  { href: "#inicio", label: "Início" },
   { href: "#conheca", label: "Conheça" },
   { href: "#cardapio", label: "Cardápio" },
   { href: "#encomende", label: "Encomende Já" },
