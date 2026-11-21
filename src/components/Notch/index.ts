@@ -1,8 +1,14 @@
+export { type UseNotchOptions, useNotch } from "@/hooks/useNotch";
+
 export {
   type BiArcParams,
   type BiArcWingSvgParams,
+  buildNotchCssVars,
   type ConcentricCollarSvgParams,
+  calculateConcentricNotch,
+  calculateConcentricSmoothHeight,
   clampAngleDeg,
+  compactCssVars,
   DEFAULT_BIARC_ANGLE_DEG,
   type GeneratedSvgGeometry,
   generateBiArcWingSvgPath,
@@ -10,26 +16,19 @@ export {
   generateTopCenterBiArcSvgPath,
   MAX_BIARC_ANGLE_DEG,
   MIN_BIARC_ANGLE_DEG,
+  type NotchCssParams,
   parseAngleDeg,
+  parseNumericPx,
   type SolvedBiArc,
+  sanitizeColor,
+  sanitizeDropShadow,
   solveBiArc,
   type TopCenterBiArcSvgParams,
   toCssAngle,
-} from "./biarc";
+  toCssLength,
+} from "@/utils/notch";
 
 export { NotchContainer } from "./NotchContainer";
-
-export {
-  buildNotchCssVars,
-  calculateConcentricNotch,
-  calculateConcentricSmoothHeight,
-  compactCssVars,
-  type NotchCssParams,
-  parseNumericPx,
-  sanitizeColor,
-  sanitizeDropShadow,
-  toCssLength,
-} from "./notchUtils";
 
 export type {
   ConcentricNotchConfig,
@@ -39,5 +38,3 @@ export type {
   NotchPlacement,
   NotchVariant,
 } from "./types";
-
-export { type UseNotchOptions, useNotch } from "./useNotch";

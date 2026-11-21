@@ -1,7 +1,7 @@
 import { type ConcentricNotchConfig, NotchContainer } from "@/components/Notch";
+import type { ThemeMode } from "@/hooks/useTheme";
 import styles from "./ThemeToggle.module.scss";
 import { ThemeToggleButton } from "./ThemeToggleButton";
-import type { ThemeMode } from "./useTheme";
 
 export interface ThemeToggleProps {
   /** Classe CSS adicional opcional para o container entalhado */

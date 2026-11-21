@@ -1,5 +1,3 @@
-export { default, ThemeToggle, type ThemeToggleProps } from "./ThemeToggle";
-export { ThemeToggleButton, type ThemeToggleButtonProps } from "./ThemeToggleButton";
 export {
   applyThemeToDocument,
   resolveInitialTheme,
@@ -10,4 +8,6 @@ export {
   type ThemeMode,
   type UseThemeReturn,
   useTheme,
-} from "./useTheme";
+} from "@/hooks/useTheme";
+export { default, ThemeToggle, type ThemeToggleProps } from "./ThemeToggle";
+export { ThemeToggleButton, type ThemeToggleButtonProps } from "./ThemeToggleButton";

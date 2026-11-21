@@ -1,7 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { type ThemeMode, useTheme } from "@/hooks/useTheme";
 import styles from "./ThemeToggle.module.scss";
-import { type ThemeMode, useTheme } from "./useTheme";
 
 export interface ThemeToggleButtonProps {
   /** Classe CSS adicional opcional para o botão circular */

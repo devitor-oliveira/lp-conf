@@ -1,13 +1,13 @@
 import { type CSSProperties, useMemo } from "react";
-import { generateBiArcWingSvgPath } from "./biarc";
+import type { NotchOwnProps } from "@/components/Notch/types";
 import {
   buildNotchCssVars,
   calculateConcentricNotch,
   calculateConcentricSmoothHeight,
+  generateBiArcWingSvgPath,
   parseNumericPx,
   toCssLength,
-} from "./notchUtils";
-import type { NotchOwnProps } from "./types";
+} from "@/utils/notch";
 
 export interface UseNotchOptions extends Omit<NotchOwnProps, "as" | "className" | "children"> {}
 
