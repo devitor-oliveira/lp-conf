@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { MenuFeaturedStage, MenuHeader, MenuSelectorRail } from "@/components/Menu";
-import { MENU_ITEMS, type MenuItem } from "@/utils/mockdata";
+import {
+  MenuFeaturedStage,
+  MenuHeader,
+  MenuProcessSteps,
+  MenuSelectorRail,
+} from "@/components/Menu";
+import { MENU_ITEMS, MENU_PROCESS_STEPS, type MenuItem } from "@/utils/mockdata";
+import { ORDER_SELECT_TIER_EVENT, type OrderServiceTier } from "@/utils/orderData";
 import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./Menu.module.scss";
 
@@ -19,7 +25,10 @@ export function Menu() {
     return MENU_ITEMS.find((item) => item.id === selectedItemId) ?? MENU_ITEMS[0];
   }, [selectedItemId]);
 
-  const handleScrollToOrder = (tier: MenuItem["targetServiceTier"]) => {
+  const handleScrollToOrder = (tier: OrderServiceTier) => {
+    window.dispatchEvent(
+      new CustomEvent<OrderServiceTier>(ORDER_SELECT_TIER_EVENT, { detail: tier }),
+    );
     const tierTargetSelector = `#encomende-${tier}`;
     const genericTargetSelector = "#encomende";
 
@@ -48,6 +57,8 @@ export function Menu() {
             <MenuFeaturedStage item={selectedItem} onOrderClick={handleScrollToOrder} />
           )}
         </div>
+
+        <MenuProcessSteps steps={MENU_PROCESS_STEPS} />
       </div>
     </section>
   );

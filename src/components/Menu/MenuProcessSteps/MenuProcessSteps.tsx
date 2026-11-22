@@ -1,12 +1,12 @@
 import { motion, useReducedMotion } from "motion/react";
-import type { OrderProcessStep } from "@/utils/orderData";
-import styles from "./OrderProcessSteps.module.scss";
+import type { MenuProcessStep } from "@/utils/mockdata";
+import styles from "./MenuProcessSteps.module.scss";
 
-export interface OrderProcessStepsProps {
-  readonly steps: readonly OrderProcessStep[];
+export interface MenuProcessStepsProps {
+  readonly steps: readonly MenuProcessStep[];
 }
 
-export function OrderProcessSteps({ steps }: OrderProcessStepsProps) {
+export function MenuProcessSteps({ steps }: MenuProcessStepsProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (

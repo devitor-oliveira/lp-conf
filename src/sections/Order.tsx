@@ -1,18 +1,41 @@
 import { AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   type OrderChannelTab,
   OrderEmailForm,
   OrderFaq,
-  OrderProcessSteps,
   OrderTabs,
   OrderWhatsAppCards,
 } from "@/components/Order";
-import { ORDER_FAQ_ITEMS, ORDER_PROCESS_STEPS, ORDER_WHATSAPP_CHANNELS } from "@/utils/orderData";
+import {
+  ORDER_FAQ_ITEMS,
+  ORDER_SELECT_TIER_EVENT,
+  ORDER_WHATSAPP_CHANNELS,
+  type OrderServiceTier,
+} from "@/utils/orderData";
+import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./Order.module.scss";
 
 export function Order() {
   const [activeTab, setActiveTab] = useState<OrderChannelTab>("whatsapp");
+
+  useEffect(() => {
+    const handleSelectTier = (event: Event) => {
+      const customEvent = event as CustomEvent<OrderServiceTier>;
+      const tier = customEvent.detail;
+      setActiveTab("whatsapp");
+
+      window.requestAnimationFrame(() => {
+        const targetSelector = `#encomende-${tier}`;
+        if (document.querySelector(targetSelector)) {
+          scrollToSection(targetSelector);
+        }
+      });
+    };
+
+    window.addEventListener(ORDER_SELECT_TIER_EVENT, handleSelectTier);
+    return () => window.removeEventListener(ORDER_SELECT_TIER_EVENT, handleSelectTier);
+  }, []);
 
   return (
     <section id="encomende" className={styles.order} aria-labelledby="order-title">
@@ -32,8 +55,6 @@ export function Order() {
             </p>
           </div>
         </header>
-
-        <OrderProcessSteps steps={ORDER_PROCESS_STEPS} />
 
         <OrderTabs activeTab={activeTab} onChangeTab={setActiveTab} />
 

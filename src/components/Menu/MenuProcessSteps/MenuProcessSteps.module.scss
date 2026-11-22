@@ -1,0 +1,81 @@
+@use "@/styles/mixins";
+
+.wrapper {
+  margin-top: clamp(1.75rem, 2.5vw, 2.5rem);
+  padding-top: clamp(1.5rem, 2.2vw, 2.25rem);
+  border-top: 1px solid color-mix(in oklab, var(--color-border) 18%, transparent);
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include mixins.respond-to("mobile") {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+}
+
+.stepCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1-5);
+  padding-inline: var(--space-1);
+
+  & + & {
+    padding-left: clamp(1.25rem, 2.5vw, 2.5rem);
+    border-left: 1px solid color-mix(in oklab, var(--color-border) 16%, transparent);
+  }
+
+  @include mixins.respond-to("mobile") {
+    padding-inline: 0;
+
+    & + & {
+      padding-top: var(--space-2);
+      padding-left: 0;
+      border-top: 1px solid color-mix(in oklab, var(--color-border) 16%, transparent);
+      border-left: none;
+    }
+  }
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-4);
+  height: var(--space-4);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-background);
+  color: var(--color-accent);
+  border: 1px solid color-mix(in oklab, var(--color-border) 16%, transparent);
+  font-size: var(--font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+}
+
+.stepTitle {
+  font-size: var(--font-body);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.stepDescription {
+  font-size: var(--font-card-desc);
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin: 0;
+}
