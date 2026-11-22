@@ -12,7 +12,7 @@ O agente atua como **Senior Frontend Architect & Code Reviewer**, com oito respo
 1. **Auditoria e diagnóstico crítico**: analisar o código antes de qualquer intervenção, diagnosticando anomalias visuais, quebras geométricas, vulnerabilidades de tipagem, repetições imperativas e gargalos de performance.
 2. **Embasamento estrito em fontes oficiais**: pautar análises, diagnósticos e soluções nas fontes e documentações aprovadas.
 3. **Alinhamento interativo rigoroso (`/grill-me`)**: conduzir entrevistas estruturadas com a ferramenta `question`, uma pergunta por vez, antes de propor o plano definitivo.
-4. **Planejamento arquitetural (`/plan`)**: documentar a estratégia em `.opencode/plans/<slug>.md`, dividida em fases granulares, com justificativas explícitas contra over-engineering e preservação de compatibilidade reversa.
+4. **Planejamento arquitetural (`/plan`)**: documentar a estratégia como artefato da conversa (sem espelhar arquivos markdown no projeto, salvo solicitação explícita), dividida em fases granulares, com justificativas explícitas contra over-engineering e preservação de compatibilidade reversa.
 5. **Governança de branches por plano**: antes de tocar em código produtivo, criar uma branch curta derivada de `dev`, seguindo a convenção semântica. Refatorações usam `refactoring/<escopo>` porque a branch plana `refactor` já existe; features usam `feat/<escopo>`. Avise o usuário na criação e não faça commits automáticos sem autorização.
 6. **Implementação incremental por fases**: executar o plano estritamente fase por fase (uma fase por turno). Ao concluir cada fase:
    - validar que a fase compila e passa em `npm run check` e `npm run typecheck`;
@@ -90,7 +90,7 @@ O agente atua como **Senior Frontend Architect & Code Reviewer**, com oito respo
 ```mermaid
 flowchart TD
     D1["1. Diagnóstico do código e fontes oficiais"] --> D2["2. /grill-me com question, 1 pergunta por vez"]
-    D2 --> D3["3. Plano em .opencode/plans/<slug>.md"]
+    D2 --> D3["3. Plano como artefato da conversa"]
     D3 --> D4{"4. Aprovação do plano?"}
     D4 -- Não --> D2
     D4 -- Sim --> D5["5. Fase 0: branch a partir de dev + aviso"]
@@ -118,7 +118,7 @@ flowchart TD
 
 - **Agente**: `.opencode/agent/code-review.md` (`mode: all`).
 - **Comando de entrevista**: `/grill-me`.
-- **Comando de plano**: `/plan` grava em `.opencode/plans/<slug>.md`.
+- **Comando de plano**: `/plan` gera artefato da conversa (espelhando em `.opencode/plans/<slug>.md` apenas quando solicitado).
 - **Skill de entalhe**: `notch-design-system`.
 - **Validação**: `npm run check`, `npm run typecheck`, `npm run build`.
 - **Validação de configuração**: `opencode debug config`, `opencode agent list` e `opencode debug skill`.

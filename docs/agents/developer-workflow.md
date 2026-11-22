@@ -70,7 +70,7 @@
 flowchart TD
     Step1["1. Demanda / proposta do usuário"]
     Step2["2. Entrevista com question"]
-    Step3["3. Plano em .opencode/plans/<slug>.md"]
+    Step3["3. Plano como artefato da conversa"]
     Step4["4. Aprovação explícita"]
     Step5["5. Branch + git worktree"]
     Step6["6. Desenvolvimento estrito"]
@@ -91,7 +91,7 @@ Use a ferramenta `question`, uma pergunta por vez, para esclarecer requisitos, c
 
 ### Etapa 3: Planejamento técnico
 
-Use `/plan` ou crie o artefato em `.opencode/plans/<slug>.md` com diagnóstico, código previsto, diffs, riscos e plano de verificação. Nunca comece a programar antes da aprovação.
+Use `/plan` para criar o plano técnico como artefato da conversa (sem espelhar arquivos markdown no projeto, salvo solicitação explícita) com diagnóstico, código previsto, diffs, riscos e plano de verificação. Nunca comece a programar antes da aprovação.
 
 ### Etapa 4: Aprovação do usuário
 
@@ -146,7 +146,7 @@ A branch plana `refactor` já existe no repositório; por isso, refatorações u
 ## 6. Integração com o opencode
 
 - **Agente**: `.opencode/agent/developer.md` (`mode: all`).
-- **Comando de plano**: `/plan` grava em `.opencode/plans/<slug>.md`.
+- **Comando de plano**: `/plan` gera artefato da conversa (espelhando em `.opencode/plans/<slug>.md` apenas quando solicitado).
 - **Comando de entrevista**: `/grill-me`.
 - **Skill de entalhe**: `notch-design-system`.
 - **Ferramentas**: `question` para alinhamento, `bash` para comandos, `edit` para implementação.

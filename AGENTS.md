@@ -9,7 +9,7 @@ Landing page SPA de confeitaria artesanal com React 19, TypeScript 6, Vite 8, Mo
 
 ## Comandos
 
-- `/plan` — cria um plano técnico detalhado em `.opencode/plans/<slug>.md` sem editar código.
+- `/plan` — cria um plano técnico detalhado como artefato da conversa sem editar código.
 - `/grill-me` — conduz uma entrevista de alinhamento, uma pergunta por vez, antes de planejar ou implementar.
 
 ## Skill
@@ -18,6 +18,7 @@ Landing page SPA de confeitaria artesanal com React 19, TypeScript 6, Vite 8, Mo
 
 ## Regras rápidas
 
+- **Artefatos de planos**: planos devem ser criados apenas como artefatos da conversa; não espelhe artefatos de planos dentro do projeto como arquivos markdown (ex.: `.opencode/plans/*.md`), a menos que seja explicitamente solicitado.
 - TypeScript estrito: proibido `any`, `@ts-ignore` cosmético e `as unknown as`.
 - Zero gambiarras, magic numbers, `!important` desnecessário ou HTML semanticamente incorreto.
 - **`button-base` é extensível**: `@mixin button-base` (`src/styles/_mixins.scss`) é um estilo de base, não definitivo; sobrescritas pontuais de estilos dessa base por botões ou componentes específicos são válidas e não devem ser classificadas automaticamente como erro.
