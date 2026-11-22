@@ -88,7 +88,7 @@ export interface MenuItem {
   readonly sensoryNotes: readonly string[];
   readonly priceDisplay: string;
   readonly portionsInfo: string;
-  readonly targetServiceTier: "pedidos-whatsapp" | "encomendas";
+  readonly targetServiceTier: "pedidos-whatsapp" | "presentes" | "encomendas";
   readonly whatsappPresetMessage: string;
 }
 
@@ -162,7 +162,7 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     sensoryNotes: ["Embalagem Rígida", "Fita de Gorgurão", "Seleção Mista"],
     priceDisplay: "R$ 96,00",
     portionsInfo: "Caixa com 8 unidades",
-    targetServiceTier: "pedidos-whatsapp",
+    targetServiceTier: "presentes",
     whatsappPresetMessage: "Olá! Gostaria de pedir a Caixa Degustação Atelier com 8 unidades.",
   },
   {
@@ -180,7 +180,7 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     sensoryNotes: ["Edição Especial", "Lacre em Cera", "Pronta para Presente"],
     priceDisplay: "R$ 180,00",
     portionsInfo: "Caixa com 16 unidades",
-    targetServiceTier: "pedidos-whatsapp",
+    targetServiceTier: "presentes",
     whatsappPresetMessage: "Olá! Gostaria de encomendar a Caixa Coleção Botânica com 16 unidades.",
   },
   {
@@ -201,5 +201,31 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     targetServiceTier: "encomendas",
     whatsappPresetMessage:
       "Olá! Gostaria de solicitar um orçamento para encomenda de evento com lotes de doces.",
+  },
+] as const;
+
+export interface MenuProcessStep {
+  readonly number: string;
+  readonly title: string;
+  readonly description: string;
+}
+
+export const MENU_PROCESS_STEPS: readonly MenuProcessStep[] = [
+  {
+    number: "01",
+    title: "Escolha a Ocasião",
+    description:
+      "Defina se o pedido é para grandes eventos, presentes especiais ou desejo imediato.",
+  },
+  {
+    number: "02",
+    title: "Alinhe os Detalhes",
+    description: "Converse pelo WhatsApp ou envie seu pedido por e-mail com sabores e datas.",
+  },
+  {
+    number: "03",
+    title: "Receba com Frescor",
+    description:
+      "Produção artesanal em pequenos lotes no dia e entrega climatizada com hora marcada.",
   },
 ] as const;

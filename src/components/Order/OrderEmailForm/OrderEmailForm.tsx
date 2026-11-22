@@ -96,7 +96,7 @@ export function OrderEmailForm() {
       ) : (
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formHeader}>
-            <h3 className={styles.formTitle}>Solicite uma Proposta Formal por E-mail</h3>
+            <h3 className={styles.formTitle}>Fale Conosco por E-mail</h3>
             <p className={styles.formSubtitle}>
               Ideal para cerimonialistas, empresas e eventos que precisam de orçamento detalhado por
               escrito.
@@ -207,7 +207,7 @@ export function OrderEmailForm() {
               ) : (
                 <>
                   <Send size={18} aria-hidden="true" />
-                  <span>Enviar Proposta por E-mail</span>
+                  <span>Enviar Mensagem por E-mail</span>
                 </>
               )}
             </button>
