@@ -2,8 +2,8 @@
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(1.25rem, 2vw, 2rem);
   align-items: stretch;
 
   @include mixins.respond-to("mobile") {
@@ -11,14 +11,23 @@
   }
 }
 
+@container (min-width: 62rem) {
+  .cardsGrid {
+    grid-template-columns: 1fr 1.08fr 1fr;
+    align-items: stretch;
+  }
+}
+
 .card {
-  scroll-margin-top: 6rem;
+  position: relative;
+  scroll-margin-top: var(--space-8);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-3);
-  padding: clamp(1.75rem, 3vw, 2.5rem);
+  padding: clamp(1.75rem, 2.5vw, 2.25rem);
   background-color: var(--color-surface);
+  border: 1px solid color-mix(in srgb, var(--color-border) 12%, transparent);
   border-radius: var(--radius-large);
   box-shadow: var(--shadow-card);
   transition: transform var(--duration-fast) var(--ease-smooth);
@@ -35,11 +44,31 @@
   }
 }
 
-.cardFeatured {
-  border-radius: var(--radius-max);
-  box-shadow: var(--shadow-card-featured);
-  outline: 2px solid var(--color-accent);
-  outline-offset: -2px;
+.badgeNotch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 12px 12px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-menu-accent);
+  color: var(--color-menu-canvas);
+  font-size: var(--font-card-tag);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
 .cardHeader {
@@ -62,19 +91,6 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-muted);
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-accent);
-  color: var(--color-background);
-  font-size: var(--font-card-tag);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
 .title {
@@ -133,11 +149,37 @@
 }
 
 .ctaFeatured {
-  background-color: var(--color-whatsapp);
-  color: var(--color-whatsapp-text);
+  background-color: var(--color-menu-cta-bg);
+  color: var(--color-menu-canvas);
 
   &:hover {
-    background-color: var(--color-whatsapp-hover);
+    background-color: var(--color-menu-text);
     opacity: 1;
+  }
+}
+
+.cardFeatured {
+  background-color: var(--color-menu-canvas);
+  color: var(--color-menu-text);
+  border-color: transparent;
+  border-radius: var(--radius-max);
+  box-shadow: var(--shadow-card-featured);
+
+  .tagRow {
+    padding-right: 9.5rem;
+  }
+
+  .tag,
+  .description {
+    color: var(--color-menu-muted);
+  }
+
+  .title,
+  .highlightItem {
+    color: var(--color-menu-text);
+  }
+
+  .checkIcon {
+    color: var(--color-menu-accent);
   }
 }

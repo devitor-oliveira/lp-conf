@@ -1,10 +1,8 @@
 import { WHATSAPP_PRESET_MESSAGES } from "./whatsapp";
 
-export interface OrderProcessStep {
-  readonly number: string;
-  readonly title: string;
-  readonly description: string;
-}
+export type OrderServiceTier = "pedidos-whatsapp" | "presentes" | "encomendas";
+
+export const ORDER_SELECT_TIER_EVENT = "lp-conf:select-order-tier";
 
 export interface OrderWhatsAppChannel {
   readonly id: string;
@@ -24,27 +22,6 @@ export interface OrderFaqItem {
   readonly question: string;
   readonly answer: string;
 }
-
-export const ORDER_PROCESS_STEPS: readonly OrderProcessStep[] = [
-  {
-    number: "01",
-    title: "Escolha a Ocasião",
-    description:
-      "Defina se o pedido é para grandes eventos, presentes especiais ou desejo imediato.",
-  },
-  {
-    number: "02",
-    title: "Alinhe os Detalhes",
-    description:
-      "Converse pelo WhatsApp ou envie uma proposta formal por e-mail com sabores e datas.",
-  },
-  {
-    number: "03",
-    title: "Receba com Frescor",
-    description:
-      "Produção artesanal em pequenos lotes no dia e entrega climatizada com hora marcada.",
-  },
-] as const;
 
 export const ORDER_WHATSAPP_CHANNELS: readonly OrderWhatsAppChannel[] = [
   {
@@ -66,20 +43,35 @@ export const ORDER_WHATSAPP_CHANNELS: readonly OrderWhatsAppChannel[] = [
   {
     id: "encomende-pedidos-whatsapp",
     badge: "Mais Solicitado",
-    tag: "Pronta-Entrega & Presentes",
-    title: "Pedidos do Dia & Caixas",
+    tag: "São Paulo & Região • 30-60min",
+    title: "Pronta-Entrega & Delivery",
     description:
-      "Atendimento ágil em tempo real para unidades avulsas, caixas rígidas para presente e entrega expressa.",
+      "Atendimento ágil em tempo real para unidades frescas do dia e entrega expressa no conforto da sua casa.",
     highlights: [
       "Fornadas diárias frescas sem conservantes",
       "Entrega rápida em São Paulo ou retirada no ateliê",
-      "Embalagens térmicas e cartão com dedicatória manuscrita",
+      "Seleção de sabores ícones disponíveis para hoje",
     ],
     ctaLabel: "Pedir Agora no WhatsApp",
     whatsappMessage: WHATSAPP_PRESET_MESSAGES.delivery,
-    ariaLabel:
-      "Fazer pedido rápido ou solicitar caixas de presente pelo WhatsApp (abre em nova aba)",
+    ariaLabel: "Fazer pedido de pronta-entrega pelo WhatsApp (abre em nova aba)",
     isFeatured: true,
+  },
+  {
+    id: "encomende-presentes",
+    tag: "Envio Climatizado • Todo o Brasil",
+    title: "Caixas para Presente",
+    description:
+      "Embalagens rígidas de colecionador com controle térmico, lacre em cera e dedicatória manuscrita.",
+    highlights: [
+      "Caixas de 8 ou 16 unidades com fita de gorgurão",
+      "Isolamento térmico para viagens e envio nacional",
+      "Cartão autoral personalizado com sua mensagem",
+    ],
+    ctaLabel: "Encomendar Presente no WhatsApp",
+    whatsappMessage: WHATSAPP_PRESET_MESSAGES.presentes,
+    ariaLabel: "Encomendar caixas para presente pelo WhatsApp (abre em nova aba)",
+    isFeatured: false,
   },
 ] as const;
 
