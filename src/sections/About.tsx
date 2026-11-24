@@ -1,5 +1,6 @@
 import { MenuExpandButton, ServiceTierCard } from "@/components/About";
 import { ABOUT_SERVICE_IMAGES } from "@/utils/constants";
+import { ORDER_SELECT_TIER_EVENT, type OrderSelectIntentDetail } from "@/utils/orderData";
 import { scrollToSection } from "@/utils/scrollToSection";
 import {
   buildWhatsAppUrl,
@@ -50,7 +51,14 @@ export function About() {
               title="Grandes Encomendas & Celebrações"
               leadDescription="O coração do Atelier. Mesas de doces inesquecíveis para casamentos e eventos corporativos com consultoria exclusiva."
               actionLabel="Solicitar Orçamento de Evento"
-              onActionClick={() => scrollToSection("#encomende", { fallbackToBottom: true })}
+              onActionClick={() => {
+                window.dispatchEvent(
+                  new CustomEvent<OrderSelectIntentDetail>(ORDER_SELECT_TIER_EVENT, {
+                    detail: { tier: "encomendas" },
+                  }),
+                );
+                scrollToSection("#encomende", { fallbackToBottom: true });
+              }}
             />
           </div>
 

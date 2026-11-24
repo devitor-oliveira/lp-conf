@@ -3,12 +3,13 @@ import { AnimatePresence, motion } from "motion/react";
 import { memo } from "react";
 import { NotchContainer } from "@/components/Notch";
 import type { MenuItem } from "@/utils/mockdata";
+import type { OrderSelectIntentDetail } from "@/utils/orderData";
 import { WhatsAppButton } from "../WhatsAppButton/WhatsAppButton";
 import styles from "./MenuFeaturedStage.module.scss";
 
 export interface MenuFeaturedStageProps {
   readonly item: MenuItem;
-  readonly onOrderClick: (tier: MenuItem["targetServiceTier"]) => void;
+  readonly onOrderClick: (detail: OrderSelectIntentDetail) => void;
 }
 
 const transitionConfig = {
@@ -99,7 +100,7 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
             <motion.button
               type="button"
               className={styles.orderCtaButton}
-              onClick={() => onOrderClick(item.targetServiceTier)}
+              onClick={() => onOrderClick({ tier: item.targetServiceTier, productName: item.name })}
               variants={ctaButtonVariants}
               whileHover="hover"
               whileTap="tap"

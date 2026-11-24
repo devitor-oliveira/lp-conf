@@ -6,7 +6,7 @@ import {
   MenuSelectorRail,
 } from "@/components/Menu";
 import { MENU_ITEMS, MENU_PROCESS_STEPS, type MenuItem } from "@/utils/mockdata";
-import { ORDER_SELECT_TIER_EVENT, type OrderServiceTier } from "@/utils/orderData";
+import { ORDER_SELECT_TIER_EVENT, type OrderSelectIntentDetail } from "@/utils/orderData";
 import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./Menu.module.scss";
 
@@ -25,20 +25,13 @@ export function Menu() {
     return MENU_ITEMS.find((item) => item.id === selectedItemId) ?? MENU_ITEMS[0];
   }, [selectedItemId]);
 
-  const handleScrollToOrder = (tier: OrderServiceTier) => {
+  const handleScrollToOrder = ({ tier, productName }: OrderSelectIntentDetail) => {
     window.dispatchEvent(
-      new CustomEvent<OrderServiceTier>(ORDER_SELECT_TIER_EVENT, { detail: tier }),
+      new CustomEvent<OrderSelectIntentDetail>(ORDER_SELECT_TIER_EVENT, {
+        detail: { tier, productName },
+      }),
     );
-    const tierTargetSelector = `#encomende-${tier}`;
-    const genericTargetSelector = "#encomende";
-
-    if (document.querySelector(tierTargetSelector)) {
-      scrollToSection(tierTargetSelector);
-    } else if (document.querySelector(genericTargetSelector)) {
-      scrollToSection(genericTargetSelector);
-    } else {
-      scrollToSection(tierTargetSelector, { fallbackToBottom: true });
-    }
+    scrollToSection("#encomende", { fallbackToBottom: true });
   };
 
   return (
