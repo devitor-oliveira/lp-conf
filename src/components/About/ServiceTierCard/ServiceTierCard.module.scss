@@ -1,5 +1,22 @@
 @use "@/styles/mixins";
 
+.cardShell {
+  position: relative;
+  transition: transform var(--duration-normal) var(--ease-smooth);
+
+  &:hover {
+    transform: translateY(-8px);
+  }
+}
+
+.cardShadow {
+  filter: var(--drop-shadow-card);
+}
+
+.featuredShell .cardShadow {
+  filter: var(--drop-shadow-card-featured);
+}
+
 .card {
   position: relative;
   display: flex;
@@ -7,22 +24,15 @@
   justify-content: flex-end;
   padding: 0;
   background-color: var(--color-surface);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md) var(--radius-md) 0 var(--radius-md);
   border: none;
   overflow: hidden;
   aspect-ratio: 3.5 / 4.2;
   min-height: clamp(20rem, 30vw, 25rem);
-  transition: transform var(--duration-normal) var(--ease-smooth);
-  box-shadow: var(--shadow-card);
-
-  &:hover {
-    transform: translateY(-8px);
-  }
 }
 
 .featuredCard {
   min-height: clamp(22rem, 33vw, 27.5rem);
-  box-shadow: var(--shadow-card-featured);
 }
 
 .cardImage {
@@ -33,7 +43,7 @@
   object-fit: cover;
   transition: transform var(--duration-card-zoom) var(--ease-smooth);
 
-  .card:hover & {
+  .cardShell:hover & {
     transform: scale(1.05);
   }
 }
@@ -46,7 +56,7 @@
   height: auto;
   min-height: 58%;
   max-height: 70%;
-  padding: var(--space-2-5);
+  padding: var(--space-2-5) var(--space-2-5) calc(var(--space-6) + var(--space-2));
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -67,7 +77,7 @@
   -webkit-mask-image: linear-gradient(to top, black 50%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
   transition: background var(--duration-normal) ease;
 
-  .card:hover & {
+  .cardShell:hover & {
     background: linear-gradient(
       to top,
       var(--card-overlay-hover-base) 0%,
@@ -132,8 +142,98 @@
   overflow: hidden;
 }
 
+.actionNotchWrapper {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1-5) 0 0 var(--space-1-5);
+}
+
 .cardActionBtn {
-  @include mixins.button-card;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  min-width: 3rem;
+  padding: 0 var(--space-1-5);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-text);
+  background-color: var(--color-text);
+  color: var(--color-background);
+  font-size: var(--font-expand-button);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-image-direct);
+  transition:
+    background-color var(--duration-fast) var(--ease-smooth),
+    border-color var(--duration-fast) var(--ease-smooth),
+    padding var(--duration-normal) var(--ease-smooth);
+
+  @include mixins.focus-ring(var(--color-accent), 3px);
+}
+
+.actionLabelTrack {
+  display: grid;
+  grid-template-columns: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-columns var(--duration-normal) var(--ease-smooth),
+    opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.actionLabelInner {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.actionIconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+.cardShell:hover,
+.cardShell:focus-within {
+  .cardActionBtn {
+    padding: 0 var(--space-2) 0 var(--space-2-5);
+  }
+
+  .actionLabelTrack {
+    grid-template-columns: 1fr;
+    opacity: 1;
+  }
+
+  .actionLabelInner {
+    padding-right: var(--space-1);
+  }
+
+  .actionIconWrapper {
+    transform: translateX(2px);
+  }
+}
+
+@media (hover: none) {
+  .cardActionBtn {
+    padding: 0 var(--space-2) 0 var(--space-2-5);
+  }
+
+  .actionLabelTrack {
+    grid-template-columns: 1fr;
+    opacity: 1;
+  }
+
+  .actionLabelInner {
+    padding-right: var(--space-1);
+  }
 }
 
 @include mixins.respond-to("mobile") {

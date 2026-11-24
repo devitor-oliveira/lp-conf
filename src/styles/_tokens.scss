@@ -68,6 +68,7 @@
   --badge-size-compact: 1.75rem; // 28px
   --padding-expand-button: 0.45rem 0.55rem 0.45rem 1.25rem;
   --menu-thumb-size: clamp(4.75rem, 4rem + 2vw, 6rem); // 76px -> 96px
+  --menu-rail-width: clamp(6.75rem, 6rem + 1.5vw, 8rem); // 108px -> 128px
 
   // --- Tipografia Fluida Acessível (rem + vw com clamp) ---
   --font-hero: clamp(3.5rem, 6.5vw, 8rem); // 56px -> 128px
@@ -94,6 +95,10 @@
   --shadow-image-direct: 0 2px 6px rgb(0 0 0 / 0.18);
   --shadow-card: 0 16px 40px -12px rgb(0 0 0 / 0.12), 0 4px 16px rgb(0 0 0 / 0.04);
   --shadow-card-featured: 0 24px 54px -14px rgb(0 0 0 / 0.18), 0 6px 20px rgb(0 0 0 / 0.06);
+  --drop-shadow-card: drop-shadow(0 12px 24px rgb(0 0 0 / 0.14))
+  drop-shadow(0 4px 10px rgb(0 0 0 / 0.06));
+  --drop-shadow-card-featured: drop-shadow(0 18px 34px rgb(0 0 0 / 0.2))
+  drop-shadow(0 6px 14px rgb(0 0 0 / 0.08));
   --card-overlay-neutral-base: rgb(20 20 24 / 0.92);
   --card-overlay-neutral-mid: rgb(20 20 24 / 0.6);
   --card-overlay-neutral-fade: rgb(20 20 24 / 0.1);
@@ -122,7 +127,9 @@
   --color-menu-muted: #e5dcc8;
   --color-menu-accent: #c7f880;
   --color-menu-border: #f8f4e8;
-  --color-menu-cta-bg: #eae2b7;
+  --color-menu-cta-bg: #1f2937;
+  --color-menu-cta-text: #f8f4e8;
+  --color-menu-whatsapp-bg: #eae2b7;
 
   // --- Superfície Editorial do Rodapé (Footer) ---
   --color-footer-surface: #1c1410;
@@ -160,5 +167,8 @@
   --color-menu-muted: #d6cec2;
   --color-menu-accent: #c7f880;
   --color-menu-border: #e5dcc8;
+  --color-menu-cta-bg: #f5efe6;
+  --color-menu-cta-text: #171210;
+  --color-menu-whatsapp-bg: #f5efe6;
   --color-footer-surface: #0f0b09;
 }

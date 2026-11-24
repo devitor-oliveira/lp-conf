@@ -254,20 +254,6 @@ export function Carrosel({
           onMouseMove={handleCanvasMouseMove}
           onMouseLeave={handleCanvasMouseLeave}
         >
-          {/* Anel 2 Concêntrico: Envolve o ThemeToggle creme com folga de 8px da Hero.
-              Equação de fechamento da caixa de 76px: offset(8px) + raio(48px) + filete(20px) = 76px. */}
-          <NotchContainer
-            as="div"
-            placement="top-right"
-            radius={48}
-            filletSize={20}
-            offsetX={CANVAS_EDGE_INSET}
-            offsetY={CANVAS_EDGE_INSET}
-            color={collarColor}
-            className={styles.themeToggleCollar}
-            aria-hidden="true"
-          />
-
           <div className={styles.canvasFrame}>
             <motion.div className={styles.parallaxLayer} style={{ x: smoothX, y: smoothY }}>
               <AnimatePresence>
@@ -285,14 +271,28 @@ export function Carrosel({
                 />
               </AnimatePresence>
             </motion.div>
-          </div>
 
-          <WhatsAppCTA
-            color={collarColor}
-            phone={phone}
-            message={whatsappMessage}
-            className={styles.whatsappCta}
-          />
+            {/* Anel 2 Concêntrico dentro de .canvasFrame: acompanha o switch pílula com gola de 8px.
+                Equação de fechamento da caixa de 98x60px: offset(0px) + raio(44px) + filete(16px) = 60px. */}
+            <NotchContainer
+              as="div"
+              placement="top-right"
+              radius={44}
+              filletSize={16}
+              offsetX={0}
+              offsetY={0}
+              color={collarColor}
+              className={styles.themeToggleCollar}
+              aria-hidden="true"
+            />
+
+            <WhatsAppCTA
+              color={collarColor}
+              phone={phone}
+              message={whatsappMessage}
+              className={styles.whatsappCta}
+            />
+          </div>
         </motion.div>
       </div>
 

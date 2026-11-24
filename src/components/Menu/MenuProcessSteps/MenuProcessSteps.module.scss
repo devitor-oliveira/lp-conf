@@ -1,8 +1,8 @@
 @use "@/styles/mixins";
 
 .wrapper {
-  margin-top: clamp(1.75rem, 2.5vw, 2.5rem);
-  padding-top: clamp(1.5rem, 2.2vw, 2.25rem);
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
   border-top: 1px solid color-mix(in oklab, var(--color-border) 18%, transparent);
 }
 

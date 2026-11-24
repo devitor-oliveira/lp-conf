@@ -1,7 +1,7 @@
 import { type ConcentricNotchConfig, NotchContainer } from "@/components/Notch";
 import type { ThemeMode } from "@/hooks/useTheme";
+import { ThemeSwitchPill } from "./ThemeSwitchPill";
 import styles from "./ThemeToggle.module.scss";
-import { ThemeToggleButton } from "./ThemeToggleButton";
 
 export interface ThemeToggleProps {
   /** Classe CSS adicional opcional para o container entalhado */
@@ -36,7 +36,7 @@ export function ThemeToggle({
     radius !== undefined || filletSize !== undefined
       ? concentric
       : (concentric ?? {
-          innerRadius: "var(--toggle-inner-radius, 28px)",
+          innerRadius: "var(--toggle-inner-radius, 24px)",
           paddingOuter: "var(--toggle-pad-outer, 12px)",
           paddingInner: offsetX,
         });
@@ -55,7 +55,7 @@ export function ThemeToggle({
       offsetY={offsetY}
       dropShadow={dropShadow}
     >
-      <ThemeToggleButton onThemeChange={onThemeChange} />
+      <ThemeSwitchPill onThemeChange={onThemeChange} />
     </NotchContainer>
   );
 }

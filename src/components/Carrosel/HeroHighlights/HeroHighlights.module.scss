@@ -12,11 +12,12 @@
   align-items: center;
   gap: var(--space-0-5);
   padding: var(--space-0-5) var(--space-1-5);
-  border: 1px solid color-mix(in oklab, currentColor 35%, transparent);
+  border: 1px solid color-mix(in oklab, currentColor 40%, transparent);
   border-radius: var(--radius-pill);
-  background: color-mix(in oklab, currentColor 8%, transparent);
+  background: color-mix(in oklab, currentColor 14%, transparent);
   color: inherit;
   font-size: var(--font-caption);
+  font-weight: 600;
   line-height: 1.4;
 
   svg {

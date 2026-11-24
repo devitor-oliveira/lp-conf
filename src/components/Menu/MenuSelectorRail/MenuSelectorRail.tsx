@@ -63,9 +63,9 @@ export function MenuSelectorRail({ items, selectedItemId, onSelectItem }: MenuSe
               onClick={() => onSelectItem(item.id)}
               onKeyDown={(e) => handleKeyDownItem(e, item.id)}
             >
-              <div className={styles.thumbFrame}>
+              <span className={styles.thumbFrame}>
                 <img src={item.image} alt={item.alt} loading="lazy" decoding="async" />
-              </div>
+              </span>
 
               <span className={styles.thumbLabel}>{item.name}</span>
             </button>

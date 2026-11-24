@@ -1,6 +1,8 @@
 .toggleContainer {
-  --toggle-size: 56px;
-  --toggle-inner-radius: 28px;
+  --switch-width: 86px;
+  --switch-height: 48px;
+  --switch-track-pad: 5px;
+  --toggle-inner-radius: 24px;
   --toggle-pad-outer: 12px;
 
   position: absolute;
@@ -12,6 +14,97 @@
   transition:
     --notch-bg 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.switchTrack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--switch-width, 86px);
+  height: var(--switch-height, 48px);
+  padding: var(--switch-track-pad, 5px);
+  border-radius: var(--radius-pill);
+  border: none;
+  background-color: var(--color-text);
+  color: var(--color-background);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-normal) var(--ease-smooth),
+    color var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-smooth);
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  &.isDark {
+    justify-content: flex-end;
+  }
+}
+
+.switchThumb {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--switch-height, 48px) - (var(--switch-track-pad, 5px) * 2));
+  height: calc(var(--switch-height, 48px) - (var(--switch-track-pad, 5px) * 2));
+  border-radius: var(--radius-pill);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  box-shadow: var(--shadow-image-direct);
+  transition:
+    background-color var(--duration-normal) var(--ease-smooth),
+    color var(--duration-normal) var(--ease-smooth);
+}
+
+.switchThumbIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.switchDots {
+  position: absolute;
+  inset-block: 0;
+  right: 18%;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+
+  .isDark & {
+    right: auto;
+    left: 18%;
+  }
+}
+
+.switchDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background-color: color-mix(in srgb, var(--color-background) 78%, transparent);
+}
+
+.switchDotSmall {
+  width: 3px;
+  height: 3px;
+  align-self: flex-start;
+  margin-top: calc(var(--switch-track-pad, 5px) + 4px);
 }
 
 .toggleButton {
@@ -44,8 +137,26 @@
 
 @media (max-width: 900px) {
   .toggleContainer {
-    --toggle-size: 44px;
-    --toggle-inner-radius: 22px;
+    --switch-width: 72px;
+    --switch-height: 40px;
+    --switch-track-pad: 4px;
+    --toggle-inner-radius: 20px;
     --toggle-pad-outer: 8px;
+  }
+}
+
+@media (forced-colors: active) {
+  .switchTrack {
+    border: 2px solid ButtonText;
+    background-color: ButtonFace;
+  }
+
+  .switchThumb {
+    background-color: ButtonText;
+    color: ButtonFace;
+  }
+
+  .switchDot {
+    background-color: ButtonText;
   }
 }
