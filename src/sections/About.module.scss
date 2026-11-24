@@ -9,12 +9,15 @@
 }
 
 .container {
-  @include mixins.container-large;
+  width: min(100%, 110rem);
+  margin-inline: auto;
   container-type: inline-size;
-  padding-inline: clamp(0.5rem, 0.25rem + 0.8vw, 1.5rem);
+  padding-inline: clamp(1rem, 1.8vw, 2rem);
 }
 
 .headerGrid {
+  @include mixins.container-large;
+  padding-inline: clamp(0.5rem, 0.25rem + 0.8vw, 1.5rem);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: flex-start;
