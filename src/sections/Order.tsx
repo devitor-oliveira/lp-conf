@@ -1,36 +1,30 @@
-import { AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
-import {
-  type OrderChannelTab,
-  OrderEmailForm,
-  OrderFaq,
-  OrderTabs,
-  OrderWhatsAppCards,
-} from "@/components/Order";
+import { OrderDirectContact, OrderFaq, OrderLeadForm } from "@/components/Order";
 import {
   ORDER_FAQ_ITEMS,
   ORDER_SELECT_TIER_EVENT,
-  ORDER_WHATSAPP_CHANNELS,
+  type OrderSelectIntentDetail,
   type OrderServiceTier,
 } from "@/utils/orderData";
-import { scrollToSection } from "@/utils/scrollToSection";
 import styles from "./Order.module.scss";
 
 export function Order() {
-  const [activeTab, setActiveTab] = useState<OrderChannelTab>("whatsapp");
+  const [selectedTier, setSelectedTier] = useState<OrderServiceTier>("encomendas");
+  const [presetProductName, setPresetProductName] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const handleSelectTier = (event: Event) => {
-      const customEvent = event as CustomEvent<OrderServiceTier>;
-      const tier = customEvent.detail;
-      setActiveTab("whatsapp");
+      const customEvent = event as CustomEvent<OrderSelectIntentDetail | OrderServiceTier>;
+      const detail = customEvent.detail;
 
-      window.requestAnimationFrame(() => {
-        const targetSelector = `#encomende-${tier}`;
-        if (document.querySelector(targetSelector)) {
-          scrollToSection(targetSelector);
+      if (typeof detail === "string") {
+        setSelectedTier(detail);
+      } else if (detail && typeof detail === "object" && "tier" in detail) {
+        setSelectedTier(detail.tier);
+        if (detail.productName) {
+          setPresetProductName(detail.productName);
         }
-      });
+      }
     };
 
     window.addEventListener(ORDER_SELECT_TIER_EVENT, handleSelectTier);
@@ -40,32 +34,13 @@ export function Order() {
   return (
     <section id="encomende" className={styles.order} aria-labelledby="order-title">
       <div className={styles.container}>
-        <header className={styles.headerGrid}>
-          <div className={styles.titleColumn}>
-            <h2 id="order-title" className={styles.title}>
-              Encomende Já
-            </h2>
-          </div>
-
-          <div className={styles.leadColumn}>
-            <p className={styles.eyebrow}>Atendimento Personalizado</p>
-            <p className={styles.lead}>
-              Escolha o canal ideal para sua ocasião. Seja um evento sob medida com degustação ou um
-              pedido fresco para hoje, cada doce é preparado sob demanda em nosso atelier.
-            </p>
-          </div>
-        </header>
-
-        <OrderTabs activeTab={activeTab} onChangeTab={setActiveTab} />
-
-        <div className={styles.channelPanelContainer}>
-          <AnimatePresence mode="wait">
-            {activeTab === "whatsapp" ? (
-              <OrderWhatsAppCards key="whatsapp" channels={ORDER_WHATSAPP_CHANNELS} />
-            ) : (
-              <OrderEmailForm key="email" />
-            )}
-          </AnimatePresence>
+        <div className={styles.splitLayout}>
+          <OrderDirectContact selectedTier={selectedTier} />
+          <OrderLeadForm
+            selectedTier={selectedTier}
+            presetProductName={presetProductName}
+            onTierChange={setSelectedTier}
+          />
         </div>
 
         <OrderFaq items={ORDER_FAQ_ITEMS} />

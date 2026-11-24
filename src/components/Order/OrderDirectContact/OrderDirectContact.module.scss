@@ -1,0 +1,116 @@
+@use "@/styles/mixins";
+
+.directColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+}
+
+.eyebrow {
+  @include mixins.eyebrow-editorial;
+}
+
+.title {
+  font-size: var(--font-section-title);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.lead {
+  font-size: var(--font-lead-editorial);
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0;
+  font-weight: 450;
+  max-width: var(--content-width-editorial);
+}
+
+.directBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 16%, transparent);
+}
+
+.directHeading {
+  font-size: var(--font-h3);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.directDescription {
+  font-size: var(--font-body);
+  line-height: 1.55;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.whatsappButton {
+  @include mixins.button-base;
+  margin-top: var(--space-1);
+  background-color: var(--color-whatsapp);
+  color: var(--color-whatsapp-text);
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--color-whatsapp-hover);
+  }
+
+  @include mixins.respond-to("mobile") {
+    width: 100%;
+  }
+}
+
+.trustMetaList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  list-style: none;
+  margin: 0;
+  padding-top: var(--space-3);
+  padding-inline: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 16%, transparent);
+}
+
+.trustMetaItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--font-card-desc);
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+.metaIcon {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.emailLink {
+  color: var(--color-text);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) var(--ease-smooth);
+
+  @include mixins.focus-ring();
+
+  &:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+}

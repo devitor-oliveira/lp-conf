@@ -1,0 +1,382 @@
+@use "@/styles/mixins";
+
+.formCard {
+  color-scheme: dark;
+  width: 100%;
+  max-width: 37.5rem;
+  justify-self: stretch;
+  padding: clamp(1.25rem, 1.8vw, 1.75rem) clamp(1.25rem, 2.2vw, 2rem);
+  background-color: var(--color-text);
+  color: var(--color-background);
+  border-radius: var(--radius-max);
+  box-shadow: var(--shadow-card-featured);
+
+  @include mixins.respond-to("mobile") {
+    max-width: 100%;
+  }
+}
+
+:global([data-theme="dark"]) .formCard {
+  color-scheme: light;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5); // Compactação vertical mantendo 12px entre campos
+}
+
+.formHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+}
+
+.formTitle {
+  font-size: var(--font-h2);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--color-background);
+  margin: 0;
+}
+
+.formSubtitle {
+  font-size: var(--font-caption);
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--color-background) 78%, transparent);
+  margin: 0;
+}
+
+.occasionFieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pillsGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+
+  @include mixins.respond-to("mobile") {
+    flex-direction: column;
+  }
+}
+
+.pillOption {
+  position: relative;
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 2.75rem; // 44px alvo tátil WCAG
+  padding: 0 var(--space-1-5);
+  white-space: nowrap;
+  background-color: color-mix(in srgb, var(--color-background) 10%, transparent);
+  color: var(--color-background);
+  border: 1px solid color-mix(in srgb, var(--color-background) 24%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-card-desc);
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth),
+    border-color var(--duration-fast) var(--ease-smooth);
+
+  &:hover {
+    border-color: var(--color-on-inverted-accent);
+  }
+
+  &:has(.srOnlyRadio:focus-visible) {
+    outline: 2px solid var(--color-on-inverted-accent);
+    outline-offset: 2px;
+  }
+}
+
+.pillOptionActive {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border-color: var(--color-background);
+
+  &:hover {
+    border-color: var(--color-background);
+  }
+}
+
+.srOnlyRadio {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+
+.occasionHint {
+  font-size: var(--font-caption);
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--color-background) 74%, transparent);
+  margin: 0;
+}
+
+.pairedSelectsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: var(--space-1-5);
+
+  @include mixins.respond-to("mobile") {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5); // 4px entre label e controle (Gestalt)
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: var(--font-card-desc);
+  font-weight: 700;
+  color: var(--color-background);
+}
+
+.optionalTag {
+  font-weight: 500;
+  color: color-mix(in srgb, var(--color-background) 70%, transparent);
+}
+
+.restoreButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  padding: var(--space-0-5) var(--space-1);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-on-inverted-accent);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+
+  @include mixins.focus-ring(var(--color-on-inverted-accent), 2px);
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+    text-decoration: underline;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.selectChevron {
+  position: absolute;
+  right: var(--space-2);
+  color: color-mix(in srgb, var(--color-background) 78%, transparent);
+  pointer-events: none;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: var(--space-1) var(--space-2);
+  background-color: color-mix(in srgb, var(--color-background) 10%, transparent);
+  color: var(--color-background);
+  border: 1px solid color-mix(in srgb, var(--color-background) 24%, transparent);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: var(--font-card-desc);
+  transition:
+    border-color var(--duration-fast) var(--ease-smooth),
+    background-color var(--duration-fast) var(--ease-smooth);
+
+  @include mixins.focus-ring(var(--color-on-inverted-accent), 2px);
+
+  &::placeholder {
+    color: color-mix(in srgb, var(--color-background) 55%, transparent);
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    background-color: color-mix(in srgb, var(--color-background) 14%, transparent);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.input,
+.select {
+  min-height: 2.75rem; // 44px alvo tátil WCAG
+}
+
+.select {
+  appearance: none;
+  padding-right: var(--space-5);
+  cursor: pointer;
+}
+
+.selectOption {
+  background-color: var(--color-text);
+  color: var(--color-background);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: var(--space-10);
+  line-height: 1.45;
+}
+
+.inputError {
+  border-color: var(--color-on-inverted-error);
+}
+
+.errorText {
+  font-size: var(--font-caption);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-on-inverted-error);
+  margin: 0;
+}
+
+.submitRow {
+  display: flex;
+  margin-top: var(--space-0-5);
+}
+
+.submitButton {
+  @include mixins.button-base;
+  width: 100%;
+  padding: var(--space-1-5) var(--space-4);
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  @include mixins.focus-ring(var(--color-on-inverted-accent), 3px);
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+  }
+
+  &:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  padding-block: var(--space-4);
+}
+
+.successIconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: var(--radius-pill);
+  background-color: color-mix(in srgb, var(--color-background) 12%, transparent);
+  color: var(--color-on-inverted-accent);
+}
+
+.successTitle {
+  font-size: var(--font-h2);
+  font-weight: 800;
+  color: var(--color-background);
+  margin: 0;
+}
+
+.successDescription {
+  font-size: var(--font-body);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-background) 78%, transparent);
+  max-width: 38ch;
+  margin: 0;
+
+  strong {
+    color: var(--color-background);
+  }
+}
+
+.successActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1-5);
+  margin-top: var(--space-1);
+}
+
+.whatsappShortcutButton {
+  @include mixins.button-base;
+  background-color: var(--color-whatsapp);
+  color: var(--color-whatsapp-text);
+  text-decoration: none;
+
+  @include mixins.focus-ring(var(--color-on-inverted-accent), 3px);
+
+  &:hover {
+    background-color: var(--color-whatsapp-hover);
+  }
+}
+
+.resetButton {
+  @include mixins.button-base;
+  background-color: color-mix(in srgb, var(--color-background) 12%, transparent);
+  color: var(--color-background);
+  border: 1px solid color-mix(in srgb, var(--color-background) 28%, transparent);
+
+  @include mixins.focus-ring(var(--color-on-inverted-accent), 3px);
+
+  &:hover {
+    border-color: var(--color-on-inverted-accent);
+    color: var(--color-on-inverted-accent);
+  }
+}
