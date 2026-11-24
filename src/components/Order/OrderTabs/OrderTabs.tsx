@@ -1,5 +1,5 @@
 import { Mail, MessageCircle } from "lucide-react";
-import { LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { LayoutGroup, motion } from "motion/react";
 import { type KeyboardEvent, useRef } from "react";
 import styles from "./OrderTabs.module.scss";
 
@@ -18,7 +18,7 @@ const TAB_ITEMS: readonly {
 }[] = [
   {
     id: "whatsapp",
-    label: "WhatsApp (Instantâneo)",
+    label: "WhatsApp",
     panelId: "order-panel-whatsapp",
     icon: "whatsapp",
   },
@@ -31,7 +31,6 @@ const TAB_ITEMS: readonly {
 ] as const;
 
 export function OrderTabs({ activeTab, onChangeTab }: OrderTabsProps) {
-  const shouldReduceMotion = useReducedMotion();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
@@ -86,7 +85,7 @@ export function OrderTabs({ activeTab, onChangeTab }: OrderTabsProps) {
               >
                 {isSelected && (
                   <motion.span
-                    layoutId={shouldReduceMotion ? undefined : "order-active-tab-pill"}
+                    layoutId="order-active-tab-pill"
                     className={styles.activePill}
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     aria-hidden="true"
