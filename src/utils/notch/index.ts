@@ -16,6 +16,11 @@ export {
   type TopCenterBiArcSvgParams,
   toCssAngle,
 } from "./biarc";
+export {
+  generateNotchedCardClipPath,
+  type NotchedCardClipPathParams,
+  type NotchedCardPlacement,
+} from "./cardClipPath";
 
 export {
   buildNotchCssVars,
