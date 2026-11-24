@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { memo } from "react";
-import { NotchContainer } from "@/components/Notch";
+import { memo, useRef } from "react";
+import { useNotchedClipPath } from "@/hooks/useNotchedClipPath";
 import type { MenuItem } from "@/utils/mockdata";
 import { WhatsAppButton } from "../WhatsAppButton/WhatsAppButton";
 import styles from "./MenuFeaturedStage.module.scss";
@@ -10,6 +10,9 @@ export interface MenuFeaturedStageProps {
   readonly item: MenuItem;
   readonly onOrderClick: (tier: MenuItem["targetServiceTier"]) => void;
 }
+
+const CTA_NOTCH_INNER_RADIUS = 28; // metade do WhatsAppButton (--space-7 = 56px)
+const CTA_NOTCH_PADDING = 12; // folga --space-1-5 entre o botão e a foto
 
 const transitionConfig = {
   duration: 0.35,
@@ -30,45 +33,47 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
   item,
   onOrderClick,
 }: MenuFeaturedStageProps) {
+  const visualStageRef = useRef<HTMLDivElement>(null);
+  const ctaNotchRef = useRef<HTMLDivElement>(null);
+
+  useNotchedClipPath(visualStageRef, {
+    placement: "top-right",
+    notchRef: ctaNotchRef,
+    innerRadius: CTA_NOTCH_INNER_RADIUS,
+    paddingOuter: CTA_NOTCH_PADDING,
+  });
+
   return (
     <article className={styles.stageLayout} aria-label={`Destaque: ${item.name}`}>
-      <div className={styles.visualStage}>
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={`image-${item.id}`}
-            className={styles.heroImageLayer}
-            initial={{ opacity: 0, scale: 1.02, zIndex: 1 }}
-            animate={{ opacity: 1, scale: 1, zIndex: 1 }}
-            exit={{ opacity: 0.99, scale: 1, zIndex: 0 }}
-            transition={{ ...transitionConfig, zIndex: { duration: 0 } }}
-          >
-            <img src={item.image} alt={item.alt} loading="eager" decoding="sync" />
-          </motion.div>
-        </AnimatePresence>
+      <div className={styles.visualStageFrame}>
+        <div className={styles.visualStageShadow}>
+          <div ref={visualStageRef} className={styles.visualStage}>
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={`image-${item.id}`}
+                className={styles.heroImageLayer}
+                initial={{ opacity: 0, scale: 1.02, zIndex: 1 }}
+                animate={{ opacity: 1, scale: 1, zIndex: 1 }}
+                exit={{ opacity: 0.99, scale: 1, zIndex: 0 }}
+                transition={{ ...transitionConfig, zIndex: { duration: 0 } }}
+              >
+                <img src={item.image} alt={item.alt} loading="eager" decoding="sync" />
+              </motion.div>
+            </AnimatePresence>
 
-        <div className={styles.priceGlassOverlay}>
-          <span className={styles.priceValue}>{item.priceDisplay}</span>
-          <span className={styles.portionsDivider} aria-hidden="true">
-            •
-          </span>
-          <span className={styles.portionsText}>{item.portionsInfo}</span>
+            <div className={styles.priceGlassOverlay}>
+              <span className={styles.priceValue}>{item.priceDisplay}</span>
+              <span className={styles.portionsDivider} aria-hidden="true">
+                •
+              </span>
+              <span className={styles.portionsText}>{item.portionsInfo}</span>
+            </div>
+          </div>
         </div>
 
-        <NotchContainer
-          as="div"
-          placement="top-right"
-          color="var(--color-surface)"
-          concentric={{
-            innerRadius: 28,
-            paddingOuter: 12,
-            paddingInner: 0,
-          }}
-          offsetX={0}
-          offsetY={0}
-          className={styles.ctaNotchWrapper}
-        >
+        <div ref={ctaNotchRef} className={styles.ctaNotchWrapper}>
           <WhatsAppButton presetMessage={item.whatsappPresetMessage} productName={item.name} />
-        </NotchContainer>
+        </div>
       </div>
 
       <AnimatePresence mode="wait">
@@ -105,7 +110,7 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
               whileTap="tap"
               transition={{ type: "spring", stiffness: 450, damping: 28 }}
             >
-              <span className={styles.ctaLabel}>Encomendar / Ver Opções</span>
+              <span className={styles.ctaLabel}>Encomendar</span>
               <motion.span
                 className={styles.arrowBadge}
                 aria-hidden="true"

@@ -3,22 +3,33 @@
 .stageLayout {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
-  gap: clamp(2rem, 1.25rem + 2.5vw, 3.75rem);
+  gap: clamp(2.25rem, 1.5rem + 2.5vw, 4rem);
   align-items: stretch;
   width: 100%;
   height: 100%;
 }
 
-.visualStage {
+.visualStageFrame {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3.8;
-  min-height: clamp(20rem, 28vw, 26rem);
-  max-height: clamp(24rem, 58vh, 31rem);
+  min-height: clamp(24rem, 34vw, 32rem);
+  max-height: clamp(28rem, 66vh, 37rem);
+}
+
+.visualStageShadow {
+  position: absolute;
+  inset: 0;
+  filter: var(--drop-shadow-card);
+}
+
+.visualStage {
+  position: relative;
+  width: 100%;
+  height: 100%;
   border-radius: var(--radius-large) 0 var(--radius-large) var(--radius-large);
   overflow: hidden;
   background-color: var(--color-background);
-  box-shadow: var(--shadow-card);
 }
 
 .heroImageLayer {
@@ -164,8 +175,8 @@
   width: var(--badge-size-compact);
   height: var(--badge-size-compact);
   border-radius: var(--radius-pill);
-  background-color: var(--color-background);
-  color: var(--color-menu-cta-bg, var(--color-text));
+  background-color: var(--color-menu-cta-text);
+  color: var(--color-menu-cta-bg);
   flex-shrink: 0;
 }
 
@@ -178,9 +189,9 @@
   font-weight: 650;
   letter-spacing: -0.01em;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--color-menu-cta-bg, var(--color-text));
-  background-color: var(--color-menu-cta-bg, var(--color-text));
-  color: var(--color-background);
+  border: 1px solid var(--color-menu-cta-bg);
+  background-color: var(--color-menu-cta-bg);
+  color: var(--color-menu-cta-text);
   cursor: pointer;
   white-space: nowrap;
   box-shadow: var(--shadow-image-direct);
@@ -189,16 +200,8 @@
     border-color var(--duration-fast) var(--ease-smooth);
 
   &:hover {
-    background-color: color-mix(
-      in srgb,
-      var(--color-menu-cta-bg, var(--color-text)) 88%,
-      var(--color-background)
-    );
-    border-color: color-mix(
-      in srgb,
-      var(--color-menu-cta-bg, var(--color-text)) 88%,
-      var(--color-background)
-    );
+    background-color: color-mix(in srgb, var(--color-menu-cta-bg) 88%, var(--color-menu-cta-text));
+    border-color: color-mix(in srgb, var(--color-menu-cta-bg) 88%, var(--color-menu-cta-text));
   }
 
   @include mixins.focus-ring(var(--color-accent), 3px);
