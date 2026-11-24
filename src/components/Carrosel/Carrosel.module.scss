@@ -32,6 +32,7 @@
   gap: clamp(var(--space-3), 5vh, var(--space-8));
   padding: 1.5rem 2rem 1.5rem 4rem;
   max-width: var(--content-width, 55%);
+  color: var(--slide-text, var(--color-on-slide));
 
   z-index: 1;
 
@@ -91,9 +92,9 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 76px;
-  height: 76px;
-  z-index: 10;
+  width: 98px;
+  height: 60px;
+  z-index: 5;
   pointer-events: none;
   transition:
     --notch-bg 0.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -102,9 +103,9 @@
 
 .whatsappCta {
   position: absolute;
-  right: var(--canvas-edge-inset);
-  bottom: 1.5rem;
-  z-index: 25;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
   transition:
     --notch-bg 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -123,10 +124,9 @@
   .canvasFrame {
     position: absolute;
     inset: var(--canvas-edge-inset) var(--canvas-edge-inset) 1.5rem var(--canvas-edge-inset);
-    border-radius: var(--radius-max) var(--radius-large) 0 var(--radius-large);
+    border-radius: var(--radius-max) 0 0 var(--radius-large);
     overflow: hidden;
     z-index: 1;
-    box-shadow: var(--shadow-image-ambient), var(--shadow-image-direct);
 
     // Scrim curto na base: protege o contraste do CTA sem apagar o doce.
     &::after {
@@ -134,6 +134,7 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, var(--image-scrim) 0%, transparent 55%);
+      z-index: 2;
       pointer-events: none;
     }
   }

@@ -24,6 +24,8 @@ export interface WhatsAppCTAProps {
   offsetX?: number | string;
   /** Offset vertical do entalhe (padrão: 0px) */
   offsetY?: number | string;
+  /** Sombra direcional contínua aplicada ao entalhe */
+  dropShadow?: string;
 }
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -53,6 +55,7 @@ export function WhatsAppCTA({
   paddingInner = 0,
   offsetX = 0,
   offsetY = 0,
+  dropShadow,
 }: WhatsAppCTAProps) {
   const waUrl = buildWhatsAppUrl(phone, message);
 
@@ -68,6 +71,7 @@ export function WhatsAppCTA({
       }}
       offsetX={offsetX}
       offsetY={offsetY}
+      dropShadow={dropShadow}
       className={[styles.ctaNotch, className].filter(Boolean).join(" ")}
       style={style}
     >

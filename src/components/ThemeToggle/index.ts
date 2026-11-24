@@ -9,5 +9,6 @@ export {
   type UseThemeReturn,
   useTheme,
 } from "@/hooks/useTheme";
+export { ThemeSwitchPill, type ThemeSwitchPillProps } from "./ThemeSwitchPill";
 export { default, ThemeToggle, type ThemeToggleProps } from "./ThemeToggle";
 export { ThemeToggleButton, type ThemeToggleButtonProps } from "./ThemeToggleButton";

@@ -27,6 +27,7 @@
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
+  transform-origin: right bottom;
   will-change: transform;
 
   &:focus-visible {
