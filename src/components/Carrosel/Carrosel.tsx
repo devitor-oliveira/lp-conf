@@ -1,78 +1,64 @@
 import { Sparkles } from "lucide-react";
-import {
-  AnimatePresence,
-  motion,
-  useAnimationFrame,
-  useMotionValue,
-  useSpring,
-} from "motion/react";
-import type React from "react";
-import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useAnimationFrame, useMotionValue } from "motion/react";
+import { type CSSProperties, useEffect, useState } from "react";
 
 import styles from "@/components/Carrosel/Carrosel.module.scss";
-import { generateConcentricCollarSvgPath, NotchContainer } from "@/components/Notch";
 import { SLIDES } from "@/utils/mockdata";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import CarroselDock from "./CarroselDock/CarroselDock";
 import CarroselProgress from "./CarroselProgress/CarroselProgress";
 import { HeroHighlights } from "./HeroHighlights/HeroHighlights";
-import WhatsAppCTA from "./WhatsAppCTA";
 
 const AUTO_PLAY_DURATION = 8000;
-const PROGRESS_SEGMENT_WIDTH = 38;
-const PROGRESS_SEGMENT_GAP = 6;
-const PROGRESS_PAD_X = 10;
 const PROGRESS_NOTCH_HEIGHT = 32;
 const PROGRESS_NOTCH_ANGLE = 48;
 const PROGRESS_RADIUS_BOTTOM = 32;
-const CONTENT_SPLIT_OFFSET_RATIO = 0.05; // 55% (.content) - 50% (centro do Hero)
-const CANVAS_EDGE_INSET = 8;
-const IMAGE_EXIT_RADIUS = 32;
 
 type ContentCssVars = CSSProperties & {
   "--slide-text": string;
 };
 
+type FloatStageCssVars = CSSProperties & {
+  "--cutout-shadow-bottom"?: string;
+  "--cutout-offset-x"?: string;
+  "--cutout-offset-y"?: string;
+};
+
 export interface CarroselProps {
   activeSurfaceColor?: string;
-  /** Angulação máxima da rampa suave do entalhe central e do recorte concêntrico da imagem (padrão: 48) */
+  /** Angulação máxima da rampa suave do entalhe central (padrão: 48) */
   notchAngle?: number | string;
   onSlideColorChange?: (colorToken: string) => void;
   phone?: string;
   whatsappMessage?: string;
 }
 
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.766.469 3.484 1.344 5l-1.406 5.156 5.281-1.375c1.469.797 3.109 1.219 4.75 1.219 5.516 0 9.969-4.453 9.969-9.969S17.547 2 12.031 2zm5.813 14.125c-.25.703-1.438 1.344-2 1.422-.516.078-1.188.109-1.922-.125-.453-.141-1.031-.344-1.766-.656-3.094-1.328-5.109-4.453-5.266-4.656-.156-.203-1.266-1.688-1.266-3.219s.797-2.281 1.078-2.594c.281-.313.609-.391.813-.391.203 0 .406.016.578.016.188 0 .438-.078.688.531.25.609.859 2.094.938 2.25.078.156.125.344.031.547-.094.203-.141.328-.281.5-.141.172-.297.391-.422.516-.141.141-.281.297-.125.578.156.281.703 1.156 1.516 1.875 1.047.922 1.922 1.219 2.203 1.359.281.141.438.109.609-.078.172-.188.734-.859.938-1.156.203-.297.406-.25.672-.156.266.094 1.703.813 1.984.953.281.141.469.219.547.344.078.125.078.719-.172 1.422z" />
+    </svg>
+  );
+}
+
 export function Carrosel({
-  activeSurfaceColor,
   notchAngle = PROGRESS_NOTCH_ANGLE,
   onSlideColorChange,
   phone,
   whatsappMessage,
 }: CarroselProps) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [wrapperWidth, setWrapperWidth] = useState(1440);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isContentHovered, setIsContentHovered] = useState(false);
   const [isDockActive, setIsDockActive] = useState(false);
   const [isProgressHovered, setIsProgressHovered] = useState(false);
-
-  useLayoutEffect(() => {
-    const el = wrapperRef.current;
-    if (!el) return;
-
-    const updateWidth = () => {
-      if (el.clientWidth > 0) {
-        setWrapperWidth(el.clientWidth);
-      }
-    };
-
-    updateWidth();
-
-    if (typeof ResizeObserver === "undefined") return;
-    const observer = new ResizeObserver(updateWidth);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   const currentSlide = SLIDES[currentIndex];
   const isPaused = isContentHovered || isDockActive || isProgressHovered;
@@ -91,25 +77,6 @@ export function Carrosel({
       progress.set(nextProgress);
     }
   });
-
-  // Micro-parallax reativo na imagem (GPU-accelerated)
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const smoothX = useSpring(mouseX, { stiffness: 120, damping: 20, mass: 0.5 });
-  const smoothY = useSpring(mouseY, { stiffness: 120, damping: 20, mass: 0.5 });
-
-  const handleCanvasMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const normalizedX = (e.clientX - rect.left) / rect.width - 0.5;
-    const normalizedY = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(normalizedX * 10);
-    mouseY.set(normalizedY * 10);
-  };
-
-  const handleCanvasMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
 
   // Sincronização de cor com o elemento pai
   useEffect(() => {
@@ -146,37 +113,28 @@ export function Carrosel({
     },
   };
 
-  const collarColor =
-    activeSurfaceColor ?? currentSlide?.surfaceColorToken ?? "var(--color-surface-slide-1)";
-
   const contentStyle: ContentCssVars = {
     "--slide-text": currentSlide?.textColorToken ?? "var(--color-text)",
   };
 
-  const flatWidth =
-    SLIDES.length * PROGRESS_SEGMENT_WIDTH +
-    Math.max(0, SLIDES.length - 1) * PROGRESS_SEGMENT_GAP +
-    PROGRESS_PAD_X * 2;
-
-  const imageStartOffset = wrapperWidth * CONTENT_SPLIT_OFFSET_RATIO + CANVAS_EDGE_INSET;
-
-  const collarGeometry = useMemo(
-    () =>
-      generateConcentricCollarSvgPath({
-        height: PROGRESS_NOTCH_HEIGHT,
-        flatHalfWidth: flatWidth / 2,
-        angleDeg: notchAngle,
-        radiusBottom: PROGRESS_RADIUS_BOTTOM,
-        gap: CANVAS_EDGE_INSET,
-        imageStartOffset,
-        exitRadius: IMAGE_EXIT_RADIUS,
-      }),
-    [flatWidth, imageStartOffset, notchAngle],
-  );
+  const cutoutScale = currentSlide?.cutoutScale ?? 1;
+  const floatStageStyle: FloatStageCssVars | undefined =
+    currentSlide?.cutoutShadowBottom || currentSlide?.cutoutOffsetX || currentSlide?.cutoutOffsetY
+      ? {
+          ...(currentSlide.cutoutShadowBottom
+            ? { "--cutout-shadow-bottom": currentSlide.cutoutShadowBottom }
+            : {}),
+          ...(currentSlide.cutoutOffsetX
+            ? { "--cutout-offset-x": currentSlide.cutoutOffsetX }
+            : {}),
+          ...(currentSlide.cutoutOffsetY
+            ? { "--cutout-offset-y": currentSlide.cutoutOffsetY }
+            : {}),
+        }
+      : undefined;
 
   return (
     <motion.div
-      ref={wrapperRef}
       className={styles.wrapper}
       onMouseEnter={() => setIsContentHovered(true)}
       onMouseLeave={() => setIsContentHovered(false)}
@@ -194,19 +152,6 @@ export function Carrosel({
         onSelectSlide={handleSelectSlide}
         onHoverChange={setIsProgressHovered}
       />
-
-      {collarGeometry.d.length > 0 && (
-        <svg
-          className={styles.imageNotchCollar}
-          width={collarGeometry.svgWidth}
-          height={collarGeometry.svgHeight}
-          viewBox={`0 0 ${collarGeometry.svgWidth} ${collarGeometry.svgHeight}`}
-          style={{ color: collarColor }}
-          aria-hidden="true"
-        >
-          <path d={collarGeometry.d} fill="currentColor" />
-        </svg>
-      )}
 
       <div
         className={styles["content-wrapper"]}
@@ -231,16 +176,22 @@ export function Carrosel({
           <motion.h1 id="hero-title" variants={contentItemVariants}>
             {currentSlide?.title}
           </motion.h1>
-          <motion.p variants={contentItemVariants}>{currentSlide?.description}</motion.p>
-          <motion.div variants={contentItemVariants} className={styles.ctaWrapper}>
+          <motion.p className={styles.lead} variants={contentItemVariants}>
+            {currentSlide?.description}
+          </motion.p>
+          <motion.div variants={contentItemVariants} className={styles.ctaGroup}>
             <a
-              className={styles.ctaButton}
+              className={styles.ctaPrimary}
               href={buildWhatsAppUrl(phone, whatsappMessage)}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Pedir doces pelo WhatsApp (abre em nova aba)"
             >
-              Pedir pelo WhatsApp
+              <WhatsAppIcon className={styles.whatsappIcon} />
+              <span>Pedir pelo WhatsApp</span>
+            </a>
+            <a className={styles.ctaSecondary} href="#cardapio">
+              Ver Cardápio Completo
             </a>
           </motion.div>
           <motion.div variants={contentItemVariants}>
@@ -248,52 +199,61 @@ export function Carrosel({
           </motion.div>
         </motion.div>
 
-        <motion.div
-          className={styles.canvas}
-          aria-live="polite"
-          onMouseMove={handleCanvasMouseMove}
-          onMouseLeave={handleCanvasMouseLeave}
-        >
-          <div className={styles.canvasFrame}>
-            <motion.div className={styles.parallaxLayer} style={{ x: smoothX, y: smoothY }}>
-              <AnimatePresence>
+        <div className={styles.canvas} aria-live="polite">
+          {!currentSlide?.isCutout && <div className={styles.imageHalo} aria-hidden="true" />}
+          <div className={styles.floatStage} style={floatStageStyle}>
+            {currentSlide?.isCutout && (
+              <div className={styles.cutoutGroundShadow} aria-hidden="true" />
+            )}
+            <div className={currentSlide?.isCutout ? styles.cutoutFrame : styles.organicFrame}>
+              <AnimatePresence mode="sync">
                 <motion.img
                   key={`img-${currentSlide?.id}`}
                   src={currentSlide?.image}
                   alt={currentSlide?.alt}
-                  initial={{ x: 80, opacity: 0, scale: 0.95 }}
-                  animate={{ x: 0, opacity: 1, scale: 1 }}
-                  exit={{ x: -80, opacity: 0, scale: 0.98 }}
+                  fetchPriority={currentIndex === 0 ? "high" : undefined}
+                  initial={{
+                    x: 64,
+                    opacity: 0,
+                    scale: currentSlide?.isCutout ? cutoutScale * 0.96 : 1.04,
+                  }}
+                  animate={{
+                    x: 0,
+                    opacity: 1,
+                    scale: currentSlide?.isCutout ? cutoutScale : 1.08,
+                  }}
+                  exit={{
+                    x: -64,
+                    opacity: 0,
+                    scale: currentSlide?.isCutout ? cutoutScale * 0.96 : 1.02,
+                  }}
                   transition={{
                     duration: 0.75,
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 />
               </AnimatePresence>
-            </motion.div>
+            </div>
 
-            {/* Anel 2 Concêntrico dentro de .canvasFrame: acompanha o switch pílula com gola de 8px.
-                Equação de fechamento da caixa de 98x60px: offset(0px) + raio(44px) + filete(16px) = 60px. */}
-            <NotchContainer
-              as="div"
-              placement="top-right"
-              radius={44}
-              filletSize={16}
-              offsetX={0}
-              offsetY={0}
-              color={collarColor}
-              className={styles.themeToggleCollar}
-              aria-hidden="true"
-            />
-
-            <WhatsAppCTA
-              color={collarColor}
-              phone={phone}
-              message={whatsappMessage}
-              className={styles.whatsappCta}
-            />
+            {currentSlide?.isCutout &&
+              currentSlide.floatingPills?.slice(0, 3).map((label, idx) => (
+                <motion.span
+                  key={label}
+                  aria-hidden="true"
+                  className={`${styles.floatingPill} ${styles[`floatingPill${idx + 1}`] ?? ""}`}
+                  initial={{ opacity: 0, y: 10, scale: 0.94 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.55,
+                    delay: 0.15 + idx * 0.08,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  {label}
+                </motion.span>
+              ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       <CarroselDock

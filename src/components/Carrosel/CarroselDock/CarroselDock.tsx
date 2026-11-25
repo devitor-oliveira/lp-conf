@@ -184,7 +184,7 @@ export function CarroselDock({
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         animate={{
-          height: isOpen ? 68 : 18,
+          height: isOpen ? 74 : 26,
         }}
         transition={{ type: "spring", stiffness: 380, damping: 28 }}
       >

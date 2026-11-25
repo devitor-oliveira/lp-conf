@@ -1,6 +1,6 @@
-import YellowHeroIMG from "@/assets/doce-amarelo.png";
-import GreenHeroIMG from "@/assets/doce-verde.png";
-import RedHeroIMG from "@/assets/doce-vermelho.png";
+import GreenHeroIMG from "@/assets/doce-verde-bg-removebg-preview.png";
+import RedHeroIMG from "@/assets/doce-vermelho-bg-removebg-preview.png";
+import YellowHeroIMG from "@/assets/Layered Banoffee Pie Jar with Mint.png";
 import type { HeroHighlight } from "@/components/Carrosel/HeroHighlights/HeroHighlights";
 import { MENU_ITEM_IMAGES } from "@/utils/constants";
 
@@ -14,6 +14,12 @@ export interface Slide {
   highlights: readonly HeroHighlight[];
   image: string;
   alt?: string;
+  isCutout?: boolean;
+  cutoutScale?: number;
+  cutoutOffsetX?: string;
+  cutoutOffsetY?: string;
+  cutoutShadowBottom?: string;
+  floatingPills?: readonly string[];
   CTAColorToken?: string;
   textColorToken?: string;
   surfaceColorToken: string;
@@ -34,7 +40,13 @@ export const SLIDES: Slide[] = [
       { id: "01-leaf", icon: "leaf", label: "Ingredientes selecionados" },
     ],
     image: RedHeroIMG,
-    alt: "Doce artesanal vermelho especial",
+    alt: "Sobremesa artesanal em pote de vidro em camadas com creme branco, geleia de frutas vermelhas, pão de ló, morangos e framboesas frescas",
+    isCutout: true,
+    cutoutScale: 1.42,
+    cutoutOffsetX: "-3.5%",
+    cutoutOffsetY: "2%",
+    cutoutShadowBottom: "-1%",
+    floatingPills: ["Morangos & framboesas", "Creme & geleia artesanal", "Pão de ló artesanal"],
     surfaceColorToken: "var(--color-surface-slide-1)",
     textColorToken: "var(--color-text-slide-1)",
   },
@@ -52,7 +64,9 @@ export const SLIDES: Slide[] = [
       { id: "02-sparkles", icon: "sparkles", label: "Para ocasiões especiais" },
     ],
     image: YellowHeroIMG,
-    alt: "Doce artesanal amarelo especial",
+    alt: "Banoffee pie artesanal em pote de vidro com banana caramelizada, chantilly e folhas de hortelã",
+    isCutout: true,
+    floatingPills: ["Chantilly & cacau", "Banana & doce de leite", "Base crocante artesanal"],
     surfaceColorToken: "var(--color-surface-slide-2)",
     textColorToken: "var(--color-text-slide-2)",
   },
@@ -70,7 +84,17 @@ export const SLIDES: Slide[] = [
       { id: "03-store", icon: "store", label: "Feito no ateliê" },
     ],
     image: GreenHeroIMG,
-    alt: "Seleção especial de confeitaria",
+    alt: "Tiramisu artesanal de pistache e chocolate em pote de vidro com laço de juta, raspas de chocolate e folhas de hortelã",
+    isCutout: true,
+    cutoutScale: 1.16,
+    cutoutOffsetX: "-2.5%",
+    cutoutOffsetY: "-1%",
+    cutoutShadowBottom: "-6%",
+    floatingPills: [
+      "Raspas de cacau & hortelã",
+      "Creme de pistache puro",
+      "Ganache & massa de cacau",
+    ],
     surfaceColorToken: "var(--color-surface-slide-3)",
     textColorToken: "var(--color-text-slide-3)",
   },
