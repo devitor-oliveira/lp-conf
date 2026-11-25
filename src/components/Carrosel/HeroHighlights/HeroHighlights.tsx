@@ -33,15 +33,22 @@ export interface HeroHighlight {
 
 export interface HeroHighlightsProps {
   highlights: readonly HeroHighlight[];
+  showRatingBadge?: boolean;
 }
 
-export function HeroHighlights({ highlights }: HeroHighlightsProps) {
-  if (highlights.length === 0) {
+export function HeroHighlights({ highlights, showRatingBadge = false }: HeroHighlightsProps) {
+  if (!showRatingBadge && highlights.length === 0) {
     return null;
   }
 
   return (
     <ul className={styles.list}>
+      {showRatingBadge && (
+        <li className={styles.ratingPill}>
+          <span aria-hidden="true">★</span>
+          <span>4.9 (1.200+ avaliações)</span>
+        </li>
+      )}
       {highlights.map(({ id, icon, label }) => {
         const Icon = ICONS[icon];
 
