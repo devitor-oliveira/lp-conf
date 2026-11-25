@@ -61,7 +61,7 @@
 
   // --- Constantes Estruturais do Layout ---
   --bento-gap: var(--space-2); // 16px (1rem)
-  --layout-stage-margin: var(--space-1-5); // 8px (0.5rem)
+  --layout-stage-margin: var(--space-2); // 16px (1rem)
   --container-width: 72.5rem; // 1160px
   --container-width-large: 95rem; // 1520px (variante oficial para seções editoriais largas como About)
   --content-width-editorial: 48.75rem; // 780px
@@ -71,12 +71,12 @@
   --menu-rail-width: clamp(6.75rem, 6rem + 1.5vw, 8rem); // 108px -> 128px
 
   // --- Tipografia Fluida Acessível (rem + vw com clamp) ---
-  --font-hero: clamp(3.5rem, 6.5vw, 8rem); // 56px -> 128px
+  --font-hero: clamp(2.5rem, 1.5rem + 3.2vw, 5.25rem); // 40px -> 84px
   --font-display: clamp(2.5rem, 1.5rem + 4vw, 5.5rem); // 40px -> 88px
   --font-h1: clamp(1.75rem, 1rem + 2.5vw, 3rem); // 28px -> 48px
   --font-h2: clamp(1.35rem, 0.85rem + 1.5vw, 2rem); // 21.6px -> 32px
   --font-h3: clamp(1.15rem, 0.85rem + 0.8vw, 1.5rem); // 18.4px -> 24px
-  --font-lead: clamp(1rem, 0.8rem + 0.6vw, 1.25rem); // 16px -> 20px
+  --font-lead: clamp(1.05rem, 0.9rem + 0.45vw, 1.35rem); // 16.8px -> 21.6px
   --font-body: clamp(0.95rem, 0.85rem + 0.3vw, 1rem); // 15.2px -> 16px
   --font-caption: clamp(0.75rem, 0.65rem + 0.25vw, 0.85rem); // 12px -> 13.6px
   --font-section-title: clamp(2.5rem, 1.25rem + 3.2vw, 4rem); // 40px -> 64px
