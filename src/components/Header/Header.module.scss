@@ -75,7 +75,7 @@
   top: 0;
   left: 0;
   z-index: 30;
-  padding-top: 8px;
+  padding-top: 12px;
   // margin-top: 0.3rem;
 
   nav {
@@ -84,9 +84,7 @@
     height: 100%;
     gap: 1.75rem;
     padding-right: 0.5rem;
-    padding-left: calc(
-      var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.75rem
-    );
+    padding-left: var(--header-edge-inset);
     color: var(--color-text);
 
     a {
@@ -120,9 +118,6 @@
   .header nav {
     gap: 1.25rem;
     padding-right: 0.35rem;
-    padding-left: calc(
-      var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.75rem
-    );
 
     a {
       font-size: 0.9rem;
@@ -131,18 +126,6 @@
 }
 
 @media (max-width: 640px) {
-  .header nav {
-    gap: 0.875rem;
-    padding-right: 0.35rem;
-    padding-left: calc(
-      var(--notch-offset-x, var(--layout-stage-margin)) + var(--notch-fillet, 32px) + 0.5rem
-    );
-
-    a {
-      font-size: 0.85rem;
-    }
-  }
-
   .floatingHeader {
     gap: 0.5rem;
   }
@@ -159,5 +142,15 @@
 
   .floatingToggleButton {
     --pill-height: 48px;
+  }
+
+  .header nav {
+    gap: 0.875rem;
+    padding-right: 0.35rem;
+    padding-left: calc(var(--layout-stage-margin) + var(--radius-max) + var(--space-1));
+
+    a {
+      font-size: 0.85rem;
+    }
   }
 }

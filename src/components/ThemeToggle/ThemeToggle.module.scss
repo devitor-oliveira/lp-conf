@@ -1,5 +1,5 @@
 .toggleContainer {
-  --switch-width: 86px;
+  --switch-width: 100px;
   --switch-height: 48px;
   --switch-track-pad: 5px;
   --toggle-inner-radius: 24px;
@@ -9,8 +9,8 @@
   top: 0;
   right: 0;
   z-index: 30;
-  padding: var(--layout-stage-margin) var(--layout-stage-margin) var(--toggle-pad-outer)
-    var(--toggle-pad-outer);
+  padding: var(--layout-stage-margin) calc(var(--layout-stage-margin) + var(--space-2))
+    var(--toggle-pad-outer) var(--toggle-pad-outer);
   transition:
     --notch-bg 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
