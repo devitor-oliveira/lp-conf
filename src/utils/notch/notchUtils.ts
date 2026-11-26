@@ -83,6 +83,29 @@ export function buildNotchCssVars(params: NotchCssParams): Record<string, string
 }
 
 /**
+ * Lê um comprimento CSS do `:root` (em `rem` ou `px`) e converte para pixels finitos.
+ */
+export function readRootCssLengthPx(tokenName: string, fallbackPx: number): number {
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return fallbackPx;
+  }
+
+  const rootStyle = getComputedStyle(document.documentElement);
+  const rawValue = rootStyle.getPropertyValue(tokenName).trim();
+  if (!rawValue) return fallbackPx;
+
+  const parsed = Number.parseFloat(rawValue);
+  if (!Number.isFinite(parsed)) return fallbackPx;
+
+  if (rawValue.endsWith("rem")) {
+    const rootFontSize = Number.parseFloat(rootStyle.fontSize) || 16;
+    return Math.max(0, parsed * rootFontSize);
+  }
+
+  return Math.max(0, parsed);
+}
+
+/**
  * Parsing numérico estrito garantindo limites finitos e não negativos.
  */
 export function parseNumericPx(value: number | string | undefined, fallback: number): number {

@@ -17,8 +17,11 @@ export {
   toCssAngle,
 } from "./biarc";
 export {
+  generateMultiNotchedCardClipPath,
   generateNotchedCardClipPath,
   type NotchedCardClipPathParams,
+  type NotchedCardCornerSpec,
+  type NotchedCardMultiClipPathParams,
   type NotchedCardPlacement,
 } from "./cardClipPath";
 
@@ -29,6 +32,7 @@ export {
   compactCssVars,
   type NotchCssParams,
   parseNumericPx,
+  readRootCssLengthPx,
   sanitizeColor,
   sanitizeDropShadow,
   toCssLength,
