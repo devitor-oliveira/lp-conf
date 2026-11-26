@@ -1,0 +1,46 @@
+.priceBadge {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1);
+  min-height: var(--space-6); // 48px -> innerRadius = 24px
+  padding: var(--space-1) var(--space-2-5);
+  border-radius: var(--radius-large); // 24px fixo para manter concentricidade mesmo em 2 linhas
+  background-color: var(--color-menu-canvas);
+  color: var(--color-menu-text);
+  border: 1px solid color-mix(in srgb, var(--color-menu-border) 22%, transparent);
+}
+
+.priceValue {
+  font-size: var(--font-menu-price);
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.portionsDivider {
+  color: var(--color-menu-accent);
+  font-size: var(--font-caption);
+  line-height: 1;
+}
+
+.portionsText {
+  font-size: var(--font-caption);
+  font-weight: 600;
+  color: var(--color-menu-muted);
+  line-height: 1.2;
+}
+
+@media (forced-colors: active) {
+  .priceBadge {
+    border-color: ButtonBorder;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  .portionsDivider,
+  .portionsText {
+    color: CanvasText;
+  }
+}

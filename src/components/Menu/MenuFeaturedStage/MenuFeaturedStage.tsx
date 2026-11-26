@@ -1,9 +1,9 @@
-import { ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { memo, useRef } from "react";
+import { memo, useMemo, useRef } from "react";
 import { useNotchedClipPath } from "@/hooks/useNotchedClipPath";
 import type { MenuItem } from "@/utils/mockdata";
 import type { OrderSelectIntentDetail } from "@/utils/orderData";
+import { MenuPriceBadge } from "../MenuPriceBadge/MenuPriceBadge";
 import { WhatsAppButton } from "../WhatsAppButton/WhatsAppButton";
 import styles from "./MenuFeaturedStage.module.scss";
 
@@ -13,36 +13,38 @@ export interface MenuFeaturedStageProps {
 }
 
 const CTA_NOTCH_INNER_RADIUS = 28; // metade do WhatsAppButton (--space-7 = 56px)
-const CTA_NOTCH_PADDING = 12; // folga --space-1-5 entre o botão e a foto
+const PRICE_NOTCH_INNER_RADIUS = 24; // metade da altura mínima de MenuPriceBadge (--space-6 = 48px)
+const NOTCH_PADDING = 12; // colarinho --space-1-5 entre os elementos e a foto
 
 const transitionConfig = {
   duration: 0.35,
   ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
 };
 
-const ctaButtonVariants = {
-  hover: {},
-  tap: { scale: 0.97 },
-};
-
-const ctaArrowVariants = {
-  hover: { x: 3 },
-  tap: { scale: 0.95 },
-};
-
-export const MenuFeaturedStage = memo(function MenuFeaturedStage({
-  item,
-  onOrderClick,
-}: MenuFeaturedStageProps) {
+export const MenuFeaturedStage = memo(function MenuFeaturedStage({ item }: MenuFeaturedStageProps) {
   const visualStageRef = useRef<HTMLDivElement>(null);
   const ctaNotchRef = useRef<HTMLDivElement>(null);
+  const priceNotchRef = useRef<HTMLDivElement>(null);
 
-  useNotchedClipPath(visualStageRef, {
-    placement: "top-right",
-    notchRef: ctaNotchRef,
-    innerRadius: CTA_NOTCH_INNER_RADIUS,
-    paddingOuter: CTA_NOTCH_PADDING,
-  });
+  const notchConfigs = useMemo(
+    () => [
+      {
+        placement: "top-right" as const,
+        notchRef: ctaNotchRef,
+        innerRadius: CTA_NOTCH_INNER_RADIUS,
+        paddingOuter: NOTCH_PADDING,
+      },
+      {
+        placement: "bottom-left" as const,
+        notchRef: priceNotchRef,
+        innerRadius: PRICE_NOTCH_INNER_RADIUS,
+        paddingOuter: NOTCH_PADDING,
+      },
+    ],
+    [],
+  );
+
+  useNotchedClipPath(visualStageRef, { notches: notchConfigs });
 
   return (
     <article className={styles.stageLayout} aria-label={`Destaque: ${item.name}`}>
@@ -61,19 +63,15 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
                 <img src={item.image} alt={item.alt} loading="eager" decoding="sync" />
               </motion.div>
             </AnimatePresence>
-
-            <div className={styles.priceGlassOverlay}>
-              <span className={styles.priceValue}>{item.priceDisplay}</span>
-              <span className={styles.portionsDivider} aria-hidden="true">
-                •
-              </span>
-              <span className={styles.portionsText}>{item.portionsInfo}</span>
-            </div>
           </div>
         </div>
 
         <div ref={ctaNotchRef} className={styles.ctaNotchWrapper}>
           <WhatsAppButton presetMessage={item.whatsappPresetMessage} productName={item.name} />
+        </div>
+
+        <div ref={priceNotchRef} className={styles.priceNotchWrapper}>
+          <MenuPriceBadge priceDisplay={item.priceDisplay} portionsInfo={item.portionsInfo} />
         </div>
       </div>
 
@@ -101,7 +99,7 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
             ))}
           </ul>
 
-          <div className={styles.editorialActions}>
+          {/* <div className={styles.editorialActions}>
             <motion.button
               type="button"
               className={styles.orderCtaButton}
@@ -121,7 +119,7 @@ export const MenuFeaturedStage = memo(function MenuFeaturedStage({
                 <ArrowRight size={14} strokeWidth={2.2} />
               </motion.span>
             </motion.button>
-          </div>
+          </div> */}
         </motion.div>
       </AnimatePresence>
     </article>

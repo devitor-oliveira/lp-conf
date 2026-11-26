@@ -3,6 +3,7 @@ export {
   type MenuFeaturedStageProps,
 } from "./MenuFeaturedStage/MenuFeaturedStage";
 export { MenuHeader } from "./MenuHeader/MenuHeader";
+export { MenuPriceBadge, type MenuPriceBadgeProps } from "./MenuPriceBadge/MenuPriceBadge";
 export {
   MenuProcessSteps,
   type MenuProcessStepsProps,

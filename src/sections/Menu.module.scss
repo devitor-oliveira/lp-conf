@@ -11,7 +11,7 @@
   position: relative;
   width: 100%;
   padding-top: clamp(2rem, 1.25rem + 2vw, 3.25rem);
-  padding-bottom: clamp(2rem, 1.25rem + 2vw, 3.25rem);
+  padding-bottom: clamp(2.25rem, 1.5rem + 2vw, 3.5rem);
   background-color: var(--color-surface);
   color: var(--color-text);
   border-top: 1px solid color-mix(in srgb, var(--color-border) 22%, transparent);
@@ -21,9 +21,8 @@
 
 .container {
   @include mixins.container-large;
-  container-type: inline-size;
-
-  padding-inline: clamp(0.5rem, 0.25rem + 0.8vw, 1.5rem);
+  // container-type: inline-size;
+  // gap: 2rem;
 }
 
 .bentoShowcase {
