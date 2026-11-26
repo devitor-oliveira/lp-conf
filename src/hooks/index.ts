@@ -1,3 +1,14 @@
+export {
+  type SlideChangeSource,
+  type UseCarouselAutoplayOptions,
+  type UseCarouselAutoplayReturn,
+  useCarouselAutoplay,
+} from "./useCarouselAutoplay";
+export {
+  type UseMagneticHoverOptions,
+  type UseMagneticHoverReturn,
+  useMagneticHover,
+} from "./useMagneticHover";
 export { type UseNotchOptions, useNotch } from "./useNotch";
 export {
   applyThemeToDocument,

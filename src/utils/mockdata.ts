@@ -1,39 +1,48 @@
+import YellowHeroIMG from "@/assets/doce-banoffee-cutout.png";
 import GreenHeroIMG from "@/assets/doce-verde-bg-removebg-preview.png";
 import RedHeroIMG from "@/assets/doce-vermelho-bg-removebg-preview.png";
-import YellowHeroIMG from "@/assets/Layered Banoffee Pie Jar with Mint.png";
 import type { HeroHighlight } from "@/components/Carrosel/HeroHighlights/HeroHighlights";
 import { MENU_ITEM_IMAGES } from "@/utils/constants";
 
+export interface HeroFloatingPill {
+  readonly id: string;
+  readonly label: string;
+  /** Coordenada normalizada (0..1) na caixa da imagem cutout para ancorar a curva SVG */
+  readonly anchor: { readonly x: number; readonly y: number };
+  /** Ângulo radial em graus (0° = direita, 90° = baixo, 180° = esquerda, -90° = topo) */
+  readonly angleDeg: number;
+  /** Fator opcional de afastamento além do raio efetivo da imagem (padrão: 1.0) */
+  readonly radiusMultiplier?: number;
+}
+
 export interface Slide {
-  id: number;
-  number: string;
-  name: string;
-  eyebrow?: string;
-  title: string;
-  description: string;
-  highlights: readonly HeroHighlight[];
-  image: string;
-  alt?: string;
-  isCutout?: boolean;
-  cutoutScale?: number;
-  cutoutOffsetX?: string;
-  cutoutOffsetY?: string;
-  cutoutShadowBottom?: string;
-  floatingPills?: readonly string[];
-  CTAColorToken?: string;
-  textColorToken?: string;
-  surfaceColorToken: string;
+  readonly id: number;
+  readonly number: string;
+  readonly name: string;
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly description: string;
+  readonly highlights: readonly HeroHighlight[];
+  readonly image: string;
+  readonly alt?: string;
+  readonly cutoutScale?: number;
+  readonly cutoutOffsetX?: string;
+  readonly cutoutOffsetY?: string;
+  readonly cutoutShadowBottom?: string;
+  readonly floatingPills?: readonly HeroFloatingPill[];
+  readonly textColorToken?: string;
+  readonly surfaceColorToken: string;
 }
 
 export const SLIDES: Slide[] = [
   {
     id: 1,
     number: "01",
-    name: "Cacau & Cereja",
+    name: "Frutas Vermelhas",
     eyebrow: "Atelier de Alta Confeitaria",
-    title: "Artesanal de verdade.",
+    title: "Confeitaria artesanal fresca todo dia.",
     description:
-      "Doces frescos feitos à mão em pequenos lotes diários, com tempo dedicado a cada detalhe e dulçor na medida certa para exaltar o sabor puro do cacau.",
+      "Sobremesas em camadas feitas à mão em pequenos lotes diários, combinando frutas frescas selecionadas, creme aveludado e pão de ló leve com dulçor na medida certa.",
     highlights: [
       { id: "01-hand", icon: "hand", label: "Feito à mão" },
       { id: "01-layers", icon: "layers", label: "Pequeno lote" },
@@ -41,23 +50,44 @@ export const SLIDES: Slide[] = [
     ],
     image: RedHeroIMG,
     alt: "Sobremesa artesanal em pote de vidro em camadas com creme branco, geleia de frutas vermelhas, pão de ló, morangos e framboesas frescas",
-    isCutout: true,
     cutoutScale: 1.42,
     cutoutOffsetX: "-3.5%",
     cutoutOffsetY: "2%",
     cutoutShadowBottom: "-1%",
-    floatingPills: ["Morangos & framboesas", "Creme & geleia artesanal", "Pão de ló artesanal"],
+    floatingPills: [
+      {
+        id: "frutas-topo",
+        label: "Morangos & framboesas",
+        anchor: { x: 0.56, y: 0.24 },
+        angleDeg: -50,
+        radiusMultiplier: 1.08,
+      },
+      {
+        id: "frutas-meio",
+        label: "Creme & geleia artesanal",
+        anchor: { x: 0.36, y: 0.54 },
+        angleDeg: 174,
+        radiusMultiplier: 1.04,
+      },
+      {
+        id: "frutas-base",
+        label: "Pão de ló artesanal",
+        anchor: { x: 0.62, y: 0.78 },
+        angleDeg: 48,
+        radiusMultiplier: 1.12,
+      },
+    ],
     surfaceColorToken: "var(--color-surface-slide-1)",
     textColorToken: "var(--color-text-slide-1)",
   },
   {
     id: 2,
     number: "02",
-    name: "Cítrico Imperial",
+    name: "Banoffee Artesanal",
     eyebrow: "Edições Especiais",
-    title: "Presentes que ficam.",
+    title: "Presentes que marcam o paladar.",
     description:
-      "Coleções exclusivas e sabores finos preparados para transformar gestos de carinho em memórias inesquecíveis. Você escolhe as criações e nós cuidamos do encanto.",
+      "Camadas de doce de leite cremoso, banana caramelizada, chantilly fresco e base crocante preparadas para transformar gestos de carinho em memórias inesquecíveis.",
     highlights: [
       { id: "02-gift", icon: "gift", label: "Pronto para presentear" },
       { id: "02-package", icon: "package", label: "Embalagem cuidada" },
@@ -65,19 +95,40 @@ export const SLIDES: Slide[] = [
     ],
     image: YellowHeroIMG,
     alt: "Banoffee pie artesanal em pote de vidro com banana caramelizada, chantilly e folhas de hortelã",
-    isCutout: true,
-    floatingPills: ["Chantilly & cacau", "Banana & doce de leite", "Base crocante artesanal"],
+    floatingPills: [
+      {
+        id: "banoffee-topo",
+        label: "Chantilly & cacau",
+        anchor: { x: 0.55, y: 0.26 },
+        angleDeg: -48,
+        radiusMultiplier: 1.08,
+      },
+      {
+        id: "banoffee-meio",
+        label: "Banana & doce de leite",
+        anchor: { x: 0.38, y: 0.55 },
+        angleDeg: 176,
+        radiusMultiplier: 1.04,
+      },
+      {
+        id: "banoffee-base",
+        label: "Base crocante artesanal",
+        anchor: { x: 0.62, y: 0.8 },
+        angleDeg: 48,
+        radiusMultiplier: 1.12,
+      },
+    ],
     surfaceColorToken: "var(--color-surface-slide-2)",
     textColorToken: "var(--color-text-slide-2)",
   },
   {
     id: 3,
     number: "03",
-    name: "Pistache Silvestre",
+    name: "Tiramisu de Pistache",
     eyebrow: "Grandes Celebrações",
-    title: "Do ateliê para sua mesa.",
+    title: "Sua celebração merece alta confeitaria.",
     description:
-      "Da seleção criteriosa à finalização delicada, levamos a experiência autoral do nosso ateliê para momentos especiais, recepções e celebrações com quem você ama.",
+      "Tiramisu autoral de pistache puro, ganache aveludada e raspas de cacau para levar a experiência artesanal do nosso ateliê a recepções e celebrações especiais.",
     highlights: [
       { id: "03-message", icon: "message", label: "Atendimento direto" },
       { id: "03-sliders", icon: "sliders", label: "Sabores à escolha" },
@@ -85,15 +136,32 @@ export const SLIDES: Slide[] = [
     ],
     image: GreenHeroIMG,
     alt: "Tiramisu artesanal de pistache e chocolate em pote de vidro com laço de juta, raspas de chocolate e folhas de hortelã",
-    isCutout: true,
     cutoutScale: 1.16,
     cutoutOffsetX: "-2.5%",
     cutoutOffsetY: "-1%",
     cutoutShadowBottom: "-6%",
     floatingPills: [
-      "Raspas de cacau & hortelã",
-      "Creme de pistache puro",
-      "Ganache & massa de cacau",
+      {
+        id: "pistache-topo",
+        label: "Raspas de cacau & hortelã",
+        anchor: { x: 0.54, y: 0.24 },
+        angleDeg: -50,
+        radiusMultiplier: 1.08,
+      },
+      {
+        id: "pistache-meio",
+        label: "Creme de pistache puro",
+        anchor: { x: 0.36, y: 0.54 },
+        angleDeg: 174,
+        radiusMultiplier: 1.04,
+      },
+      {
+        id: "pistache-base",
+        label: "Ganache & massa de cacau",
+        anchor: { x: 0.62, y: 0.78 },
+        angleDeg: 48,
+        radiusMultiplier: 1.12,
+      },
     ],
     surfaceColorToken: "var(--color-surface-slide-3)",
     textColorToken: "var(--color-text-slide-3)",

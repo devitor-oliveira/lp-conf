@@ -16,7 +16,7 @@ export function Hero({ onSlideColorChange, activeColor }: HeroProps) {
         backgroundColor: activeColor || "var(--color-surface-slide-1)",
       }}
     >
-      <Carrosel activeSurfaceColor={activeColor} onSlideColorChange={onSlideColorChange} />
+      <Carrosel onSlideColorChange={onSlideColorChange} />
     </section>
   );
 }

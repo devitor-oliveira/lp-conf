@@ -1,0 +1,118 @@
+.canvas {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  padding-inline: 0;
+  block-size: 100%;
+  min-block-size: 100%;
+  min-inline-size: 0;
+  translate: 15% 0;
+  overflow: visible;
+  z-index: 1;
+
+  // border: 1px solid lightblue;
+}
+
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes heroShadowPulse {
+  0%,
+  100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scaleX(0.96) scaleY(0.97);
+    opacity: 0.78;
+  }
+}
+
+.floatStage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: clamp(21.5rem, 35.9vw, 34.2rem);
+  animation: heroFloat 8s ease-in-out infinite;
+  will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.cutoutGroundShadow {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: var(--cutout-shadow-bottom, -6%);
+  height: 14%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgb(0 0 0 / 0.48) 0%,
+    rgb(0 0 0 / 0.18) 50%,
+    transparent 74%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: heroShadowPulse 8s ease-in-out infinite;
+  will-change: transform, opacity;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.cutoutFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1312 / 1199;
+  max-height: calc(90vh - 8.5rem);
+  translate: var(--cutout-offset-x, 0) var(--cutout-offset-y, 0);
+  overflow: visible;
+
+  @supports (height: 90dvh) {
+    max-height: calc(90dvh - 8.5rem);
+  }
+
+  img {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 10px 18px rgb(0 0 0 / 0.24));
+    will-change: transform, opacity;
+  }
+}
+
+@media (max-width: 900px) {
+  .canvas {
+    padding: 0 1.75rem 3.5rem 1.75rem;
+    translate: none;
+  }
+
+  .floatStage {
+    max-width: min(100%, 21rem);
+  }
+
+  .cutoutFrame {
+    max-height: 42dvh;
+  }
+}
