@@ -61,7 +61,10 @@
 
   // --- Constantes Estruturais do Layout ---
   --bento-gap: var(--space-2); // 16px (1rem)
-  --layout-stage-margin: var(--space-2); // 16px (1rem)
+  --layout-stage-margin: var(--space-1-5); // 12px (0.75rem)
+  --header-edge-inset: calc(var(--layout-stage-margin) + var(--radius-max) + var(--space-1-5)); // 56px
+  --hero-container-width: var(--container-width-large); // 95rem (1520px)
+  --hero-pad-inline: clamp(3.5rem, 8.5vw, 9.5rem); // 56px -> 152px
   --container-width: 72.5rem; // 1160px
   --container-width-large: 95rem; // 1520px (variante oficial para seções editoriais largas como About)
   --content-width-editorial: 48.75rem; // 780px
@@ -120,6 +123,14 @@
   --duration-slow: 0.6s;
   --duration-card-zoom: 0.6s;
 
+  // --- Superfície e CTA da Seção Hero (#inicio) ---
+  --color-hero-cta-bg: #f8f4e8;
+  --color-hero-cta-text: #1c1410;
+  --color-hero-cta-hover-bg: #eae2b7;
+  --color-hero-cta-hover-text: #1c1410;
+  --color-hero-cta-icon: #0e7468;
+  --color-hero-anchor: #1e4620;
+
   // --- Superfície Editorial Chocolate da Seção Cardápio (#cardapio) ---
   --color-menu-surface: var(--color-surface-slide-2); // #5a3620 (Cacau Torrado)
   --color-menu-canvas: #301c11; // Cacau Amargo 70%
@@ -161,6 +172,12 @@
   --color-on-inverted-error: #b91c1c;
   --color-border: #7d6c61;
   --color-whatsapp-icon-surface: #25d366;
+  --color-hero-cta-bg: #f5efe6;
+  --color-hero-cta-text: #171210;
+  --color-hero-cta-hover-bg: #eae2b7;
+  --color-hero-cta-hover-text: #171210;
+  --color-hero-cta-icon: #0e7468;
+  --color-hero-anchor: #1e4620;
   --color-menu-surface: #301c11; // Cacau Amargo 70%
   --color-menu-canvas: #1c1009;
   --color-menu-text: #f0f3ed;
